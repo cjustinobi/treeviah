@@ -5,3 +5,6 @@ export declare class UserLoginInput {
 export declare class SampleInput {
     test: string;
 }
+export declare class AccessToken {
+    accessToken: string;
+}

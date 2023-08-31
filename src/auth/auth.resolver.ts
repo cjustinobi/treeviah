@@ -4,7 +4,7 @@ import { AuthService } from './auth.service';
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql'
 // import { GetUser } from 'src/auth/get-user.decorator'
 import { UserRegisterInput } from './user-register.input'
-import { UserLoginInput, SampleInput } from './user-login.input';
+import { UserLoginInput, SampleInput, AccessToken } from './user-login.input';
 import { UnauthorizedException } from '@nestjs/common';
 
 @Resolver(of => UserRegisterInput)
@@ -33,7 +33,7 @@ const dummy: SampleInput = {
 //     return authenticatedUser
 //   }
 
-@Mutation(() => UserLoginInput, {name: 'login'})
+@Mutation(() => AccessToken, {name: 'login'})
 // @Mutation(() => AuthResponseType) // AuthResponseType is a custom GraphQL type
 async login(@Args('loginInput') loginInput: UserLoginInput): Promise<string> {
   try {
@@ -43,7 +43,7 @@ async login(@Args('loginInput') loginInput: UserLoginInput): Promise<string> {
 
     return accessToken // Return the response object
   } catch (error) {
-    throw new UnauthorizedException('Invalid credentials');
+    throw new UnauthorizedException('Invalid credentials')
   }
 }
 

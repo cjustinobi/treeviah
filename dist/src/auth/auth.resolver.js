@@ -48,7 +48,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AuthResolver.prototype, "getDummy", null);
 __decorate([
-    (0, graphql_1.Mutation)(() => user_login_input_1.UserLoginInput, { name: 'login' }),
+    (0, graphql_1.Mutation)(() => user_login_input_1.AccessToken, { name: 'login' }),
     __param(0, (0, graphql_1.Args)('loginInput')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_login_input_1.UserLoginInput]),

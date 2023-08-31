@@ -17,3 +17,10 @@ export class SampleInput {
   @Field()
   test: string 
 }
+
+@ObjectType()
+export class AccessToken {
+
+  @Field()
+  accessToken: string 
+}
