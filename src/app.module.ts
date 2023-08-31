@@ -20,8 +20,6 @@ import { AuthResolver } from './auth/auth.resolver'
     }),
     AuthModule,
     TypeOrmModule.forFeature([User]),
-    // ProductModule,
-    
     TypeOrmModule.forRootAsync({
       useFactory: dataSourceOptions,
       inject: [ConfigService], // Inject ConfigService

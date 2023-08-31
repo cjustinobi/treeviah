@@ -1,8 +1,6 @@
 
-// import { UserInput } from 'src/auth/user.type'
 import { AuthService } from './auth.service';
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql'
-// import { GetUser } from 'src/auth/get-user.decorator'
 import { UserRegisterInput } from './user-register.input'
 import { UserLoginInput, SampleInput, AccessToken } from './user-login.input';
 import { UnauthorizedException } from '@nestjs/common';
@@ -18,30 +16,16 @@ export class AuthResolver {
 const dummy: SampleInput = {
     test: 'Hello'
   };
-  return dummy;
+  return dummy
   }
 
 
-//   @Mutation(() => UserLoginInput, {name: 'login'})
-//   async loginUser(@Args('loginInput') userLoginInput: UserLoginInput) {
-//     const authenticatedUser = await this.authService.login(userLoginInput) 
-  
-//    if (!authenticatedUser) {
-//     throw new Error('Authentication failed');
-//   }
-// console.log(authenticatedUser)
-//     return authenticatedUser
-//   }
-
-@Mutation(() => AccessToken, {name: 'login'})
-// @Mutation(() => AuthResponseType) // AuthResponseType is a custom GraphQL type
-async login(@Args('loginInput') loginInput: UserLoginInput): Promise<string> {
+@Mutation(() => AccessToken)
+async login(@Args('loginInput') loginInput: UserLoginInput): Promise<{accessToken: string}> {
   try {
-    const { accessToken } = await this.authService.login(loginInput);
+    const { accessToken } = await this.authService.login(loginInput)
 
-    // Here you can implement your service's login method
-
-    return accessToken // Return the response object
+    return {accessToken} // Return the response object
   } catch (error) {
     throw new UnauthorizedException('Invalid credentials')
   }
