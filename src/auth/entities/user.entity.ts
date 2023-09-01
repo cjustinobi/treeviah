@@ -1,5 +1,5 @@
 
-import { Product } from 'src/product/entities/product.entity'
+// import { Product } from 'src/product/entities/product.entity'
 import { 
   Entity, 
   Column, 
@@ -44,8 +44,8 @@ export class User {
   @DeleteDateColumn()
   public deleted_at: Date | null
 
-  @OneToMany(type => Product, product => product.user, { eager: true })
-  products: Product[]
+  // @OneToMany(type => Product, product => product.user, { eager: true })
+  // products: Product[]
 }
 
 {}
