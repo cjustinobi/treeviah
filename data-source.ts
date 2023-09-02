@@ -4,8 +4,7 @@ import { ConfigService } from '@nestjs/config'
 
 export const dataSourceOptions = async (configService: ConfigService): Promise<TypeOrmModuleOptions> => ({
   type: 'mysql', // Database type
-  host: 'localhost',
-  // host: configService.get<string>('DB_HOST'),
+  host: configService.get<string>('DB_HOST'),
   port: configService.get<number>('DB_PORT'),
   username: configService.get<string>('DB_USERNAME'),
   password: configService.get<string>('DB_PASSWORD'),
@@ -13,9 +12,9 @@ export const dataSourceOptions = async (configService: ConfigService): Promise<T
   entities: [__dirname + '/**/*.entity{.ts,.js}'],
   synchronize: true,
   logging: true,
-  extra: {
-    socketPath: configService.get<string>('CONNECTION_NAME')
-  }
+  // extra: {
+  //   socketPath: configService.get<string>('CONNECTION_NAME')
+  // }
 })
 
 // DATABASE_URL="postgresql://zuser:pass@localhost/db?host=/cloudsql/projectis:us-central1:db"

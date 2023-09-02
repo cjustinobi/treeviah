@@ -3,8 +3,8 @@ import { ObjectType, Field, ID, InputType } from '@nestjs/graphql'
 @InputType()
 @ObjectType('Register')
 export class UserRegisterInput {
-  @Field(type => ID)
-  id: number
+  // @Field(type => ID)
+  // id: number
 
   @Field()
   first_name: string
