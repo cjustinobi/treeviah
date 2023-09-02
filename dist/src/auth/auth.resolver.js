@@ -22,12 +22,6 @@ let AuthResolver = exports.AuthResolver = class AuthResolver {
     constructor(authService) {
         this.authService = authService;
     }
-    async getDummy() {
-        const dummy = {
-            test: 'Hello'
-        };
-        return dummy;
-    }
     async login(loginInput) {
         try {
             const { accessToken } = await this.authService.login(loginInput);
@@ -41,12 +35,6 @@ let AuthResolver = exports.AuthResolver = class AuthResolver {
         return this.authService.register(userRegisterInput);
     }
 };
-__decorate([
-    (0, graphql_1.Query)(returns => user_login_input_1.SampleInput),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], AuthResolver.prototype, "getDummy", null);
 __decorate([
     (0, graphql_1.Mutation)(() => user_login_input_1.AccessToken),
     __param(0, (0, graphql_1.Args)('loginInput')),

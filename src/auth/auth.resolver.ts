@@ -1,23 +1,15 @@
 
-import { AuthService } from './auth.service';
-import { Resolver, Query, Args, Mutation } from '@nestjs/graphql'
+import { AuthService } from './auth.service'
+import { Resolver, Args, Mutation } from '@nestjs/graphql'
 import { UserRegisterInput } from './user-register.input'
-import { UserLoginInput, SampleInput, AccessToken } from './user-login.input';
-import { UnauthorizedException } from '@nestjs/common';
+import { UserLoginInput, AccessToken } from './user-login.input'
+import { UnauthorizedException } from '@nestjs/common'
 
 @Resolver(of => UserRegisterInput)
 export class AuthResolver {
   constructor(
     private authService: AuthService
   ) {}
-
-  @Query(returns => SampleInput)
-  async getDummy() {
-const dummy: SampleInput = {
-    test: 'Hello'
-  };
-  return dummy
-  }
 
 
 @Mutation(() => AccessToken)

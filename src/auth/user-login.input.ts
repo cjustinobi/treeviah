@@ -10,15 +10,6 @@ export class UserLoginInput {
   password: string
 }
 
-// TODO: Remove when i have a query elsewhere
-@ObjectType()
-export class SampleInput {
-
-  @Field()
-  test: string 
-}
-
-
 @ObjectType()
 export class AccessToken {
 
