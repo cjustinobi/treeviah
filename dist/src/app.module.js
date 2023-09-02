@@ -17,12 +17,14 @@ const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const data_source_1 = require("../data-source");
 const auth_module_1 = require("./auth/auth.module");
-const user_entity_1 = require("./auth/entities/user.entity");
+const quiz_module_1 = require("./quiz/quiz.module");
 const graphql_1 = require("@nestjs/graphql");
+const user_entity_1 = require("./auth/entities/user.entity");
 const apollo_1 = require("@nestjs/apollo");
 const config_1 = require("@nestjs/config");
 const configuration_1 = require("../config/configuration");
 const auth_resolver_1 = require("./auth/auth.resolver");
+const question_resolver_1 = require("./quiz/question.resolver");
 let AppModule = exports.AppModule = class AppModule {
     constructor(dataSource) {
         this.dataSource = dataSource;
@@ -50,12 +52,14 @@ exports.AppModule = AppModule = __decorate([
                 subscriptions: {
                     'graphql-ws': true
                 },
-            })
+            }),
+            quiz_module_1.QuizModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [
             app_service_1.AppService,
-            auth_resolver_1.AuthResolver
+            auth_resolver_1.AuthResolver,
+            question_resolver_1.QuestionResolver
         ],
     }),
     __metadata("design:paramtypes", [typeorm_2.DataSource])

@@ -5,12 +5,14 @@ import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { dataSourceOptions } from 'data-source'
 import { AuthModule } from './auth/auth.module'
-import { User } from './auth/entities/user.entity'
+import { QuizModule } from './quiz/quiz.module'
 import { GraphQLModule } from '@nestjs/graphql'
+import { User } from './auth/entities/user.entity'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import configuration from '../config/configuration'
 import { AuthResolver } from './auth/auth.resolver'
+import { QuestionResolver } from './quiz/question.resolver'
 
 @Module({
   imports: [
@@ -33,12 +35,14 @@ import { AuthResolver } from './auth/auth.resolver'
       subscriptions: {
         'graphql-ws': true
       },
-    })
+    }),
+    QuizModule
   ],
   controllers: [AppController],
   providers: [
     AppService,
-    AuthResolver
+    AuthResolver,
+    QuestionResolver
   ],
 })
 export class AppModule {
