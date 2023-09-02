@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"  # Map the container port to the host port
-    command: ["./wait-for-it.sh", "mysql-db:3306", "--", "npm", "run", "start:dev"]
+    command: ["./wait-for-it.sh", "http://127.0.0.1:3306", "--", "npm", "run", "start:dev"]
     networks:
       - app-network
     volumes:
@@ -35,3 +35,5 @@ networks:
     driver: bridge
 volumes:
   mysql_data:
+
+  # docker tag treeviah gcr.io/treeviah/treeviah:treeviah
