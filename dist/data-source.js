@@ -11,6 +11,9 @@ const dataSourceOptions = async (configService) => ({
     entities: [__dirname + '/**/*.entity{.ts,.js}'],
     synchronize: true,
     logging: true,
+    extra: {
+        socketPath: configService.get('CONNECTION_NAME')
+    }
 });
 exports.dataSourceOptions = dataSourceOptions;
 //# sourceMappingURL=data-source.js.map
