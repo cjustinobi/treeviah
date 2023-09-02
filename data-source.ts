@@ -1,8 +1,8 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 
-export const getDataSourceOptions = async (configService: ConfigService): Promise<TypeOrmModuleOptions> => {
-  
+export const dataSourceOptions = async (configService: ConfigService): Promise<TypeOrmModuleOptions> => {
+
   const isProduction = configService.get<string>('NODE_ENV') === 'production'
 
   const baseOptions: TypeOrmModuleOptions = {
