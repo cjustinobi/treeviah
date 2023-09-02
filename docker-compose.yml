@@ -4,6 +4,7 @@ services:
     container_name: nest-app
     build:
       context: .
+      target: "dev"
       dockerfile: Dockerfile
     ports:
       - "3000:3000"  # Map the container port to the host port
