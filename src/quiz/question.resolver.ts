@@ -4,12 +4,18 @@ import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql'
 import { QuestionService } from './question.service'
 import { Question } from './question.entity'
 import { CreateQuestionInput } from './question.input'
+import { UseGuards } from '@nestjs/common'
+import { AuthGuard } from '@nestjs/passport'
+
 
 @Resolver(of => CreateQuestionInput)
+
 export class QuestionResolver {
   constructor(private readonly questionService: QuestionService) {}
 
   @Mutation(returns => CreateQuestionInput)
+
+@UseGuards(AuthGuard())
   async createQuestion(@Args('input') input: CreateQuestionInput): Promise<Question> {
     return this.questionService.createQuestion(input)
   }
