@@ -5,17 +5,15 @@ import { QuestionService } from './question.service'
 import { Question } from './question.entity'
 import { CreateQuestionInput } from './question.input'
 import { UseGuards } from '@nestjs/common'
-import { AuthGuard } from '@nestjs/passport'
+import { JwtAuthGuard } from '../common/guards'
 
 
 @Resolver(of => CreateQuestionInput)
-
+@UseGuards(JwtAuthGuard)
 export class QuestionResolver {
   constructor(private readonly questionService: QuestionService) {}
 
   @Mutation(returns => CreateQuestionInput)
-
-@UseGuards(AuthGuard())
   async createQuestion(@Args('input') input: CreateQuestionInput): Promise<Question> {
     return this.questionService.createQuestion(input)
   }

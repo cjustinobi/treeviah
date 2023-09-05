@@ -17,7 +17,7 @@ const graphql_1 = require("@nestjs/graphql");
 const question_service_1 = require("./question.service");
 const question_input_1 = require("./question.input");
 const common_1 = require("@nestjs/common");
-const passport_1 = require("@nestjs/passport");
+const guards_1 = require("../common/guards");
 let QuestionResolver = exports.QuestionResolver = class QuestionResolver {
     constructor(questionService) {
         this.questionService = questionService;
@@ -37,7 +37,6 @@ let QuestionResolver = exports.QuestionResolver = class QuestionResolver {
 };
 __decorate([
     (0, graphql_1.Mutation)(returns => question_input_1.CreateQuestionInput),
-    (0, common_1.UseGuards)((0, passport_1.AuthGuard)()),
     __param(0, (0, graphql_1.Args)('input')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [question_input_1.CreateQuestionInput]),
@@ -66,6 +65,7 @@ __decorate([
 ], QuestionResolver.prototype, "findAll", null);
 exports.QuestionResolver = QuestionResolver = __decorate([
     (0, graphql_1.Resolver)(of => question_input_1.CreateQuestionInput),
+    (0, common_1.UseGuards)(guards_1.JwtAuthGuard),
     __metadata("design:paramtypes", [question_service_1.QuestionService])
 ], QuestionResolver);
 //# sourceMappingURL=question.resolver.js.map

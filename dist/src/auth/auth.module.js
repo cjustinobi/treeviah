@@ -16,6 +16,7 @@ const auth_respository_1 = require("./auth.respository");
 const jwt_1 = require("@nestjs/jwt");
 const passport_1 = require("@nestjs/passport");
 const jwt_strategy_1 = require("./jwt.strategy");
+const auth_helper_1 = require("./auth.helper");
 let AuthModule = exports.AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule = __decorate([
@@ -40,12 +41,14 @@ exports.AuthModule = AuthModule = __decorate([
                 },
             },
             auth_service_1.AuthService,
-            jwt_strategy_1.JwtStrategy
+            jwt_strategy_1.JwtStrategy,
+            auth_helper_1.AuthHelper
         ],
         exports: [
             jwt_strategy_1.JwtStrategy,
             passport_1.PassportModule,
-            auth_service_1.AuthService
+            auth_service_1.AuthService,
+            auth_helper_1.AuthHelper
         ]
     })
 ], AuthModule);

@@ -36,11 +36,4 @@ export class AuthService {
 
   }
 
-  // async login(loginUserDto: LoginUserDto): Promise<string> {
-
-    
-
-  //   return 'Heloo'
-
-  // }
 }

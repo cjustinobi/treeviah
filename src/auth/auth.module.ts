@@ -8,6 +8,7 @@ import { CustomAuthRepository } from './auth.respository'
 import { JwtModule } from '@nestjs/jwt'
 import { PassportModule } from '@nestjs/passport'
 import { JwtStrategy } from './jwt.strategy'
+import { AuthHelper } from './auth.helper'
 
 @Module({
   imports: [
@@ -31,12 +32,14 @@ import { JwtStrategy } from './jwt.strategy'
       },
     },
     AuthService,
-    JwtStrategy
+    JwtStrategy,
+    AuthHelper
   ],
   exports: [
     JwtStrategy,
     PassportModule,
-    AuthService
+    AuthService,
+    AuthHelper
   ]
 })
 export class AuthModule {}
