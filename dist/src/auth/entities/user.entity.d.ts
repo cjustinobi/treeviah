@@ -1,3 +1,4 @@
+import { Question } from 'src/quiz/question.entity';
 export declare class User {
     id: number;
     first_name: string;
@@ -9,4 +10,5 @@ export declare class User {
     created_at: Date;
     updated_at: Date | null;
     deleted_at: Date | null;
+    questions: Question[];
 }

@@ -22,8 +22,12 @@ let QuestionResolver = exports.QuestionResolver = class QuestionResolver {
     constructor(questionService) {
         this.questionService = questionService;
     }
-    async createQuestion(input) {
-        return this.questionService.createQuestion(input);
+    async createQuestion(input, { req }) {
+        console.log(req);
+        const user = req.user;
+        console.log('user');
+        console.log(user);
+        return this.questionService.createQuestion(input, user);
     }
     async updateQuestion(id, input) {
         return this.questionService.updateQuestion(id, input);
@@ -38,8 +42,9 @@ let QuestionResolver = exports.QuestionResolver = class QuestionResolver {
 __decorate([
     (0, graphql_1.Mutation)(returns => question_input_1.CreateQuestionInput),
     __param(0, (0, graphql_1.Args)('input')),
+    __param(1, (0, graphql_1.Context)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [question_input_1.CreateQuestionInput]),
+    __metadata("design:paramtypes", [question_input_1.CreateQuestionInput, Object]),
     __metadata("design:returntype", Promise)
 ], QuestionResolver.prototype, "createQuestion", null);
 __decorate([

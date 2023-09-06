@@ -1,6 +1,5 @@
-// src/quiz/question.resolver.ts
 
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql'
+import { Resolver, Query, Mutation, Args, Context } from '@nestjs/graphql'
 import { QuestionService } from './question.service'
 import { Question } from './question.entity'
 import { CreateQuestionInput } from './question.input'
@@ -14,8 +13,15 @@ export class QuestionResolver {
   constructor(private readonly questionService: QuestionService) {}
 
   @Mutation(returns => CreateQuestionInput)
-  async createQuestion(@Args('input') input: CreateQuestionInput): Promise<Question> {
-    return this.questionService.createQuestion(input)
+  async createQuestion(
+    @Args('input') input: CreateQuestionInput,
+    @Context() { req }: any
+    ): Promise<Question> {
+      console.log(req)
+      const user = req.user
+      console.log('user')
+      console.log(user)
+    return this.questionService.createQuestion(input, user)
   }
 
   @Mutation(() => CreateQuestionInput)

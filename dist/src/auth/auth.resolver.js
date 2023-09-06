@@ -34,6 +34,17 @@ let AuthResolver = exports.AuthResolver = class AuthResolver {
     async registerUser(userRegisterInput) {
         return this.authService.register(userRegisterInput);
     }
+    async logout(context) {
+        const { authorization } = context.req.headers;
+        const token = authorization.replace('Bearer ', '');
+        try {
+            this.authService.logout(token);
+            return true;
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
 };
 __decorate([
     (0, graphql_1.Mutation)(() => user_login_input_1.AccessToken),
@@ -49,6 +60,13 @@ __decorate([
     __metadata("design:paramtypes", [user_register_input_1.UserRegisterInput]),
     __metadata("design:returntype", Promise)
 ], AuthResolver.prototype, "registerUser", null);
+__decorate([
+    (0, graphql_1.Mutation)(() => Boolean),
+    __param(0, (0, graphql_1.Context)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AuthResolver.prototype, "logout", null);
 exports.AuthResolver = AuthResolver = __decorate([
     (0, graphql_1.Resolver)(of => user_register_input_1.UserRegisterInput),
     __metadata("design:paramtypes", [auth_service_1.AuthService])

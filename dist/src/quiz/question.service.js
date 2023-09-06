@@ -21,9 +21,9 @@ let QuestionService = exports.QuestionService = class QuestionService {
     constructor(questionRepository) {
         this.questionRepository = questionRepository;
     }
-    async createQuestion(createQuestionDto) {
+    async createQuestion(createQuestionDto, user) {
         const question = this.questionRepository.create(createQuestionDto);
-        return this.questionRepository.save(question);
+        return this.questionRepository.save({ ...question, user });
     }
     async findOne(id) {
         return this.questionRepository.findOneBy({ id });

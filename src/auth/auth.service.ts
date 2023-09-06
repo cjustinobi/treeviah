@@ -6,6 +6,7 @@ import { RegisterUserDto } from './dto/register-user.dto'
 import { LoginUserDto } from './dto/login-user.dto'
 import { JwtService } from '@nestjs/jwt'
 import { JwtPayload } from './jwt-payload.interface'
+import { AuthHelper } from './auth.helper'
 
 
 @Injectable()
@@ -13,6 +14,7 @@ export class AuthService {
 
   constructor(@InjectRepository(User) 
     private readonly authRepository: AuthRepository,
+    private readonly authHelper: AuthHelper,
     private jwtService: JwtService
   ) {}
 
@@ -34,6 +36,10 @@ export class AuthService {
 
     return { accessToken }
 
+  }
+
+  async logout(accessToken: string): Promise<void> {
+    this.authHelper.blackListToken(accessToken);
   }
 
 }

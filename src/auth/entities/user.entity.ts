@@ -1,5 +1,5 @@
 
-// import { Product } from 'src/product/entities/product.entity'
+import { Question } from 'src/quiz/question.entity'
 import { 
   Entity, 
   Column, 
@@ -46,6 +46,8 @@ export class User {
 
   // @OneToMany(type => Product, product => product.user, { eager: true })
   // products: Product[]
+  @OneToMany(() => Question, (question) => question.user)
+  questions: Question[]
 }
 
 {}

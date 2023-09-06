@@ -8,4 +8,5 @@ export declare class AuthResolver {
         accessToken: string;
     }>;
     registerUser(userRegisterInput: UserRegisterInput): Promise<import("./entities/user.entity").User>;
+    logout(context: any): Promise<boolean>;
 }

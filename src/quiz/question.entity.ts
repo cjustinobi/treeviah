@@ -1,6 +1,7 @@
 
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm'
 import { Quiz } from './quiz.entity'
+import { User } from 'src/auth/entities/user.entity'
 
 @Entity()
 export class Question {
@@ -27,4 +28,7 @@ export class Question {
 
   @ManyToOne(() => Quiz, (quiz) => quiz.questions)
   quiz: Quiz
+
+  @ManyToOne(() => User, (user) => user.questions)
+  user: User
 }

@@ -5,6 +5,7 @@ import { Repository } from 'typeorm'
 import { CreateQuestionDto } from './dto/create-question.dto'
 import { UpdateQuestionDto } from './dto/update-question.dto'
 import { Question } from './question.entity'
+import { User } from 'src/auth/entities/user.entity'
 
 @Injectable()
 export class QuestionService {
@@ -13,9 +14,9 @@ export class QuestionService {
     private readonly questionRepository: Repository<Question>,
   ) {}
 
-  async createQuestion(createQuestionDto: CreateQuestionDto): Promise<Question> {
+  async createQuestion(createQuestionDto: CreateQuestionDto, user: User): Promise<Question> {
     const question = this.questionRepository.create(createQuestionDto)
-    return this.questionRepository.save(question)
+    return this.questionRepository.save({...question, user})
   }
 
    async findOne(id: number): Promise<Question | undefined> {

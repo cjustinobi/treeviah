@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Question = void 0;
 const typeorm_1 = require("typeorm");
 const quiz_entity_1 = require("./quiz.entity");
+const user_entity_1 = require("../auth/entities/user.entity");
 let Question = exports.Question = class Question {
 };
 __decorate([
@@ -46,6 +47,10 @@ __decorate([
     (0, typeorm_1.ManyToOne)(() => quiz_entity_1.Quiz, (quiz) => quiz.questions),
     __metadata("design:type", quiz_entity_1.Quiz)
 ], Question.prototype, "quiz", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.questions),
+    __metadata("design:type", user_entity_1.User)
+], Question.prototype, "user", void 0);
 exports.Question = Question = __decorate([
     (0, typeorm_1.Entity)()
 ], Question);

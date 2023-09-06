@@ -18,6 +18,7 @@ const user_entity_1 = require("./entities/user.entity");
 const bcrypt = require("bcrypt");
 let AuthHelper = exports.AuthHelper = class AuthHelper {
     constructor(jwt) {
+        this.tokenBlacklist = new Set();
         this.jwt = jwt;
     }
     async decode(token) {
@@ -26,8 +27,9 @@ let AuthHelper = exports.AuthHelper = class AuthHelper {
     async validateUser(email) {
         return await this.repository.findOneBy({ email });
     }
-    generateToken(user) {
-        return this.jwt.sign({ id: user.id, email: user.email });
+    async generateToken(email) {
+        const payload = { email };
+        return await this.jwt.sign(payload);
     }
     isPasswordValid(password, userPassword) {
         return bcrypt.compareSync(password, userPassword);
@@ -37,17 +39,18 @@ let AuthHelper = exports.AuthHelper = class AuthHelper {
         return bcrypt.hashSync(password, salt);
     }
     async validate(token) {
+        if (this.tokenBlacklist.has(token))
+            return false;
         const decoded = this.jwt.verify(token);
-        if (!decoded) {
+        if (!decoded)
             throw new common_1.HttpException('Forbidden', common_1.HttpStatus.FORBIDDEN);
-        }
         const user = await this.validateUser(decoded.email);
-        console.log('user');
-        console.log(user);
-        if (!user) {
+        if (!user)
             throw new common_1.UnauthorizedException();
-        }
         return true;
+    }
+    async blackListToken(accessToken) {
+        this.tokenBlacklist.add(accessToken);
     }
 };
 __decorate([

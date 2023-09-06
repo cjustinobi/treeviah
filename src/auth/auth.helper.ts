@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { User } from './entities/user.entity'
 import * as bcrypt from 'bcrypt'
+import { JwtPayload } from './jwt-payload.interface'
 
 interface DecodedToken {
   email: string;
@@ -18,6 +19,8 @@ export class AuthHelper {
 
   private readonly jwt: JwtService
 
+  private readonly tokenBlacklist: Set<string> = new Set<string>()
+
   constructor(jwt: JwtService) {
     this.jwt = jwt
   }
@@ -30,8 +33,10 @@ export class AuthHelper {
     return await this.repository.findOneBy({email})
   }
 
-  public generateToken(user: User): string {
-    return this.jwt.sign({ id: user.id, email: user.email })
+  public async generateToken(email): Promise<string> {
+    const payload: JwtPayload = { email }
+
+    return await this.jwt.sign(payload)
   }
 
   public isPasswordValid(password: string, userPassword: string): boolean {
@@ -46,20 +51,20 @@ export class AuthHelper {
 
   async validate(token: string): Promise<boolean | never> {
 
+    if (this.tokenBlacklist.has(token)) return false
+
     const decoded: DecodedToken = this.jwt.verify(token)
 
-    if (!decoded) {
-      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN)
-    }
+    if (!decoded) throw new HttpException('Forbidden', HttpStatus.FORBIDDEN)
 
     const user = await this.validateUser(decoded.email)
-    console.log('user')
-    console.log(user)
 
-    if (!user) {
-      throw new UnauthorizedException()
-    }
+    if (!user) throw new UnauthorizedException()
 
     return true
+  }
+
+  async blackListToken(accessToken: string): Promise<void> {
+    this.tokenBlacklist.add(accessToken)
   }
 }
