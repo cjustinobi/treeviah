@@ -13,6 +13,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import configuration from '../config/configuration'
 import { AuthResolver } from './auth/auth.resolver'
 import { QuestionResolver } from './quiz/question.resolver'
+import { QuizResolver } from './quiz/quiz.resolver'
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { QuestionResolver } from './quiz/question.resolver'
   providers: [
     AppService,
     AuthResolver,
+    QuizResolver,
     QuestionResolver
   ],
 })

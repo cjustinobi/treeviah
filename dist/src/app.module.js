@@ -25,6 +25,7 @@ const config_1 = require("@nestjs/config");
 const configuration_1 = require("../config/configuration");
 const auth_resolver_1 = require("./auth/auth.resolver");
 const question_resolver_1 = require("./quiz/question.resolver");
+const quiz_resolver_1 = require("./quiz/quiz.resolver");
 let AppModule = exports.AppModule = class AppModule {
     constructor(dataSource) {
         this.dataSource = dataSource;
@@ -59,6 +60,7 @@ exports.AppModule = AppModule = __decorate([
         providers: [
             app_service_1.AppService,
             auth_resolver_1.AuthResolver,
+            quiz_resolver_1.QuizResolver,
             question_resolver_1.QuestionResolver
         ],
     }),

@@ -5,4 +5,5 @@ export declare class CreateQuestionDto {
     options?: string[];
     correctAnswers?: string[];
     timer?: number;
+    quizId: number;
 }

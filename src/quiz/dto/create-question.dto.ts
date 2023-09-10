@@ -23,4 +23,7 @@ export class CreateQuestionDto {
   @IsOptional()
   @IsInt()
   timer?: number
+
+  @IsInt()
+  quizId: number
 }

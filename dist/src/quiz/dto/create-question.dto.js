@@ -42,4 +42,8 @@ __decorate([
     (0, class_validator_1.IsInt)(),
     __metadata("design:type", Number)
 ], CreateQuestionDto.prototype, "timer", void 0);
+__decorate([
+    (0, class_validator_1.IsInt)(),
+    __metadata("design:type", Number)
+], CreateQuestionDto.prototype, "quizId", void 0);
 //# sourceMappingURL=create-question.dto.js.map
