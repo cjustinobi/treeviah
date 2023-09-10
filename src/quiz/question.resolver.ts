@@ -5,6 +5,8 @@ import { Question } from './question.entity'
 import { CreateQuestionInput } from './question.input'
 import { UseGuards } from '@nestjs/common'
 import { JwtAuthGuard } from '../common/guards'
+import { ReqUser } from '../common/decorators'
+
 
 
 @Resolver(of => CreateQuestionInput)
@@ -15,12 +17,9 @@ export class QuestionResolver {
   @Mutation(returns => CreateQuestionInput)
   async createQuestion(
     @Args('input') input: CreateQuestionInput,
-    @Context() { req }: any
+    @ReqUser() user: any
     ): Promise<Question> {
-      console.log(req)
-      const user = req.user
-      console.log('user')
-      console.log(user)
+
     return this.questionService.createQuestion(input, user)
   }
 

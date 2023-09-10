@@ -10,6 +10,6 @@ export declare class AuthHelper {
     generateToken(email: any): Promise<string>;
     isPasswordValid(password: string, userPassword: string): boolean;
     encodePassword(password: string): string;
-    validate(token: string): Promise<boolean | never>;
+    validate(token: string): Promise<false | User>;
     blackListToken(accessToken: string): Promise<void>;
 }

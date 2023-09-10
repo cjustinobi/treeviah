@@ -47,7 +47,7 @@ let AuthHelper = exports.AuthHelper = class AuthHelper {
         const user = await this.validateUser(decoded.email);
         if (!user)
             throw new common_1.UnauthorizedException();
-        return true;
+        return user;
     }
     async blackListToken(accessToken) {
         this.tokenBlacklist.add(accessToken);

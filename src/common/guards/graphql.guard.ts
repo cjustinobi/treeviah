@@ -1,7 +1,7 @@
 
-import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
-import { GqlExecutionContext } from '@nestjs/graphql';
-import { AuthHelper } from '../../auth/auth.helper';
+import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common'
+import { GqlExecutionContext } from '@nestjs/graphql'
+import { AuthHelper } from '../../auth/auth.helper'
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
@@ -13,17 +13,20 @@ export class JwtAuthGuard implements CanActivate {
     const authorizationHeader = req.headers.authorization
     
     try {
-      const [, token] = authorizationHeader.split(' ')
-    
-      const isValid = await this.authHelper.validate(token)
+      const token = authorizationHeader.split(' ')[1]
+      const user = await this.authHelper.validate(token)
 
-    if (!isValid) {
+    if (!user) {
       throw new UnauthorizedException('Not Authoried to perform this action')
     }
+
+     // Set the authenticated user in the request context
+      req.user = user;
 
     return true
     } catch (error) {
       console.log(error)
     }
   }
+
 }

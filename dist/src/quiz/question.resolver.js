@@ -18,15 +18,12 @@ const question_service_1 = require("./question.service");
 const question_input_1 = require("./question.input");
 const common_1 = require("@nestjs/common");
 const guards_1 = require("../common/guards");
+const decorators_1 = require("../common/decorators");
 let QuestionResolver = exports.QuestionResolver = class QuestionResolver {
     constructor(questionService) {
         this.questionService = questionService;
     }
-    async createQuestion(input, { req }) {
-        console.log(req);
-        const user = req.user;
-        console.log('user');
-        console.log(user);
+    async createQuestion(input, user) {
         return this.questionService.createQuestion(input, user);
     }
     async updateQuestion(id, input) {
@@ -42,7 +39,7 @@ let QuestionResolver = exports.QuestionResolver = class QuestionResolver {
 __decorate([
     (0, graphql_1.Mutation)(returns => question_input_1.CreateQuestionInput),
     __param(0, (0, graphql_1.Args)('input')),
-    __param(1, (0, graphql_1.Context)()),
+    __param(1, (0, decorators_1.ReqUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [question_input_1.CreateQuestionInput, Object]),
     __metadata("design:returntype", Promise)

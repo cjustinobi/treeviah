@@ -18,7 +18,7 @@ const dataSourceOptions = async (configService) => {
             host: 'localhost',
             port: configService.get('DB_PORT'),
             extra: {
-                socketPath: configService.get('CONNECTION_NAME'),
+                socketPath: configService.get('CONNECTION_NAME')
             },
         };
     }
@@ -26,7 +26,7 @@ const dataSourceOptions = async (configService) => {
         return {
             ...baseOptions,
             host: configService.get('DB_HOST'),
-            port: configService.get('DB_PORT'),
+            port: configService.get('DB_PORT')
         };
     }
 };

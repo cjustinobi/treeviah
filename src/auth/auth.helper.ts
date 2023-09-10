@@ -49,7 +49,7 @@ export class AuthHelper {
     return bcrypt.hashSync(password, salt)
   }
 
-  async validate(token: string): Promise<boolean | never> {
+  async validate(token: string) {
 
     if (this.tokenBlacklist.has(token)) return false
 
@@ -61,7 +61,7 @@ export class AuthHelper {
 
     if (!user) throw new UnauthorizedException()
 
-    return true
+    return user
   }
 
   async blackListToken(accessToken: string): Promise<void> {

@@ -1,42 +1,6 @@
-// import { TypeOrmModuleOptions } from '@nestjs/typeorm'
-// import { ConfigService } from '@nestjs/config'
 
-// console.log(process.env.NODE_ENV)
-
-// // dev
-// export const dataSourceOptions = async (configService: ConfigService): Promise<TypeOrmModuleOptions> => ({
-//   type: 'mysql', // Database type
-//   host: configService.get<string>('DB_HOST'),
-//   port: configService.get<number>('DB_PORT'),
-//   username: configService.get<string>('DB_USERNAME'),
-//   password: configService.get<string>('DB_PASSWORD'),
-//   database: configService.get<string>('DB_DATABASE'),
-//   entities: [__dirname + '/**/*.entity{.ts,.js}'],
-//   synchronize: true,
-//   logging: true
-// })
-
-// Prod
-// export const dataSourceOptions = async (configService: ConfigService): Promise<TypeOrmModuleOptions> => ({
-//   type: 'mysql', // Database type
-//   host: 'localhost',
-//   port: configService.get<number>('DB_PORT'),
-//   username: configService.get<string>('DB_USERNAME'),
-//   password: configService.get<string>('DB_PASSWORD'),
-//   database: configService.get<string>('DB_DATABASE'),
-//   entities: [__dirname + '/**/*.entity{.ts,.js}'],
-//   synchronize: true,
-//   logging: true,
-//   extra: {
-//     socketPath: configService.get<string>('CONNECTION_NAME')
-//   }
-// })
-
-
-
-
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { ConfigService } from '@nestjs/config';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm'
+import { ConfigService } from '@nestjs/config'
 
 export const dataSourceOptions = async (configService: ConfigService): Promise<TypeOrmModuleOptions> => {
 
@@ -52,7 +16,7 @@ export const dataSourceOptions = async (configService: ConfigService): Promise<T
     entities: [__dirname + '/**/*.entity{.ts,.js}'],
     synchronize: true,
     logging: true,
-  };
+  }
 
   if (isProduction) {
     return {
@@ -60,14 +24,14 @@ export const dataSourceOptions = async (configService: ConfigService): Promise<T
       host: 'localhost',
       port: configService.get<number>('DB_PORT'),
       extra: {
-        socketPath: configService.get<string>('CONNECTION_NAME'),
+        socketPath: configService.get<string>('CONNECTION_NAME')
       },
-    };
+    }
   } else {
     return {
       ...baseOptions,
       host: configService.get<string>('DB_HOST'),
-      port: configService.get<number>('DB_PORT'),
-    };
+      port: configService.get<number>('DB_PORT')
+    }
   }
 };

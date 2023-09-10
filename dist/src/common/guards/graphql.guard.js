@@ -22,11 +22,12 @@ let JwtAuthGuard = exports.JwtAuthGuard = class JwtAuthGuard {
         const req = ctx.getContext().req;
         const authorizationHeader = req.headers.authorization;
         try {
-            const [, token] = authorizationHeader.split(' ');
-            const isValid = await this.authHelper.validate(token);
-            if (!isValid) {
+            const token = authorizationHeader.split(' ')[1];
+            const user = await this.authHelper.validate(token);
+            if (!user) {
                 throw new common_1.UnauthorizedException('Not Authoried to perform this action');
             }
+            req.user = user;
             return true;
         }
         catch (error) {
