@@ -1,5 +1,5 @@
 
-import { Resolver, Query, Mutation, Args, Context } from '@nestjs/graphql'
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
 import { QuestionService } from './question.service'
 import { Question } from './question.entity'
 import { CreateQuestionInput } from './question.input'
@@ -31,12 +31,12 @@ export class QuestionResolver {
     return this.questionService.updateQuestion(id, input)
   }
 
-  @Query(returns => CreateQuestionInput)
+  @Query(returns => CreateQuestionInput, {name: 'getQuestion'})
   async findOne(@Args('id') id: number): Promise<Question> {
     return this.questionService.findOne(id)
   }
 
-  @Query(returns => CreateQuestionInput)
+  @Query(returns => CreateQuestionInput, {name: 'getQuestions'})
   async findAll(): Promise<Question[]> {
     return this.questionService.findAll()
   }

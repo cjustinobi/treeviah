@@ -53,14 +53,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], QuestionResolver.prototype, "updateQuestion", null);
 __decorate([
-    (0, graphql_1.Query)(returns => question_input_1.CreateQuestionInput),
+    (0, graphql_1.Query)(returns => question_input_1.CreateQuestionInput, { name: 'getQuestion' }),
     __param(0, (0, graphql_1.Args)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], QuestionResolver.prototype, "findOne", null);
 __decorate([
-    (0, graphql_1.Query)(returns => question_input_1.CreateQuestionInput),
+    (0, graphql_1.Query)(returns => question_input_1.CreateQuestionInput, { name: 'getQuestions' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)

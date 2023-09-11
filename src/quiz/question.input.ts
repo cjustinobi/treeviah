@@ -21,6 +21,6 @@ export class CreateQuestionInput {
   @Field(() => Int, { nullable: true })
   timer?: number
 
-  @Field(() => Int) // Assuming that the quizId is an integer
-  quizId: number
+  @Field(() => Int, { description: 'Enter the ID of the quiz'}) // Assuming that the quizId is an integer
+  quiz: number
 }

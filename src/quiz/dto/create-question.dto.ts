@@ -25,5 +25,5 @@ export class CreateQuestionDto {
   timer?: number
 
   @IsInt()
-  quizId: number
+  quiz
 }

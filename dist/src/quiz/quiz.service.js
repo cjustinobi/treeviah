@@ -33,6 +33,9 @@ let QuizService = exports.QuizService = class QuizService {
         Object.assign(quiz, updateQuizDto);
         return this.quizRepository.save(quiz);
     }
+    async findOne(id) {
+        return this.quizRepository.findOneBy({ id });
+    }
     async findAll() {
         return this.quizRepository.find({ relations: ['questions'] });
     }

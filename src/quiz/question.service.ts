@@ -15,6 +15,7 @@ export class QuestionService {
   ) {}
 
   async createQuestion(createQuestionDto: CreateQuestionDto, user: User): Promise<Question> {
+ 
     const question = this.questionRepository.create(createQuestionDto)
     return this.questionRepository.save({...question, user})
   }

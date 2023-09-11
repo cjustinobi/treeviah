@@ -38,9 +38,9 @@ __decorate([
     __metadata("design:type", Number)
 ], CreateQuestionInput.prototype, "timer", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => graphql_1.Int),
+    (0, graphql_1.Field)(() => graphql_1.Int, { description: 'Enter the ID of the quiz' }),
     __metadata("design:type", Number)
-], CreateQuestionInput.prototype, "quizId", void 0);
+], CreateQuestionInput.prototype, "quiz", void 0);
 exports.CreateQuestionInput = CreateQuestionInput = __decorate([
     (0, graphql_1.InputType)(),
     (0, graphql_1.ObjectType)('Question')

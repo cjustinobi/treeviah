@@ -30,9 +30,9 @@ export class QuizService {
     return this.quizRepository.save(quiz)
   }
 
-  // async findOne(id: number): Promise<Quiz | undefined> {
-  //   return this.quizRepository.findOne(id, { relations: ['questions'] })
-  // }
+  async findOne(id: number): Promise<Quiz | undefined> {
+    return this.quizRepository.findOneBy({id})
+  }
 
   async findAll(): Promise<Quiz[]> {
     return this.quizRepository.find({ relations: ['questions'] })

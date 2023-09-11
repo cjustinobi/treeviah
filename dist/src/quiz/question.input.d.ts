@@ -5,5 +5,5 @@ export declare class CreateQuestionInput {
     options?: string[];
     correctAnswers?: string[];
     timer?: number;
-    quizId: number;
+    quiz: number;
 }

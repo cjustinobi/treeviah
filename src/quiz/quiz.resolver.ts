@@ -1,28 +1,35 @@
-import { Resolver, Query, Mutation, Args, Context } from '@nestjs/graphql';
-import { Quiz } from './quiz.entity';
-import { QuizService } from './quiz.service'; // Create this service if it doesn't exist
-import { CreateQuizDto } from './dto/create-quiz.dto'
-import { CreateQuizInput } from './quiz.input';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
+import { Quiz } from './quiz.entity'
+import { QuizService } from './quiz.service'
+import { CreateQuizInput } from './quiz.input'
+import { UseGuards } from '@nestjs/common'
+import { JwtAuthGuard } from 'src/common/guards'
 
 @Resolver(of => CreateQuizInput)
+@UseGuards(JwtAuthGuard)
 export class QuizResolver {
   constructor(private readonly quizService: QuizService) {}
 
-  @Query(returns => [CreateQuizInput])
-  async quizzes(): Promise<CreateQuizInput[]> {
-    // Implement logic to fetch and return all quizzes from the database
-    return this.quizService.findAll(); // You'll need to create this method in QuizService
+  @Query(returns => [CreateQuizInput], {name: 'getQuizzes'})
+  async findAll(): Promise<CreateQuizInput[]> {
+    return this.quizService.findAll()
   }
 
-  // @Query(returns => Quiz)
-  // async quiz(@Args('id') id: number): Promise<Quiz> {
-    
-  //   return this.quizService.findOne(id); // You'll need to create this method in QuizService
-  // }
+  @Query(returns => CreateQuizInput, {name: 'getQuiz'})
+  async findOne(@Args('id') id: number): Promise<Quiz> {
+    return this.quizService.findOne(id) 
+  }
 
-  @Mutation(returns => CreateQuizInput)
-  async createQuiz(@Args('title') title: CreateQuizInput): Promise<Quiz> {
+  @Mutation(returns => CreateQuizInput, {name: 'createQuiz'})
+  async create(@Args('input') input: CreateQuizInput): Promise<Quiz> {
+    return this.quizService.createQuiz(input)
+  }
 
-    return this.quizService.createQuiz(title); // You'll need to create this method in QuizService
+  @Mutation(returns => CreateQuizInput, {name: 'updateQuiz'})
+  async update(
+    @Args('id') id: number,
+    @Args('input') input: CreateQuizInput
+    ): Promise<Quiz> {
+    return this.quizService.updateQuiz(id, input)
   }
 }

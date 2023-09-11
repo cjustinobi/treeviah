@@ -16,32 +16,56 @@ exports.QuizResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const quiz_service_1 = require("./quiz.service");
 const quiz_input_1 = require("./quiz.input");
+const common_1 = require("@nestjs/common");
+const guards_1 = require("../common/guards");
 let QuizResolver = exports.QuizResolver = class QuizResolver {
     constructor(quizService) {
         this.quizService = quizService;
     }
-    async quizzes() {
+    async findAll() {
         return this.quizService.findAll();
     }
-    async createQuiz(title) {
-        return this.quizService.createQuiz(title);
+    async findOne(id) {
+        return this.quizService.findOne(id);
+    }
+    async create(input) {
+        return this.quizService.createQuiz(input);
+    }
+    async update(id, input) {
+        return this.quizService.updateQuiz(id, input);
     }
 };
 __decorate([
-    (0, graphql_1.Query)(returns => [quiz_input_1.CreateQuizInput]),
+    (0, graphql_1.Query)(returns => [quiz_input_1.CreateQuizInput], { name: 'getQuizzes' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], QuizResolver.prototype, "quizzes", null);
+], QuizResolver.prototype, "findAll", null);
 __decorate([
-    (0, graphql_1.Mutation)(returns => quiz_input_1.CreateQuizInput),
-    __param(0, (0, graphql_1.Args)('title')),
+    (0, graphql_1.Query)(returns => quiz_input_1.CreateQuizInput, { name: 'getQuiz' }),
+    __param(0, (0, graphql_1.Args)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], QuizResolver.prototype, "findOne", null);
+__decorate([
+    (0, graphql_1.Mutation)(returns => quiz_input_1.CreateQuizInput, { name: 'createQuiz' }),
+    __param(0, (0, graphql_1.Args)('input')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [quiz_input_1.CreateQuizInput]),
     __metadata("design:returntype", Promise)
-], QuizResolver.prototype, "createQuiz", null);
+], QuizResolver.prototype, "create", null);
+__decorate([
+    (0, graphql_1.Mutation)(returns => quiz_input_1.CreateQuizInput, { name: 'updateQuiz' }),
+    __param(0, (0, graphql_1.Args)('id')),
+    __param(1, (0, graphql_1.Args)('input')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, quiz_input_1.CreateQuizInput]),
+    __metadata("design:returntype", Promise)
+], QuizResolver.prototype, "update", null);
 exports.QuizResolver = QuizResolver = __decorate([
     (0, graphql_1.Resolver)(of => quiz_input_1.CreateQuizInput),
+    (0, common_1.UseGuards)(guards_1.JwtAuthGuard),
     __metadata("design:paramtypes", [quiz_service_1.QuizService])
 ], QuizResolver);
 //# sourceMappingURL=quiz.resolver.js.map

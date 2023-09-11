@@ -4,6 +4,8 @@ import { CreateQuizInput } from './quiz.input';
 export declare class QuizResolver {
     private readonly quizService;
     constructor(quizService: QuizService);
-    quizzes(): Promise<CreateQuizInput[]>;
-    createQuiz(title: CreateQuizInput): Promise<Quiz>;
+    findAll(): Promise<CreateQuizInput[]>;
+    findOne(id: number): Promise<Quiz>;
+    create(input: CreateQuizInput): Promise<Quiz>;
+    update(id: number, input: CreateQuizInput): Promise<Quiz>;
 }
