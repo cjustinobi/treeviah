@@ -18,7 +18,7 @@ export const dataSourceOptions = async (configService: ConfigService): Promise<T
     logging: true,
   }
 
-  if (isProduction) {
+  if (true) {
     return {
       ...baseOptions,
       host: 'localhost',
