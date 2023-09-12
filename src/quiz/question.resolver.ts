@@ -23,12 +23,13 @@ export class QuestionResolver {
     return this.questionService.createQuestion(input, user)
   }
 
-  @Mutation(() => CreateQuestionInput)
+  @Mutation(() => CreateQuestionInput, {name: 'updateQuestion'})
   async updateQuestion(
     @Args('id') id: number,
     @Args('input') input: CreateQuestionInput,
+    @ReqUser() user: any
   ): Promise<Question> {
-    return this.questionService.updateQuestion(id, input)
+    return this.questionService.update(id, input, user)
   }
 
   @Query(returns => CreateQuestionInput, {name: 'getQuestion'})

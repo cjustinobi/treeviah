@@ -28,17 +28,17 @@ export class QuestionService {
     return this.questionRepository.find()
   }
 
-  async updateQuestion(
+  async update(
     id: number,
     updateQuestionDto: UpdateQuestionDto,
+    user: User
   ): Promise<Question> {
     const question = await this.questionRepository.findOneBy({id})
     if (!question) {
       throw new NotFoundException('Question not found')
     }
 
-    // Update question fields based on updateQuestionDto
-    Object.assign(question, updateQuestionDto)
+    Object.assign(question, {...updateQuestionDto, user})
 
     return this.questionRepository.save(question)
   }

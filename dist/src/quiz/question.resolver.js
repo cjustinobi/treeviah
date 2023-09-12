@@ -26,8 +26,8 @@ let QuestionResolver = exports.QuestionResolver = class QuestionResolver {
     async createQuestion(input, user) {
         return this.questionService.createQuestion(input, user);
     }
-    async updateQuestion(id, input) {
-        return this.questionService.updateQuestion(id, input);
+    async updateQuestion(id, input, user) {
+        return this.questionService.update(id, input, user);
     }
     async findOne(id) {
         return this.questionService.findOne(id);
@@ -45,11 +45,12 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], QuestionResolver.prototype, "createQuestion", null);
 __decorate([
-    (0, graphql_1.Mutation)(() => question_input_1.CreateQuestionInput),
+    (0, graphql_1.Mutation)(() => question_input_1.CreateQuestionInput, { name: 'updateQuestion' }),
     __param(0, (0, graphql_1.Args)('id')),
     __param(1, (0, graphql_1.Args)('input')),
+    __param(2, (0, decorators_1.ReqUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, question_input_1.CreateQuestionInput]),
+    __metadata("design:paramtypes", [Number, question_input_1.CreateQuestionInput, Object]),
     __metadata("design:returntype", Promise)
 ], QuestionResolver.prototype, "updateQuestion", null);
 __decorate([

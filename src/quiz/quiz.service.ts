@@ -24,7 +24,6 @@ export class QuizService {
       throw new NotFoundException('Quiz not found')
     }
 
-    // Update quiz fields based on updateQuizDto
     Object.assign(quiz, updateQuizDto)
 
     return this.quizRepository.save(quiz)

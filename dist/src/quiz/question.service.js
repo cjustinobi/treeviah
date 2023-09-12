@@ -31,12 +31,12 @@ let QuestionService = exports.QuestionService = class QuestionService {
     async findAll() {
         return this.questionRepository.find();
     }
-    async updateQuestion(id, updateQuestionDto) {
+    async update(id, updateQuestionDto, user) {
         const question = await this.questionRepository.findOneBy({ id });
         if (!question) {
             throw new common_1.NotFoundException('Question not found');
         }
-        Object.assign(question, updateQuestionDto);
+        Object.assign(question, { ...updateQuestionDto, user });
         return this.questionRepository.save(question);
     }
 };

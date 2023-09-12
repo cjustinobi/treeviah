@@ -9,5 +9,5 @@ export declare class QuestionService {
     createQuestion(createQuestionDto: CreateQuestionDto, user: User): Promise<Question>;
     findOne(id: number): Promise<Question | undefined>;
     findAll(): Promise<Question[]>;
-    updateQuestion(id: number, updateQuestionDto: UpdateQuestionDto): Promise<Question>;
+    update(id: number, updateQuestionDto: UpdateQuestionDto, user: User): Promise<Question>;
 }
