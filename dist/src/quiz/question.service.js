@@ -39,6 +39,13 @@ let QuestionService = exports.QuestionService = class QuestionService {
         Object.assign(question, { ...updateQuestionDto, user });
         return this.questionRepository.save(question);
     }
+    async delete(id) {
+        const question = await this.questionRepository.findOneBy({ id });
+        if (!question) {
+            throw new common_1.NotFoundException('Question not found');
+        }
+        await this.questionRepository.remove(question);
+    }
 };
 exports.QuestionService = QuestionService = __decorate([
     (0, common_1.Injectable)(),

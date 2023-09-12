@@ -25,6 +25,12 @@ let QuizService = exports.QuizService = class QuizService {
         const quiz = this.quizRepository.create(createQuizDto);
         return this.quizRepository.save(quiz);
     }
+    async findOne(id) {
+        return this.quizRepository.findOneBy({ id });
+    }
+    async findAll() {
+        return this.quizRepository.find({ relations: ['questions'] });
+    }
     async updateQuiz(id, updateQuizDto) {
         const quiz = await this.quizRepository.findOneBy({ id });
         if (!quiz) {
@@ -33,11 +39,12 @@ let QuizService = exports.QuizService = class QuizService {
         Object.assign(quiz, updateQuizDto);
         return this.quizRepository.save(quiz);
     }
-    async findOne(id) {
-        return this.quizRepository.findOneBy({ id });
-    }
-    async findAll() {
-        return this.quizRepository.find({ relations: ['questions'] });
+    async delete(id) {
+        const quiz = await this.quizRepository.findOneBy({ id });
+        if (!quiz) {
+            throw new common_1.NotFoundException('Question not found');
+        }
+        await this.quizRepository.remove(quiz);
     }
 };
 exports.QuizService = QuizService = __decorate([

@@ -23,15 +23,6 @@ export class QuestionResolver {
     return this.questionService.createQuestion(input, user)
   }
 
-  @Mutation(() => CreateQuestionInput, {name: 'updateQuestion'})
-  async updateQuestion(
-    @Args('id') id: number,
-    @Args('input') input: CreateQuestionInput,
-    @ReqUser() user: any
-  ): Promise<Question> {
-    return this.questionService.update(id, input, user)
-  }
-
   @Query(returns => CreateQuestionInput, {name: 'getQuestion'})
   async findOne(@Args('id') id: number): Promise<Question> {
     return this.questionService.findOne(id)
@@ -40,5 +31,24 @@ export class QuestionResolver {
   @Query(returns => CreateQuestionInput, {name: 'getQuestions'})
   async findAll(): Promise<Question[]> {
     return this.questionService.findAll()
+  }
+
+  @Mutation(() => CreateQuestionInput, {name: 'updateQuestion'})
+  async update(
+    @Args('id') id: number,
+    @Args('input') input: CreateQuestionInput,
+    @ReqUser() user: any
+  ): Promise<Question> {
+    return this.questionService.update(id, input, user)
+  }
+
+  @Mutation(() => Boolean, {name: 'deleteQuestion'})
+  async delete(@Args('id') id: number): Promise<boolean> {
+    try {
+      await this.questionService.delete(id)
+      return true
+    } catch {
+      return false
+    }
   }
 }

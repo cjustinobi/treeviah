@@ -32,4 +32,14 @@ export class QuizResolver {
     ): Promise<Quiz> {
     return this.quizService.updateQuiz(id, input)
   }
+
+  // @Mutation(() => Boolean, {name: 'deleteQuiz'})
+  // async delete(@Args('id') id: number): Promise<boolean> {
+  //   try {
+  //     await this.quizService.delete(id)
+  //     return true
+  //   } catch {
+  //     return false
+  //   }
+  // }
 }

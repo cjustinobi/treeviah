@@ -42,4 +42,13 @@ export class QuestionService {
 
     return this.questionRepository.save(question)
   }
+
+  async delete(id: number): Promise<void> {
+    const question = await this.questionRepository.findOneBy({id})
+    if (!question) {
+      throw new NotFoundException('Question not found')
+    }
+
+    await this.questionRepository.remove(question)
+  }
 }

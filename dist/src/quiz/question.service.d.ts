@@ -10,4 +10,5 @@ export declare class QuestionService {
     findOne(id: number): Promise<Question | undefined>;
     findAll(): Promise<Question[]>;
     update(id: number, updateQuestionDto: UpdateQuestionDto, user: User): Promise<Question>;
+    delete(id: number): Promise<void>;
 }

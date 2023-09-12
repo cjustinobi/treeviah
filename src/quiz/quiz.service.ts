@@ -18,6 +18,14 @@ export class QuizService {
     return this.quizRepository.save(quiz)
   }
 
+  async findOne(id: number): Promise<Quiz | undefined> {
+    return this.quizRepository.findOneBy({id})
+  }
+
+  async findAll(): Promise<Quiz[]> {
+    return this.quizRepository.find({ relations: ['questions'] })
+  }
+
   async updateQuiz(id: number, updateQuizDto: UpdateQuizDto): Promise<Quiz> {
     const quiz = await this.quizRepository.findOneBy({id})
     if (!quiz) {
@@ -29,11 +37,12 @@ export class QuizService {
     return this.quizRepository.save(quiz)
   }
 
-  async findOne(id: number): Promise<Quiz | undefined> {
-    return this.quizRepository.findOneBy({id})
-  }
+  async delete(id: number): Promise<void> {
+    const quiz = await this.quizRepository.findOneBy({id})
+    if (!quiz) {
+      throw new NotFoundException('Question not found')
+    }
 
-  async findAll(): Promise<Quiz[]> {
-    return this.quizRepository.find({ relations: ['questions'] })
+    await this.quizRepository.remove(quiz)
   }
 }

@@ -26,14 +26,23 @@ let QuestionResolver = exports.QuestionResolver = class QuestionResolver {
     async createQuestion(input, user) {
         return this.questionService.createQuestion(input, user);
     }
-    async updateQuestion(id, input, user) {
-        return this.questionService.update(id, input, user);
-    }
     async findOne(id) {
         return this.questionService.findOne(id);
     }
     async findAll() {
         return this.questionService.findAll();
+    }
+    async update(id, input, user) {
+        return this.questionService.update(id, input, user);
+    }
+    async delete(id) {
+        try {
+            await this.questionService.delete(id);
+            return true;
+        }
+        catch {
+            return false;
+        }
     }
 };
 __decorate([
@@ -44,15 +53,6 @@ __decorate([
     __metadata("design:paramtypes", [question_input_1.CreateQuestionInput, Object]),
     __metadata("design:returntype", Promise)
 ], QuestionResolver.prototype, "createQuestion", null);
-__decorate([
-    (0, graphql_1.Mutation)(() => question_input_1.CreateQuestionInput, { name: 'updateQuestion' }),
-    __param(0, (0, graphql_1.Args)('id')),
-    __param(1, (0, graphql_1.Args)('input')),
-    __param(2, (0, decorators_1.ReqUser)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, question_input_1.CreateQuestionInput, Object]),
-    __metadata("design:returntype", Promise)
-], QuestionResolver.prototype, "updateQuestion", null);
 __decorate([
     (0, graphql_1.Query)(returns => question_input_1.CreateQuestionInput, { name: 'getQuestion' }),
     __param(0, (0, graphql_1.Args)('id')),
@@ -66,6 +66,22 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], QuestionResolver.prototype, "findAll", null);
+__decorate([
+    (0, graphql_1.Mutation)(() => question_input_1.CreateQuestionInput, { name: 'updateQuestion' }),
+    __param(0, (0, graphql_1.Args)('id')),
+    __param(1, (0, graphql_1.Args)('input')),
+    __param(2, (0, decorators_1.ReqUser)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, question_input_1.CreateQuestionInput, Object]),
+    __metadata("design:returntype", Promise)
+], QuestionResolver.prototype, "update", null);
+__decorate([
+    (0, graphql_1.Mutation)(() => Boolean, { name: 'deleteQuestion' }),
+    __param(0, (0, graphql_1.Args)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], QuestionResolver.prototype, "delete", null);
 exports.QuestionResolver = QuestionResolver = __decorate([
     (0, graphql_1.Resolver)(of => question_input_1.CreateQuestionInput),
     (0, common_1.UseGuards)(guards_1.JwtAuthGuard),
