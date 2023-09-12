@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install app dependencies
-RUN npm install --production
+RUN npm install
 
 # Copy the rest of the application code to the container
 COPY . .
@@ -28,7 +28,7 @@ COPY --from=builder /app/dist ./dist
 
 # Start the Nest.js application
 # CMD ["node", "./dist/main.js"]
-CMD ["npm", "run", "start:prod"]
+CMD ["npm", "run", "start:dev"]
 
 
 
