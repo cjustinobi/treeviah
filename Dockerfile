@@ -27,7 +27,8 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 
 # Start the Nest.js application
-CMD ["node", "./dist/main.js"]
+# CMD ["node", "./dist/main.js"]
+CMD ["npm", "run", "start:prod"]
 
 
 
