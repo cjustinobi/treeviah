@@ -28,7 +28,7 @@ const dataSourceOptions = async (configService) => {
         synchronize: true,
         logging: true,
     };
-    if (isProduction) {
+    if (true) {
         return prod;
     }
     else {
