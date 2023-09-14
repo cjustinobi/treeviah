@@ -3,7 +3,7 @@ FROM node:18-alpine as prod
 # Set the working directory
 WORKDIR /app
 
-ENV NODE_ENV=production
+ENV NODE_ENV=development
 
 # Copy package.json and package-lock.json to the container
 COPY package*.json ./
