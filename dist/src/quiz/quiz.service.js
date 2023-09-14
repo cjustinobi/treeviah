@@ -47,15 +47,6 @@ let QuizService = exports.QuizService = class QuizService {
         }
         await this.quizRepository.remove(quiz);
     }
-    async assignQuizToCategory(quizId, categoryId) {
-        const quiz = await this.quizRepository.findOneBy(quizId);
-        const category = await this.categoryRepository.findOneBy(categoryId);
-        if (!quiz || !category) {
-            throw new common_1.NotFoundException('Quiz or category not found');
-        }
-        quiz.category = category;
-        await this.quizRepository.save(quiz);
-    }
     async updateQuizCategory(quizId, categoryId) {
     }
 };
