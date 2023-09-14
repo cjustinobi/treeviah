@@ -18,9 +18,8 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const quiz_entity_1 = require("./quiz.entity");
 let QuizService = exports.QuizService = class QuizService {
-    constructor(quizRepository, categoryRepository) {
+    constructor(quizRepository) {
         this.quizRepository = quizRepository;
-        this.categoryRepository = categoryRepository;
     }
     async createQuiz(createQuizDto) {
         const quiz = this.quizRepository.create(createQuizDto);
@@ -53,7 +52,6 @@ let QuizService = exports.QuizService = class QuizService {
 exports.QuizService = QuizService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(quiz_entity_1.Quiz)),
-    __metadata("design:paramtypes", [typeorm_2.Repository,
-        typeorm_2.Repository])
+    __metadata("design:paramtypes", [typeorm_2.Repository])
 ], QuizService);
 //# sourceMappingURL=quiz.service.js.map

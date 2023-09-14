@@ -12,7 +12,7 @@ export class QuizService {
   constructor(
     @InjectRepository(Quiz)
     private readonly quizRepository: Repository<Quiz>,
-    private readonly categoryRepository: Repository<Category>
+    // private readonly categoryRepository: Repository<Category>
   ) {}
 
   async createQuiz(createQuizDto: CreateQuizDto): Promise<Quiz> {
