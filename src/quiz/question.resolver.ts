@@ -23,17 +23,17 @@ export class QuestionResolver {
     return this.questionService.createQuestion(input, user)
   }
 
-  @Query(returns => CreateQuestionInput, {name: 'getQuestion'})
+  @Query(returns => CreateQuestionInput, { name: 'getQuestion' })
   async findOne(@Args('id') id: number): Promise<Question> {
     return this.questionService.findOne(id)
   }
 
-  @Query(returns => CreateQuestionInput, {name: 'getQuestions'})
-  async findAll(): Promise<Question[]> {
+  @Query(returns => [CreateQuestionInput], { name: 'getQuestions' })
+  async findAll() {
     return this.questionService.findAll()
   }
 
-  @Mutation(() => CreateQuestionInput, {name: 'updateQuestion'})
+  @Mutation(() => CreateQuestionInput, { name: 'updateQuestion' })
   async update(
     @Args('id') id: number,
     @Args('input') input: CreateQuestionInput,
