@@ -16,5 +16,4 @@ const dataSourceOptions = async (configService) => ({
     }
 });
 exports.dataSourceOptions = dataSourceOptions;
-;
 //# sourceMappingURL=data-source.js.map
