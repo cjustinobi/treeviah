@@ -5,14 +5,14 @@ import { Repository } from 'typeorm'
 import { CreateQuizDto } from './dto/create-quiz.dto'
 import { UpdateQuizDto } from './dto/update-quiz.dto'
 import { Quiz } from './quiz.entity'
-// import { Category } from '../category/entities/category.entity'
+import { Category } from '../category/entities/category.entity'
 
 @Injectable()
 export class QuizService {
   constructor(
     @InjectRepository(Quiz)
     private readonly quizRepository: Repository<Quiz>,
-    // private readonly categoryRepository: Repository<Category>
+    private readonly categoryRepository: Repository<Category>
   ) {}
 
   async createQuiz(createQuizDto: CreateQuizDto): Promise<Quiz> {
@@ -49,17 +49,17 @@ export class QuizService {
   }
 
 
-//   async assignQuizToCategory(quizId: any, categoryId: any): Promise<void> {
-//   const quiz = await this.quizRepository.findOneBy(quizId);
-//   const category = await this.categoryRepository.findOneBy(categoryId);
+  async assignQuizToCategory(quizId: any, categoryId: any): Promise<void> {
+  const quiz = await this.quizRepository.findOneBy(quizId);
+  const category = await this.categoryRepository.findOneBy(categoryId);
 
-//   if (!quiz || !category) {
-//     throw new NotFoundException('Quiz or category not found');
-//   }
+  if (!quiz || !category) {
+    throw new NotFoundException('Quiz or category not found');
+  }
 
-//   quiz.category = category;
-//   await this.quizRepository.save(quiz);
-// }
+  quiz.category = category;
+  await this.quizRepository.save(quiz);
+}
 
 async updateQuizCategory(quizId: number, categoryId: number): Promise<void> {
   // Similar to the assignQuizToCategory method, but it updates the category of an existing quiz.

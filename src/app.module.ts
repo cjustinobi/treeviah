@@ -16,7 +16,6 @@ import { AuthResolver } from './auth/auth.resolver'
 import { QuestionResolver } from './quiz/question.resolver'
 import { QuizResolver } from './quiz/quiz.resolver'
 import { CategoryResolver } from './category/category.resolver'
-import { QuizService } from './quiz/quiz.service'
 
 @Module({
   imports: [
@@ -46,7 +45,6 @@ import { QuizService } from './quiz/quiz.service'
   controllers: [AppController],
   providers: [
     AppService,
-    // QuizService,
     AuthResolver,
     QuizResolver,
     QuestionResolver,

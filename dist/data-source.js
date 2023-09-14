@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dataSourceOptions = void 0;
 const dataSourceOptions = async (configService) => {
-    const isProduction = process.env.NODE_ENV === 'production';
+    const isProduction = process.env.NODE_ENV === 'staging';
     const prod = {
         type: 'mysql',
         host: 'localhost',
