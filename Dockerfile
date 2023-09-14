@@ -9,7 +9,7 @@ ENV NODE_ENV=production
 COPY package*.json ./
 
 # Install app dependencies
-RUN npm install
+RUN npm install --only=production
 # Install Nest.js CLI globally
 RUN npm install -g @nestjs/cli
 # Copy the rest of the application code to the container
