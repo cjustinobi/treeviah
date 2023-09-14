@@ -3,6 +3,13 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm'
 import { Quiz } from './quiz.entity'
 import { User } from 'src/auth/entities/user.entity'
 
+enum QuestionFormat {
+  MULTIPLE_CHOICE = 'multiple-choice',
+  BOOLEAN = 'boolean',
+  PUZZLE = 'puzzle',
+  TYPE_ANSWER = 'type-answer',
+}
+
 @Entity()
 export class Question {
   @PrimaryGeneratedColumn()
@@ -14,17 +21,26 @@ export class Question {
   @Column({ nullable: true })
   mediaUrl: string
 
-  @Column()
-  format: string // e.g., 'multiple-choice', 'true-false'
+  @Column({ 
+    type: 'enum', 
+    enum: ['multiple-choice', 'boolean', 'puzzle', 'type-answer']
+  })
+    format: string
 
-  @Column({ type: 'json', nullable: true })
-  options: string[] // JSON array for multiple-choice options
+  @Column({ type: 'json'})
+  options: string[] 
 
-  @Column({ type: 'json', nullable: true })
-  correctAnswers: string[] // JSON array for correct answers in multiple-choice questions
+  @Column({ type: 'json'})
+  correctAnswers: string[]
 
-  @Column({ type: 'int', nullable: true })
-  timer: number // Time limit for the question in seconds
+  @Column({ type: 'json', nullable: true, comment: 'This works in tandem when the format is multiple choice' })
+  multipleAnswers: boolean 
+
+  @Column({ comment: 'In seconds'})
+  timer: number
+
+  @Column({ type: 'enum', enum: ['standard', 'double', 'no-point'], default: 'standard'})
+  point: string
 
   @ManyToOne(() => Quiz, (quiz) => quiz.questions)
   quiz: Quiz

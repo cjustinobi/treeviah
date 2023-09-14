@@ -4,6 +4,8 @@ export declare class CreateQuestionInput {
     format: string;
     options?: string[];
     correctAnswers?: string[];
+    multipleAnswers?: boolean;
     timer?: number;
+    point: string;
     quiz: number;
 }

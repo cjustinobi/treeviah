@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Quiz = void 0;
 const typeorm_1 = require("typeorm");
 const question_entity_1 = require("./question.entity");
+const category_entity_1 = require("../category/entities/category.entity");
 let Quiz = exports.Quiz = class Quiz {
 };
 __decorate([
@@ -26,6 +27,13 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => question_entity_1.Question, (question) => question.quiz, { cascade: true }),
     __metadata("design:type", Array)
 ], Quiz.prototype, "questions", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => category_entity_1.Category, (category) => category.quizzes, {
+        onDelete: 'CASCADE',
+        nullable: true
+    }),
+    __metadata("design:type", category_entity_1.Category)
+], Quiz.prototype, "category", void 0);
 exports.Quiz = Quiz = __decorate([
     (0, typeorm_1.Entity)()
 ], Quiz);

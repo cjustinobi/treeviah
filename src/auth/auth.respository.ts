@@ -30,13 +30,12 @@ export const CustomAuthRepository: Pick<AuthRepository, any> = {
   async validateUserPassword(loginUserDto: LoginUserDto): Promise<boolean> {
     const { email, password } = loginUserDto
 
-   // Check if details exist
-    const found = await this.findOneBy({email})
-
-    if (!found) throw new NotFoundException(`User with email: ${email} not found`)
-    
-    // compare password
-    return await comparePassword(password, found.password)
+    try {
+      const found = await this.findOneBy({email})
+      return await comparePassword(password, found.password)
+    } catch (error) {
+      console.log(`User with email: ${email} not found`)
+    }
 
   }
 

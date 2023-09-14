@@ -6,6 +6,7 @@ import { AppService } from './app.service'
 import { dataSourceOptions } from 'data-source'
 import { AuthModule } from './auth/auth.module'
 import { QuizModule } from './quiz/quiz.module'
+import { CategoryModule } from './category/category.module'
 import { GraphQLModule } from '@nestjs/graphql'
 import { User } from './auth/entities/user.entity'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
@@ -14,6 +15,8 @@ import configuration from '../config/configuration'
 import { AuthResolver } from './auth/auth.resolver'
 import { QuestionResolver } from './quiz/question.resolver'
 import { QuizResolver } from './quiz/quiz.resolver'
+import { CategoryResolver } from './category/category.resolver'
+import { QuizService } from './quiz/quiz.service'
 
 @Module({
   imports: [
@@ -37,14 +40,17 @@ import { QuizResolver } from './quiz/quiz.resolver'
         'graphql-ws': true
       },
     }),
-    QuizModule
+    QuizModule,
+    CategoryModule
   ],
   controllers: [AppController],
   providers: [
     AppService,
+    // QuizService,
     AuthResolver,
     QuizResolver,
-    QuestionResolver
+    QuestionResolver,
+    CategoryResolver
   ],
 })
 export class AppModule {

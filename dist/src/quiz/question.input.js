@@ -22,7 +22,7 @@ __decorate([
     __metadata("design:type", String)
 ], CreateQuestionInput.prototype, "mediaUrl", void 0);
 __decorate([
-    (0, graphql_1.Field)(),
+    (0, graphql_1.Field)({ description: 'Select any of these: [multiple-choice, boolean, puzzle, type-answer]' }),
     __metadata("design:type", String)
 ], CreateQuestionInput.prototype, "format", void 0);
 __decorate([
@@ -34,9 +34,17 @@ __decorate([
     __metadata("design:type", Array)
 ], CreateQuestionInput.prototype, "correctAnswers", void 0);
 __decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", Boolean)
+], CreateQuestionInput.prototype, "multipleAnswers", void 0);
+__decorate([
     (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
     __metadata("design:type", Number)
 ], CreateQuestionInput.prototype, "timer", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String, { description: 'Select any of these: [standard, double, no-point]' }),
+    __metadata("design:type", String)
+], CreateQuestionInput.prototype, "point", void 0);
 __decorate([
     (0, graphql_1.Field)(() => graphql_1.Int, { description: 'Enter the ID of the quiz' }),
     __metadata("design:type", Number)

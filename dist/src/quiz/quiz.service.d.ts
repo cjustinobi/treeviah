@@ -10,4 +10,5 @@ export declare class QuizService {
     findAll(): Promise<Quiz[]>;
     updateQuiz(id: number, updateQuizDto: UpdateQuizDto): Promise<Quiz>;
     delete(id: number): Promise<void>;
+    updateQuizCategory(quizId: number, categoryId: number): Promise<void>;
 }

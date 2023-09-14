@@ -1,6 +1,7 @@
 
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from 'typeorm'
 import { Question } from './question.entity'
+import { Category } from '../category/entities/category.entity'
 
 @Entity()
 export class Quiz {
@@ -12,4 +13,10 @@ export class Quiz {
 
   @OneToMany(() => Question, (question) => question.quiz, { cascade: true })
   questions: Question[]
+
+  @ManyToOne(() => Category, (category) => category.quizzes, {
+    onDelete: 'CASCADE',
+    nullable: true
+  })
+  category: Category
 }

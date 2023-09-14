@@ -39,9 +39,17 @@ __decorate([
 ], CreateQuestionDto.prototype, "correctAnswers", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Boolean)
+], CreateQuestionDto.prototype, "multipleAnswers", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsInt)(),
     __metadata("design:type", Number)
 ], CreateQuestionDto.prototype, "timer", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateQuestionDto.prototype, "point", void 0);
 __decorate([
     (0, class_validator_1.IsInt)(),
     __metadata("design:type", Object)

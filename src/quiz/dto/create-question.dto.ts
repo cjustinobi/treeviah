@@ -21,8 +21,14 @@ export class CreateQuestionDto {
   correctAnswers?: string[]
 
   @IsOptional()
+  multipleAnswers?: boolean
+
+  @IsOptional()
   @IsInt()
   timer?: number
+
+  @IsString()
+  point: string
 
   @IsInt()
   quiz

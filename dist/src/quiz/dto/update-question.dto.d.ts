@@ -4,5 +4,7 @@ export declare class UpdateQuestionDto {
     format?: string;
     options?: string[];
     correctAnswers?: string[];
+    multipleAnswers?: boolean;
+    point?: string;
     timer?: number;
 }

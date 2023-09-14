@@ -28,7 +28,7 @@ let AuthService = exports.AuthService = class AuthService {
         return this.authRepository.register(data);
     }
     async login(loginUserDto) {
-        const res = this.authRepository.validateUserPassword(loginUserDto);
+        const res = await this.authRepository.validateUserPassword(loginUserDto);
         if (!res)
             throw new common_1.UnauthorizedException('Invalid credentials');
         const { email } = loginUserDto;

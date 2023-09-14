@@ -46,6 +46,8 @@ let QuizService = exports.QuizService = class QuizService {
         }
         await this.quizRepository.remove(quiz);
     }
+    async updateQuizCategory(quizId, categoryId) {
+    }
 };
 exports.QuizService = QuizService = __decorate([
     (0, common_1.Injectable)(),

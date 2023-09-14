@@ -7,7 +7,9 @@ export declare class Question {
     format: string;
     options: string[];
     correctAnswers: string[];
+    multipleAnswers: boolean;
     timer: number;
+    point: string;
     quiz: Quiz;
     user: User;
 }

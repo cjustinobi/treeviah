@@ -24,6 +24,13 @@ export class UpdateQuestionDto {
   correctAnswers?: string[]
 
   @IsOptional()
+  multipleAnswers?: boolean
+
+  @IsOptional()
+  @IsString()
+  point?: string
+
+  @IsOptional()
   @IsInt()
   timer?: number
 }

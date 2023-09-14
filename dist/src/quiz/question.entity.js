@@ -13,6 +13,13 @@ exports.Question = void 0;
 const typeorm_1 = require("typeorm");
 const quiz_entity_1 = require("./quiz.entity");
 const user_entity_1 = require("../auth/entities/user.entity");
+var QuestionFormat;
+(function (QuestionFormat) {
+    QuestionFormat["MULTIPLE_CHOICE"] = "multiple-choice";
+    QuestionFormat["BOOLEAN"] = "boolean";
+    QuestionFormat["PUZZLE"] = "puzzle";
+    QuestionFormat["TYPE_ANSWER"] = "type-answer";
+})(QuestionFormat || (QuestionFormat = {}));
 let Question = exports.Question = class Question {
 };
 __decorate([
@@ -28,21 +35,32 @@ __decorate([
     __metadata("design:type", String)
 ], Question.prototype, "mediaUrl", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({
+        type: 'enum',
+        enum: ['multiple-choice', 'boolean', 'puzzle', 'type-answer']
+    }),
     __metadata("design:type", String)
 ], Question.prototype, "format", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'json', nullable: true }),
+    (0, typeorm_1.Column)({ type: 'json' }),
     __metadata("design:type", Array)
 ], Question.prototype, "options", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'json', nullable: true }),
+    (0, typeorm_1.Column)({ type: 'json' }),
     __metadata("design:type", Array)
 ], Question.prototype, "correctAnswers", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'int', nullable: true }),
+    (0, typeorm_1.Column)({ type: 'json', nullable: true, comment: 'This works in tandem when the format is multiple choice' }),
+    __metadata("design:type", Boolean)
+], Question.prototype, "multipleAnswers", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ comment: 'In seconds' }),
     __metadata("design:type", Number)
 ], Question.prototype, "timer", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'enum', enum: ['standard', 'double', 'no-point'], default: 'standard' }),
+    __metadata("design:type", String)
+], Question.prototype, "point", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => quiz_entity_1.Quiz, (quiz) => quiz.questions),
     __metadata("design:type", quiz_entity_1.Quiz)

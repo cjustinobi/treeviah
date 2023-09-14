@@ -4,6 +4,8 @@ export declare class CreateQuestionDto {
     format: string;
     options?: string[];
     correctAnswers?: string[];
+    multipleAnswers?: boolean;
     timer?: number;
+    point: string;
     quiz: any;
 }
