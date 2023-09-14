@@ -5,7 +5,8 @@ import { ConfigService } from '@nestjs/config'
 // Prod
 export const dataSourceOptions = async (configService: ConfigService): Promise<TypeOrmModuleOptions> => ({
   type: 'mysql', // Database type
-  host: configService.get<string>('NODE_ENV') === 'production' ? 'localhost' : configService.get<string>('DB_HOST'),
+  host: 'localhost',
+  // host: configService.get<string>('NODE_ENV') === 'production' ? 'localhost' : configService.get<string>('DB_HOST'),
   port: configService.get<number>('DB_PORT'),
   username: configService.get<string>('DB_USERNAME'),
   password: configService.get<string>('DB_PASSWORD'),
@@ -14,6 +15,7 @@ export const dataSourceOptions = async (configService: ConfigService): Promise<T
   synchronize: true,
   logging: true,
   extra: {
-    socketPath: configService.get<string>('NODE_ENV') === 'production' ? configService.get<string>('CONNECTION_NAME') : ''
+    socketPath: configService.get<string>('CONNECTION_NAME')
+    // socketPath: configService.get<string>('NODE_ENV') === 'production' ? configService.get<string>('CONNECTION_NAME') : ''
   }
 })
