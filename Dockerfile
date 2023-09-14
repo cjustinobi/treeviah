@@ -33,7 +33,7 @@ ENV NODE_ENV=production
 COPY package*.json ./
 
 # Install app dependencies
-RUN npm install --only=production
+RUN npm install
 
 # Copy the rest of the application code to the container
 COPY . .
