@@ -2,6 +2,7 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
 import { Quiz } from './quiz.entity'
 import { QuizService } from './quiz.service'
 import { CreateQuizInput } from './quiz.input'
+import { AssignQuizToCategoryInput } from './quiz-category.input'
 import { UseGuards } from '@nestjs/common'
 import { JwtAuthGuard } from 'src/common/guards'
 
@@ -20,6 +21,13 @@ export class QuizResolver {
     return this.quizService.findOne(id) 
   }
 
+  @Query(() => [CreateQuizInput])
+  async getQuizzesByCategory(
+    @Args('categoryId') categoryId: number,
+  ): Promise<Quiz[]> {
+    return this.quizService.getQuizzesByCategory(categoryId);
+  }
+
   @Mutation(returns => CreateQuizInput, {name: 'createQuiz'})
   async create(@Args('input') input: CreateQuizInput): Promise<Quiz> {
     return this.quizService.createQuiz(input)
@@ -31,6 +39,14 @@ export class QuizResolver {
     @Args('input') input: CreateQuizInput
     ): Promise<Quiz> {
     return this.quizService.updateQuiz(id, input)
+  }
+
+  @Mutation(() => CreateQuizInput)
+  async assignQuizToCategory(
+    @Args('input') input: AssignQuizToCategoryInput,
+  ): Promise<Quiz> {
+    const { quizId, categoryId } = input;
+      return await this.quizService.assignQuizToCategory(quizId, categoryId);
   }
 
   // @Mutation(() => Boolean, {name: 'deleteQuiz'})

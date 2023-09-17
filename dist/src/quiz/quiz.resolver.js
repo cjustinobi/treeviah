@@ -16,6 +16,7 @@ exports.QuizResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const quiz_service_1 = require("./quiz.service");
 const quiz_input_1 = require("./quiz.input");
+const quiz_category_input_1 = require("./quiz-category.input");
 const common_1 = require("@nestjs/common");
 const guards_1 = require("../common/guards");
 let QuizResolver = exports.QuizResolver = class QuizResolver {
@@ -28,11 +29,18 @@ let QuizResolver = exports.QuizResolver = class QuizResolver {
     async findOne(id) {
         return this.quizService.findOne(id);
     }
+    async getQuizzesByCategory(categoryId) {
+        return this.quizService.getQuizzesByCategory(categoryId);
+    }
     async create(input) {
         return this.quizService.createQuiz(input);
     }
     async update(id, input) {
         return this.quizService.updateQuiz(id, input);
+    }
+    async assignQuizToCategory(input) {
+        const { quizId, categoryId } = input;
+        return await this.quizService.assignQuizToCategory(quizId, categoryId);
     }
 };
 __decorate([
@@ -49,6 +57,13 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], QuizResolver.prototype, "findOne", null);
 __decorate([
+    (0, graphql_1.Query)(() => [quiz_input_1.CreateQuizInput]),
+    __param(0, (0, graphql_1.Args)('categoryId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], QuizResolver.prototype, "getQuizzesByCategory", null);
+__decorate([
     (0, graphql_1.Mutation)(returns => quiz_input_1.CreateQuizInput, { name: 'createQuiz' }),
     __param(0, (0, graphql_1.Args)('input')),
     __metadata("design:type", Function),
@@ -63,6 +78,13 @@ __decorate([
     __metadata("design:paramtypes", [Number, quiz_input_1.CreateQuizInput]),
     __metadata("design:returntype", Promise)
 ], QuizResolver.prototype, "update", null);
+__decorate([
+    (0, graphql_1.Mutation)(() => quiz_input_1.CreateQuizInput),
+    __param(0, (0, graphql_1.Args)('input')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [quiz_category_input_1.AssignQuizToCategoryInput]),
+    __metadata("design:returntype", Promise)
+], QuizResolver.prototype, "assignQuizToCategory", null);
 exports.QuizResolver = QuizResolver = __decorate([
     (0, graphql_1.Resolver)(of => quiz_input_1.CreateQuizInput),
     (0, common_1.UseGuards)(guards_1.JwtAuthGuard),
