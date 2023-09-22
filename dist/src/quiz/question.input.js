@@ -11,8 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateQuestionInput = void 0;
 const graphql_1 = require("@nestjs/graphql");
-let CreateQuestionInput = exports.CreateQuestionInput = class CreateQuestionInput {
+let CreateQuestionInput = class CreateQuestionInput {
 };
+exports.CreateQuestionInput = CreateQuestionInput;
 __decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)

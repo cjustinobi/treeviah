@@ -20,8 +20,9 @@ var QuestionFormat;
     QuestionFormat["PUZZLE"] = "puzzle";
     QuestionFormat["TYPE_ANSWER"] = "type-answer";
 })(QuestionFormat || (QuestionFormat = {}));
-let Question = exports.Question = class Question {
+let Question = class Question {
 };
+exports.Question = Question;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)

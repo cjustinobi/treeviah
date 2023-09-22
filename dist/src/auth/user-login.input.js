@@ -11,8 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccessToken = exports.UserLoginInput = void 0;
 const graphql_1 = require("@nestjs/graphql");
-let UserLoginInput = exports.UserLoginInput = class UserLoginInput {
+let UserLoginInput = class UserLoginInput {
 };
+exports.UserLoginInput = UserLoginInput;
 __decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
@@ -25,8 +26,9 @@ exports.UserLoginInput = UserLoginInput = __decorate([
     (0, graphql_1.InputType)(),
     (0, graphql_1.ObjectType)('Login')
 ], UserLoginInput);
-let AccessToken = exports.AccessToken = class AccessToken {
+let AccessToken = class AccessToken {
 };
+exports.AccessToken = AccessToken;
 __decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)

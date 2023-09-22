@@ -13,8 +13,9 @@ exports.Quiz = void 0;
 const typeorm_1 = require("typeorm");
 const question_entity_1 = require("./question.entity");
 const category_entity_1 = require("../category/entities/category.entity");
-let Quiz = exports.Quiz = class Quiz {
+let Quiz = class Quiz {
 };
+exports.Quiz = Quiz;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)

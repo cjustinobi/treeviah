@@ -18,7 +18,7 @@ const graphql_1 = require("@nestjs/graphql");
 const user_register_input_1 = require("./user-register.input");
 const user_login_input_1 = require("./user-login.input");
 const common_1 = require("@nestjs/common");
-let AuthResolver = exports.AuthResolver = class AuthResolver {
+let AuthResolver = class AuthResolver {
     constructor(authService) {
         this.authService = authService;
     }
@@ -46,6 +46,7 @@ let AuthResolver = exports.AuthResolver = class AuthResolver {
         }
     }
 };
+exports.AuthResolver = AuthResolver;
 __decorate([
     (0, graphql_1.Mutation)(() => user_login_input_1.AccessToken),
     __param(0, (0, graphql_1.Args)('loginInput')),

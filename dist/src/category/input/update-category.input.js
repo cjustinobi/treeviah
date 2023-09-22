@@ -11,8 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateCategoryInput = void 0;
 const graphql_1 = require("@nestjs/graphql");
-let UpdateCategoryInput = exports.UpdateCategoryInput = class UpdateCategoryInput {
+let UpdateCategoryInput = class UpdateCategoryInput {
 };
+exports.UpdateCategoryInput = UpdateCategoryInput;
 __decorate([
     (0, graphql_1.Field)({ nullable: true }),
     __metadata("design:type", String)

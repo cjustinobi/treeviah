@@ -12,8 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const question_entity_1 = require("../../quiz/question.entity");
 const typeorm_1 = require("typeorm");
-let User = exports.User = class User {
+let User = class User {
 };
+exports.User = User;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)

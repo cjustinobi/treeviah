@@ -14,8 +14,9 @@ const typeorm_1 = require("@nestjs/typeorm");
 const quiz_entity_1 = require("./quiz.entity");
 const question_entity_1 = require("./question.entity");
 const category_entity_1 = require("../category/entities/category.entity");
-let QuizModule = exports.QuizModule = class QuizModule {
+let QuizModule = class QuizModule {
 };
+exports.QuizModule = QuizModule;
 exports.QuizModule = QuizModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([quiz_entity_1.Quiz, question_entity_1.Question, category_entity_1.Category])],

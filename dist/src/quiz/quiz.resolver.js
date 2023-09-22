@@ -19,9 +19,11 @@ const quiz_input_1 = require("./quiz.input");
 const quiz_category_input_1 = require("./quiz-category.input");
 const common_1 = require("@nestjs/common");
 const guards_1 = require("../common/guards");
-let QuizResolver = exports.QuizResolver = class QuizResolver {
-    constructor(quizService) {
+const quiz_gateway_1 = require("./quiz.gateway");
+let QuizResolver = class QuizResolver {
+    constructor(quizService, quizGateway) {
         this.quizService = quizService;
+        this.quizGateway = quizGateway;
     }
     async findAll() {
         return this.quizService.findAll();
@@ -33,7 +35,9 @@ let QuizResolver = exports.QuizResolver = class QuizResolver {
         return this.quizService.getQuizzesByCategory(categoryId);
     }
     async create(input) {
-        return this.quizService.createQuiz(input);
+        const quiz = await this.quizService.createQuiz(input);
+        this.quizGateway.server.emit('newQuiz', { quiz });
+        return quiz;
     }
     async update(id, input) {
         return this.quizService.updateQuiz(id, input);
@@ -43,6 +47,7 @@ let QuizResolver = exports.QuizResolver = class QuizResolver {
         return await this.quizService.assignQuizToCategory(quizId, categoryId);
     }
 };
+exports.QuizResolver = QuizResolver;
 __decorate([
     (0, graphql_1.Query)(returns => [quiz_input_1.CreateQuizInput], { name: 'getQuizzes' }),
     __metadata("design:type", Function),
@@ -88,6 +93,7 @@ __decorate([
 exports.QuizResolver = QuizResolver = __decorate([
     (0, graphql_1.Resolver)(of => quiz_input_1.CreateQuizInput),
     (0, common_1.UseGuards)(guards_1.JwtAuthGuard),
-    __metadata("design:paramtypes", [quiz_service_1.QuizService])
+    __metadata("design:paramtypes", [quiz_service_1.QuizService,
+        quiz_gateway_1.QuizGateway])
 ], QuizResolver);
 //# sourceMappingURL=quiz.resolver.js.map

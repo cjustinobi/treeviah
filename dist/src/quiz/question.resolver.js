@@ -19,7 +19,7 @@ const question_input_1 = require("./question.input");
 const common_1 = require("@nestjs/common");
 const guards_1 = require("../common/guards");
 const decorators_1 = require("../common/decorators");
-let QuestionResolver = exports.QuestionResolver = class QuestionResolver {
+let QuestionResolver = class QuestionResolver {
     constructor(questionService) {
         this.questionService = questionService;
     }
@@ -45,6 +45,7 @@ let QuestionResolver = exports.QuestionResolver = class QuestionResolver {
         }
     }
 };
+exports.QuestionResolver = QuestionResolver;
 __decorate([
     (0, graphql_1.Mutation)(returns => question_input_1.CreateQuestionInput),
     __param(0, (0, graphql_1.Args)('input')),

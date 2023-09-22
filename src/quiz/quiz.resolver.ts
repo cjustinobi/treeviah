@@ -5,11 +5,16 @@ import { CreateQuizInput } from './quiz.input'
 import { AssignQuizToCategoryInput } from './quiz-category.input'
 import { UseGuards } from '@nestjs/common'
 import { JwtAuthGuard } from 'src/common/guards'
+// import { WebSocketGateway } from '@nestjs/websockets'
+import { QuizGateway } from './quiz.gateway'
 
 @Resolver(of => CreateQuizInput)
 @UseGuards(JwtAuthGuard)
 export class QuizResolver {
-  constructor(private readonly quizService: QuizService) {}
+  constructor(
+    private readonly quizService: QuizService,
+    private readonly quizGateway: QuizGateway
+    ) {}
 
   @Query(returns => [CreateQuizInput], {name: 'getQuizzes'})
   async findAll(): Promise<CreateQuizInput[]> {
@@ -30,7 +35,9 @@ export class QuizResolver {
 
   @Mutation(returns => CreateQuizInput, {name: 'createQuiz'})
   async create(@Args('input') input: CreateQuizInput): Promise<Quiz> {
-    return this.quizService.createQuiz(input)
+    const quiz = await this.quizService.createQuiz(input)
+    this.quizGateway.server.emit('newQuiz', {quiz})
+    return quiz
   }
 
   @Mutation(returns => CreateQuizInput, {name: 'updateQuiz'})

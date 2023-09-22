@@ -16,7 +16,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const user_entity_1 = require("./entities/user.entity");
 const bcrypt = require("bcrypt");
-let AuthHelper = exports.AuthHelper = class AuthHelper {
+let AuthHelper = class AuthHelper {
     constructor(jwt) {
         this.tokenBlacklist = new Set();
         this.jwt = jwt;
@@ -53,6 +53,7 @@ let AuthHelper = exports.AuthHelper = class AuthHelper {
         this.tokenBlacklist.add(accessToken);
     }
 };
+exports.AuthHelper = AuthHelper;
 __decorate([
     (0, typeorm_1.InjectRepository)(user_entity_1.User),
     __metadata("design:type", typeorm_2.Repository)

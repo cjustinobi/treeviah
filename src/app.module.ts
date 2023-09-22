@@ -1,4 +1,5 @@
-import { Module } from '@nestjs/common'
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
+import * as cors from 'cors'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { DataSource } from 'typeorm'
 import { AppController } from './app.controller'
@@ -16,6 +17,7 @@ import { AuthResolver } from './auth/auth.resolver'
 import { QuestionResolver } from './quiz/question.resolver'
 import { QuizResolver } from './quiz/quiz.resolver'
 import { CategoryResolver } from './category/category.resolver'
+import { QuizGateway } from './quiz/quiz.gateway'
 
 @Module({
   imports: [
@@ -48,9 +50,13 @@ import { CategoryResolver } from './category/category.resolver'
     AuthResolver,
     QuizResolver,
     QuestionResolver,
-    CategoryResolver
+    CategoryResolver,
+    QuizGateway
   ],
 })
-export class AppModule {
+export class AppModule implements NestModule {
   constructor(private dataSource: DataSource) {}
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(cors()).forRoutes('*')
+  }
 }

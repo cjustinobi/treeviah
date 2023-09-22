@@ -13,7 +13,7 @@ exports.JwtAuthGuard = void 0;
 const common_1 = require("@nestjs/common");
 const graphql_1 = require("@nestjs/graphql");
 const auth_helper_1 = require("../../auth/auth.helper");
-let JwtAuthGuard = exports.JwtAuthGuard = class JwtAuthGuard {
+let JwtAuthGuard = class JwtAuthGuard {
     constructor(authHelper) {
         this.authHelper = authHelper;
     }
@@ -35,6 +35,7 @@ let JwtAuthGuard = exports.JwtAuthGuard = class JwtAuthGuard {
         }
     }
 };
+exports.JwtAuthGuard = JwtAuthGuard;
 exports.JwtAuthGuard = JwtAuthGuard = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [auth_helper_1.AuthHelper])

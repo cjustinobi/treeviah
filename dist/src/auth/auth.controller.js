@@ -20,7 +20,7 @@ const login_user_dto_1 = require("./dto/login-user.dto");
 const passport_1 = require("@nestjs/passport");
 const get_user_decorator_1 = require("./get-user.decorator");
 const user_entity_1 = require("./entities/user.entity");
-let AuthController = exports.AuthController = class AuthController {
+let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
     }
@@ -35,6 +35,7 @@ let AuthController = exports.AuthController = class AuthController {
         console.log(user);
     }
 };
+exports.AuthController = AuthController;
 __decorate([
     (0, common_1.Post)('register'),
     __param(0, (0, common_1.Res)()),

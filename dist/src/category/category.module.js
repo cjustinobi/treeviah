@@ -11,8 +11,9 @@ const common_1 = require("@nestjs/common");
 const category_service_1 = require("./category.service");
 const typeorm_1 = require("@nestjs/typeorm");
 const category_entity_1 = require("./entities/category.entity");
-let CategoryModule = exports.CategoryModule = class CategoryModule {
+let CategoryModule = class CategoryModule {
 };
+exports.CategoryModule = CategoryModule;
 exports.CategoryModule = CategoryModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([category_entity_1.Category])],

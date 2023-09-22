@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
+const cors = require("cors");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const app_controller_1 = require("./app.controller");
@@ -28,11 +29,16 @@ const auth_resolver_1 = require("./auth/auth.resolver");
 const question_resolver_1 = require("./quiz/question.resolver");
 const quiz_resolver_1 = require("./quiz/quiz.resolver");
 const category_resolver_1 = require("./category/category.resolver");
-let AppModule = exports.AppModule = class AppModule {
+const quiz_gateway_1 = require("./quiz/quiz.gateway");
+let AppModule = class AppModule {
     constructor(dataSource) {
         this.dataSource = dataSource;
     }
+    configure(consumer) {
+        consumer.apply(cors()).forRoutes('*');
+    }
 };
+exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
@@ -65,7 +71,8 @@ exports.AppModule = AppModule = __decorate([
             auth_resolver_1.AuthResolver,
             quiz_resolver_1.QuizResolver,
             question_resolver_1.QuestionResolver,
-            category_resolver_1.CategoryResolver
+            category_resolver_1.CategoryResolver,
+            quiz_gateway_1.QuizGateway
         ],
     }),
     __metadata("design:paramtypes", [typeorm_2.DataSource])

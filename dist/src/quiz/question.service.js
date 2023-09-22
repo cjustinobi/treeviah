@@ -17,7 +17,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const question_entity_1 = require("./question.entity");
-let QuestionService = exports.QuestionService = class QuestionService {
+let QuestionService = class QuestionService {
     constructor(questionRepository) {
         this.questionRepository = questionRepository;
     }
@@ -47,6 +47,7 @@ let QuestionService = exports.QuestionService = class QuestionService {
         await this.questionRepository.remove(question);
     }
 };
+exports.QuestionService = QuestionService;
 exports.QuestionService = QuestionService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(question_entity_1.Question)),

@@ -19,7 +19,7 @@ const guards_1 = require("../common/guards");
 const category_service_1 = require("./category.service");
 const category_input_1 = require("./input/category.input");
 const update_category_input_1 = require("./input/update-category.input");
-let CategoryResolver = exports.CategoryResolver = class CategoryResolver {
+let CategoryResolver = class CategoryResolver {
     constructor(categoryService) {
         this.categoryService = categoryService;
     }
@@ -40,6 +40,7 @@ let CategoryResolver = exports.CategoryResolver = class CategoryResolver {
         return true;
     }
 };
+exports.CategoryResolver = CategoryResolver;
 __decorate([
     (0, graphql_1.Query)(() => category_input_1.CreateCategoryInput, { nullable: true, name: 'getCategory' }),
     __param(0, (0, graphql_1.Args)('id')),

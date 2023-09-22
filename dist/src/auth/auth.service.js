@@ -18,7 +18,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const user_entity_1 = require("./entities/user.entity");
 const jwt_1 = require("@nestjs/jwt");
 const auth_helper_1 = require("./auth.helper");
-let AuthService = exports.AuthService = class AuthService {
+let AuthService = class AuthService {
     constructor(authRepository, authHelper, jwtService) {
         this.authRepository = authRepository;
         this.authHelper = authHelper;
@@ -40,6 +40,7 @@ let AuthService = exports.AuthService = class AuthService {
         this.authHelper.blackListToken(accessToken);
     }
 };
+exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
