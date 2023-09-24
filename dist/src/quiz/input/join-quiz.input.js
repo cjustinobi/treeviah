@@ -9,33 +9,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.QuizParticipant = void 0;
-const typeorm_1 = require("typeorm");
-const quiz_entity_1 = require("./quiz.entity");
-let QuizParticipant = class QuizParticipant {
+exports.JoinQuizInput = void 0;
+const graphql_1 = require("@nestjs/graphql");
+let JoinQuizInput = class JoinQuizInput {
 };
-exports.QuizParticipant = QuizParticipant;
+exports.JoinQuizInput = JoinQuizInput;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    (0, graphql_1.Field)(),
     __metadata("design:type", Number)
-], QuizParticipant.prototype, "id", void 0);
+], JoinQuizInput.prototype, "quizId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
+    (0, graphql_1.Field)(),
     __metadata("design:type", String)
-], QuizParticipant.prototype, "username", void 0);
+], JoinQuizInput.prototype, "socketId", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => quiz_entity_1.Quiz, (quiz) => quiz.participants),
-    __metadata("design:type", quiz_entity_1.Quiz)
-], QuizParticipant.prototype, "quiz", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", Number)
-], QuizParticipant.prototype, "score", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
+    (0, graphql_1.Field)(),
     __metadata("design:type", String)
-], QuizParticipant.prototype, "socketId", void 0);
-exports.QuizParticipant = QuizParticipant = __decorate([
-    (0, typeorm_1.Entity)()
-], QuizParticipant);
-//# sourceMappingURL=quiz-participant.entity.js.map
+], JoinQuizInput.prototype, "username", void 0);
+exports.JoinQuizInput = JoinQuizInput = __decorate([
+    (0, graphql_1.InputType)(),
+    (0, graphql_1.ObjectType)('JoinQuiz')
+], JoinQuizInput);
+//# sourceMappingURL=join-quiz.input.js.map

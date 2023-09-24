@@ -8,8 +8,8 @@ export class QuizParticipant {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, (user) => user.quizParticipants)
-  user: User;
+  @Column({ nullable: true })
+  username: string;
 
   @ManyToOne(() => Quiz, (quiz) => quiz.participants)
   quiz: Quiz;

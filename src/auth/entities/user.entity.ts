@@ -39,13 +39,6 @@ export class User {
   @Column()
   password: string
 
-  @ManyToMany(() => Quiz, (quiz) => quiz.participants)
-  @JoinTable()
-  joinedQuizzes: Quiz[];
-
-  @OneToMany(() => QuizParticipant, (participant) => participant.user)
-  quizParticipants: QuizParticipant[];
-
   @CreateDateColumn()
   public created_at: Date
 

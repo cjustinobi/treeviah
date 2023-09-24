@@ -11,11 +11,10 @@ import { QuizParticipant } from './entities/quiz-participant.entity'
 import { QuizParticipantInput } from './input/quiz-participant.input'
 import { Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
-import { ReqUser } from '../common/decorators'
+import { JoinQuizInput } from './input/join-quiz.input'
 
 
 @Resolver(of => CreateQuizInput)
-@UseGuards(JwtAuthGuard)
 export class QuizResolver {
   constructor(
     private readonly quizService: QuizService,
@@ -24,16 +23,19 @@ export class QuizResolver {
     private readonly quizParticipantRepository: Repository<QuizParticipant>
     ) {}
 
+  @UseGuards(JwtAuthGuard)
   @Query(returns => [CreateQuizInput], {name: 'getQuizzes'})
   async findAll(): Promise<CreateQuizInput[]> {
     return this.quizService.findAll()
   }
 
+  @UseGuards(JwtAuthGuard)
   @Query(returns => CreateQuizInput, {name: 'getQuiz'})
   async findOne(@Args('id') id: number): Promise<Quiz> {
     return this.quizService.findOne(id) 
   }
 
+  @UseGuards(JwtAuthGuard)
   @Query(() => [CreateQuizInput])
   async getQuizzesByCategory(
     @Args('categoryId') categoryId: number,
@@ -41,12 +43,14 @@ export class QuizResolver {
     return this.quizService.getQuizzesByCategory(categoryId);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(returns => CreateQuizInput, {name: 'createQuiz'})
   async create(@Args('input') input: CreateQuizInput): Promise<Quiz> {
     const quiz = await this.quizService.createQuiz(input)
     return quiz
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(returns => CreateQuizInput, {name: 'updateQuiz'})
   async update(
     @Args('id') id: number,
@@ -55,6 +59,7 @@ export class QuizResolver {
     return this.quizService.updateQuiz(id, input)
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => CreateQuizInput)
   async assignQuizToCategory(
     @Args('input') input: AssignQuizToCategoryInput,
@@ -73,6 +78,7 @@ export class QuizResolver {
   //   }
   // }
 
+@UseGuards(JwtAuthGuard)
 @Mutation(() => CreateQuizInput)
 async startQuiz(@Args('id') id: number): Promise<Quiz> {
 
@@ -94,11 +100,10 @@ async startQuiz(@Args('id') id: number): Promise<Quiz> {
 
 @Mutation(() => CreateQuizInput)
   async joinQuiz(
-    @Args('quizId') quizId: number,
-    @Args('socketId') socketId: string,
-    @ReqUser() user: any
+    @Args('input') input: JoinQuizInput
   ): Promise<Quiz> {
-    // Retrieve the quiz by ID
+    const { quizId, socketId, username } = input
+    
     const quiz = await this.quizService.findOne(quizId)
 
     // Check if the quiz is in progress and not completed
@@ -108,7 +113,7 @@ async startQuiz(@Args('id') id: number): Promise<Quiz> {
         // Create a new QuizParticipant instance and populate it with data from QuizParticipantInput
         const newParticipant = new QuizParticipant();
         newParticipant.socketId = socketId
-        newParticipant.user = user.id
+        newParticipant.username = username
 
         await this.quizParticipantRepository.save(newParticipant)
         quiz.participants.push(newParticipant);
