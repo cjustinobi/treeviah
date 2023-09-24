@@ -1,6 +1,6 @@
 import { QuestionService } from './question.service';
-import { Question } from './question.entity';
-import { CreateQuestionInput } from './question.input';
+import { Question } from './entities/question.entity';
+import { CreateQuestionInput } from './input/question.input';
 export declare class QuestionResolver {
     private readonly questionService;
     constructor(questionService: QuestionService);

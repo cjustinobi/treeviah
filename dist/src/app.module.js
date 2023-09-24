@@ -21,7 +21,6 @@ const auth_module_1 = require("./auth/auth.module");
 const quiz_module_1 = require("./quiz/quiz.module");
 const category_module_1 = require("./category/category.module");
 const graphql_1 = require("@nestjs/graphql");
-const user_entity_1 = require("./auth/entities/user.entity");
 const apollo_1 = require("@nestjs/apollo");
 const config_1 = require("@nestjs/config");
 const configuration_1 = require("../config/configuration");
@@ -30,6 +29,7 @@ const question_resolver_1 = require("./quiz/question.resolver");
 const quiz_resolver_1 = require("./quiz/quiz.resolver");
 const category_resolver_1 = require("./category/category.resolver");
 const quiz_gateway_1 = require("./quiz/quiz.gateway");
+const quiz_participant_entity_1 = require("./quiz/entities/quiz-participant.entity");
 let AppModule = class AppModule {
     constructor(dataSource) {
         this.dataSource = dataSource;
@@ -47,7 +47,7 @@ exports.AppModule = AppModule = __decorate([
                 load: [configuration_1.default]
             }),
             auth_module_1.AuthModule,
-            typeorm_1.TypeOrmModule.forFeature([user_entity_1.User]),
+            typeorm_1.TypeOrmModule.forFeature([quiz_participant_entity_1.QuizParticipant]),
             typeorm_1.TypeOrmModule.forRootAsync({
                 useFactory: data_source_1.dataSourceOptions,
                 inject: [config_1.ConfigService],

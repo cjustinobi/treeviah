@@ -15,15 +15,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.QuizResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const quiz_service_1 = require("./quiz.service");
-const quiz_input_1 = require("./quiz.input");
+const quiz_input_1 = require("./input/quiz.input");
 const quiz_category_input_1 = require("./quiz-category.input");
 const common_1 = require("@nestjs/common");
 const guards_1 = require("../common/guards");
 const quiz_gateway_1 = require("./quiz.gateway");
+const quiz_participant_entity_1 = require("./entities/quiz-participant.entity");
+const typeorm_1 = require("typeorm");
+const typeorm_2 = require("@nestjs/typeorm");
+const decorators_1 = require("../common/decorators");
 let QuizResolver = class QuizResolver {
-    constructor(quizService, quizGateway) {
+    constructor(quizService, quizGateway, quizParticipantRepository) {
         this.quizService = quizService;
         this.quizGateway = quizGateway;
+        this.quizParticipantRepository = quizParticipantRepository;
     }
     async findAll() {
         return this.quizService.findAll();
@@ -36,7 +41,6 @@ let QuizResolver = class QuizResolver {
     }
     async create(input) {
         const quiz = await this.quizService.createQuiz(input);
-        this.quizGateway.server.emit('newQuiz', { quiz });
         return quiz;
     }
     async update(id, input) {
@@ -45,6 +49,40 @@ let QuizResolver = class QuizResolver {
     async assignQuizToCategory(input) {
         const { quizId, categoryId } = input;
         return await this.quizService.assignQuizToCategory(quizId, categoryId);
+    }
+    async startQuiz(id) {
+        const quiz = await this.quizService.findOne(id);
+        if (quiz.status === 'Not Started') {
+            quiz.status = 'In Progress';
+            quiz.code = 'thecode';
+            await this.quizService.updateQuiz(id, quiz);
+            this.quizGateway.server.emit('quizStarted', { quiz });
+            return quiz;
+        }
+        else {
+            throw new Error('Quiz is already in progress or completed.');
+        }
+    }
+    async joinQuiz(quizId, socketId, user) {
+        const quiz = await this.quizService.findOne(quizId);
+        if (quiz.status === 'In Progress') {
+            if (!quiz.participants.some((participant) => participant.socketId === socketId)) {
+                const newParticipant = new quiz_participant_entity_1.QuizParticipant();
+                newParticipant.socketId = socketId;
+                newParticipant.user = user.id;
+                await this.quizParticipantRepository.save(newParticipant);
+                quiz.participants.push(newParticipant);
+                await this.quizService.updateQuiz(quizId, quiz);
+                this.quizGateway.server.emit('userJoined', { quizId, socketId });
+                return quiz;
+            }
+            else {
+                throw new Error('User is already a participant in this quiz.');
+            }
+        }
+        else {
+            throw new Error('Quiz is not in progress or has been completed.');
+        }
     }
 };
 exports.QuizResolver = QuizResolver;
@@ -90,10 +128,28 @@ __decorate([
     __metadata("design:paramtypes", [quiz_category_input_1.AssignQuizToCategoryInput]),
     __metadata("design:returntype", Promise)
 ], QuizResolver.prototype, "assignQuizToCategory", null);
+__decorate([
+    (0, graphql_1.Mutation)(() => quiz_input_1.CreateQuizInput),
+    __param(0, (0, graphql_1.Args)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], QuizResolver.prototype, "startQuiz", null);
+__decorate([
+    (0, graphql_1.Mutation)(() => quiz_input_1.CreateQuizInput),
+    __param(0, (0, graphql_1.Args)('quizId')),
+    __param(1, (0, graphql_1.Args)('socketId')),
+    __param(2, (0, decorators_1.ReqUser)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, String, Object]),
+    __metadata("design:returntype", Promise)
+], QuizResolver.prototype, "joinQuiz", null);
 exports.QuizResolver = QuizResolver = __decorate([
     (0, graphql_1.Resolver)(of => quiz_input_1.CreateQuizInput),
     (0, common_1.UseGuards)(guards_1.JwtAuthGuard),
+    __param(2, (0, typeorm_2.InjectRepository)(quiz_participant_entity_1.QuizParticipant)),
     __metadata("design:paramtypes", [quiz_service_1.QuizService,
-        quiz_gateway_1.QuizGateway])
+        quiz_gateway_1.QuizGateway,
+        typeorm_1.Repository])
 ], QuizResolver);
 //# sourceMappingURL=quiz.resolver.js.map

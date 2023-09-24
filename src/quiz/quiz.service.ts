@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { CreateQuizDto } from './dto/create-quiz.dto'
 import { UpdateQuizDto } from './dto/update-quiz.dto'
-import { Quiz } from './quiz.entity'
+import { Quiz } from './entities/quiz.entity'
 import { Category } from '../category/entities/category.entity'
 
 @Injectable()
@@ -21,9 +21,17 @@ export class QuizService {
     return this.quizRepository.save(quiz)
   }
 
+  // async findOne(id: number): Promise<Quiz | undefined> {
+  //   return this.quizRepository.findOneBy({id})
+  // }
+
   async findOne(id: number): Promise<Quiz | undefined> {
-    return this.quizRepository.findOneBy({id})
-  }
+  return this.quizRepository
+    .createQueryBuilder('quiz')
+    .where('quiz.id = :id', { id })
+    .leftJoinAndSelect('quiz.participants', 'participants')
+    .getOne()
+}
 
   async findAll(): Promise<Quiz[]> {
     return this.quizRepository.find({ relations: ['questions'] })

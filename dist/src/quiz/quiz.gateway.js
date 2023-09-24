@@ -8,21 +8,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.QuizGateway = void 0;
 const websockets_1 = require("@nestjs/websockets");
 const socket_io_1 = require("socket.io");
 let QuizGateway = class QuizGateway {
-    listenForMessages(message) {
-        this.server.sockets.emit('receive_message', message);
+    handleJoinQuiz(client, quizId) {
+        this.server.emit('userJoined', { quizId, userId: client.id });
     }
-    handleHelloEvent(client, payload) {
-        console.log(`Received 'hello' event with payload: ${payload}`);
-        const response = 'Hello from the server!';
-        client.emit('helloResponse', response);
+    handleSubmitAnswers(client, data) {
     }
 };
 exports.QuizGateway = QuizGateway;
@@ -31,18 +25,17 @@ __decorate([
     __metadata("design:type", socket_io_1.Server)
 ], QuizGateway.prototype, "server", void 0);
 __decorate([
-    (0, websockets_1.SubscribeMessage)('send_message'),
-    __param(0, (0, websockets_1.MessageBody)()),
+    (0, websockets_1.SubscribeMessage)('joinQuiz'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [socket_io_1.Socket, Number]),
     __metadata("design:returntype", void 0)
-], QuizGateway.prototype, "listenForMessages", null);
+], QuizGateway.prototype, "handleJoinQuiz", null);
 __decorate([
-    (0, websockets_1.SubscribeMessage)('hello'),
+    (0, websockets_1.SubscribeMessage)('submitAnswers'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [socket_io_1.Socket, String]),
+    __metadata("design:paramtypes", [socket_io_1.Socket, Object]),
     __metadata("design:returntype", void 0)
-], QuizGateway.prototype, "handleHelloEvent", null);
+], QuizGateway.prototype, "handleSubmitAnswers", null);
 exports.QuizGateway = QuizGateway = __decorate([
     (0, websockets_1.WebSocketGateway)()
 ], QuizGateway);

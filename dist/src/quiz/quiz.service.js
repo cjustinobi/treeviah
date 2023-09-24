@@ -16,7 +16,7 @@ exports.QuizService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const quiz_entity_1 = require("./quiz.entity");
+const quiz_entity_1 = require("./entities/quiz.entity");
 const category_entity_1 = require("../category/entities/category.entity");
 let QuizService = class QuizService {
     constructor(quizRepository, categoryRepository) {
@@ -28,7 +28,11 @@ let QuizService = class QuizService {
         return this.quizRepository.save(quiz);
     }
     async findOne(id) {
-        return this.quizRepository.findOneBy({ id });
+        return this.quizRepository
+            .createQueryBuilder('quiz')
+            .where('quiz.id = :id', { id })
+            .leftJoinAndSelect('quiz.participants', 'participants')
+            .getOne();
     }
     async findAll() {
         return this.quizRepository.find({ relations: ['questions'] });

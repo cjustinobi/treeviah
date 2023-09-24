@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.QuestionResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const question_service_1 = require("./question.service");
-const question_input_1 = require("./question.input");
+const question_input_1 = require("./input/question.input");
 const common_1 = require("@nestjs/common");
 const guards_1 = require("../common/guards");
 const decorators_1 = require("../common/decorators");

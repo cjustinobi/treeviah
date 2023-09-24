@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Question = void 0;
 const typeorm_1 = require("typeorm");
 const quiz_entity_1 = require("./quiz.entity");
-const user_entity_1 = require("../auth/entities/user.entity");
+const user_entity_1 = require("../../auth/entities/user.entity");
 var QuestionFormat;
 (function (QuestionFormat) {
     QuestionFormat["MULTIPLE_CHOICE"] = "multiple-choice";

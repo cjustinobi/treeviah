@@ -1,4 +1,6 @@
-import { Question } from 'src/quiz/question.entity';
+import { QuizParticipant } from 'src/quiz/entities/quiz-participant.entity';
+import { Question } from '../../quiz/entities/question.entity';
+import { Quiz } from '../../quiz/entities/quiz.entity';
 export declare class User {
     id: number;
     first_name: string;
@@ -7,6 +9,8 @@ export declare class User {
     email: string;
     salt: string;
     password: string;
+    joinedQuizzes: Quiz[];
+    quizParticipants: QuizParticipant[];
     created_at: Date;
     updated_at: Date | null;
     deleted_at: Date | null;

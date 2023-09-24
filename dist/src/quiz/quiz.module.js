@@ -11,8 +11,8 @@ const common_1 = require("@nestjs/common");
 const quiz_service_1 = require("./quiz.service");
 const question_service_1 = require("./question.service");
 const typeorm_1 = require("@nestjs/typeorm");
-const quiz_entity_1 = require("./quiz.entity");
-const question_entity_1 = require("./question.entity");
+const quiz_entity_1 = require("./entities/quiz.entity");
+const question_entity_1 = require("./entities/question.entity");
 const category_entity_1 = require("../category/entities/category.entity");
 let QuizModule = class QuizModule {
 };

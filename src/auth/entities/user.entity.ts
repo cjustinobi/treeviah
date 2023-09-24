@@ -1,5 +1,7 @@
 
-import { Question } from 'src/quiz/question.entity'
+import { QuizParticipant } from 'src/quiz/entities/quiz-participant.entity'
+import { Question } from '../../quiz/entities/question.entity'
+import { Quiz } from '../../quiz/entities/quiz.entity'
 import { 
   Entity, 
   Column, 
@@ -8,7 +10,9 @@ import {
   CreateDateColumn, 
   DeleteDateColumn, 
   UpdateDateColumn, 
-  OneToMany
+  OneToMany,
+  ManyToMany,
+  JoinTable
 } from 'typeorm'
 
 @Entity()
@@ -35,6 +39,13 @@ export class User {
   @Column()
   password: string
 
+  @ManyToMany(() => Quiz, (quiz) => quiz.participants)
+  @JoinTable()
+  joinedQuizzes: Quiz[];
+
+  @OneToMany(() => QuizParticipant, (participant) => participant.user)
+  quizParticipants: QuizParticipant[];
+
   @CreateDateColumn()
   public created_at: Date
 
@@ -44,8 +55,7 @@ export class User {
   @DeleteDateColumn()
   public deleted_at: Date | null
 
-  // @OneToMany(type => Product, product => product.user, { eager: true })
-  // products: Product[]
+
   @OneToMany(() => Question, (question) => question.user)
   questions: Question[]
 }

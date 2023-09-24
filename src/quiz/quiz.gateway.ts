@@ -10,18 +10,19 @@ import { Server, Socket } from 'socket.io';
 export class QuizGateway {
     @WebSocketServer()
     server: Server;
-    // listen for send_message events
-    @SubscribeMessage('send_message')
-    listenForMessages(@MessageBody() message: string) {
-      this.server.sockets.emit('receive_message', message);
-    }
+  
+      // Handle user joining a quiz
+  @SubscribeMessage('joinQuiz')
+  handleJoinQuiz(client: Socket, quizId: number) {
+    // Implement logic to add the user to the quiz and notify others
+    // For example, you can emit a 'userJoined' event to notify other participants.
+    this.server.emit('userJoined', { quizId, userId: client.id });
+  }
 
-     @SubscribeMessage('hello')
-  handleHelloEvent(client: Socket, payload: string): void {
-    console.log(`Received 'hello' event with payload: ${payload}`);
-
-    // You can respond to the event here if needed
-    const response = 'Hello from the server!';
-    client.emit('helloResponse', response); // Emit a response back to the client
+  // Handle user submitting answers
+  @SubscribeMessage('submitAnswers')
+  handleSubmitAnswers(client: Socket, data: any) {
+    // Implement logic to process submitted answers
+    // For example, validate answers, calculate scores, and emit results.
   }
 }

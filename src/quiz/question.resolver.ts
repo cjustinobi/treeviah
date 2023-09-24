@@ -1,8 +1,8 @@
 
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
 import { QuestionService } from './question.service'
-import { Question } from './question.entity'
-import { CreateQuestionInput } from './question.input'
+import { Question } from './entities/question.entity'
+import { CreateQuestionInput } from './input/question.input'
 import { UseGuards } from '@nestjs/common'
 import { JwtAuthGuard } from '../common/guards'
 import { ReqUser } from '../common/decorators'

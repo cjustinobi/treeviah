@@ -18,6 +18,7 @@ import { QuestionResolver } from './quiz/question.resolver'
 import { QuizResolver } from './quiz/quiz.resolver'
 import { CategoryResolver } from './category/category.resolver'
 import { QuizGateway } from './quiz/quiz.gateway'
+import { QuizParticipant } from './quiz/entities/quiz-participant.entity'
 
 @Module({
   imports: [
@@ -26,7 +27,8 @@ import { QuizGateway } from './quiz/quiz.gateway'
       load: [configuration]
     }),
     AuthModule,
-    TypeOrmModule.forFeature([User]),
+    // TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([QuizParticipant]),
     TypeOrmModule.forRootAsync({
       useFactory: dataSourceOptions,
       inject: [ConfigService], // Inject ConfigService

@@ -16,7 +16,7 @@ exports.QuestionService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const question_entity_1 = require("./question.entity");
+const question_entity_1 = require("./entities/question.entity");
 let QuestionService = class QuestionService {
     constructor(questionRepository) {
         this.questionRepository = questionRepository;

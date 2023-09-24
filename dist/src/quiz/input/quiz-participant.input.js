@@ -9,29 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Category = void 0;
-const typeorm_1 = require("typeorm");
-const quiz_entity_1 = require("../../quiz/entities/quiz.entity");
-let Category = class Category {
+exports.QuizParticipantInput = void 0;
+const graphql_1 = require("@nestjs/graphql");
+let QuizParticipantInput = class QuizParticipantInput {
 };
-exports.Category = Category;
+exports.QuizParticipantInput = QuizParticipantInput;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    (0, graphql_1.Field)(),
+    __metadata("design:type", String)
+], QuizParticipantInput.prototype, "socketId", void 0);
+__decorate([
+    (0, graphql_1.Field)(),
     __metadata("design:type", Number)
-], Category.prototype, "id", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Category.prototype, "name", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], Category.prototype, "description", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => quiz_entity_1.Quiz, (quiz) => quiz.category),
-    __metadata("design:type", Array)
-], Category.prototype, "quizzes", void 0);
-exports.Category = Category = __decorate([
-    (0, typeorm_1.Entity)()
-], Category);
-//# sourceMappingURL=category.entity.js.map
+], QuizParticipantInput.prototype, "score", void 0);
+exports.QuizParticipantInput = QuizParticipantInput = __decorate([
+    (0, graphql_1.InputType)(),
+    (0, graphql_1.ObjectType)('QuizParticipant')
+], QuizParticipantInput);
+//# sourceMappingURL=quiz-participant.input.js.map
