@@ -19,9 +19,18 @@ const question_input_1 = require("./input/question.input");
 const common_1 = require("@nestjs/common");
 const guards_1 = require("../common/guards");
 const decorators_1 = require("../common/decorators");
+let currentQuestionIndex = 0;
 let QuestionResolver = class QuestionResolver {
     constructor(questionService) {
         this.questionService = questionService;
+    }
+    async getNextQuestion() {
+        const questions = await this.questionService.findAll();
+        if (currentQuestionIndex < questions.length) {
+            const nextQuestion = questions[currentQuestionIndex];
+            currentQuestionIndex++;
+            return nextQuestion;
+        }
     }
     async createQuestion(input, user) {
         return this.questionService.createQuestion(input, user);
@@ -46,6 +55,12 @@ let QuestionResolver = class QuestionResolver {
     }
 };
 exports.QuestionResolver = QuestionResolver;
+__decorate([
+    (0, graphql_1.Query)(returns => question_input_1.CreateQuestionInput, { name: 'getNextQuestion' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], QuestionResolver.prototype, "getNextQuestion", null);
 __decorate([
     (0, graphql_1.Mutation)(returns => question_input_1.CreateQuestionInput),
     __param(0, (0, graphql_1.Args)('input')),

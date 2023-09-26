@@ -50,9 +50,21 @@ let QuizResolver = class QuizResolver {
         const { quizId, categoryId } = input;
         return await this.quizService.assignQuizToCategory(quizId, categoryId);
     }
-    async startQuiz(id) {
+    async onboardPlayers(id) {
         const quiz = await this.quizService.findOne(id);
         if (quiz.status === 'Not Started') {
+            quiz.status = 'Onboarding';
+            await this.quizService.updateQuiz(id, quiz);
+            this.quizGateway.server.emit('Onboarding Started');
+            return quiz;
+        }
+        else {
+            throw new Error('Quiz is already in progress or completed.');
+        }
+    }
+    async startQuiz(id) {
+        const quiz = await this.quizService.findOne(id);
+        if (quiz.status === 'Onboarding') {
             quiz.status = 'In Progress';
             quiz.code = 'thecode';
             await this.quizService.updateQuiz(id, quiz);
@@ -60,13 +72,13 @@ let QuizResolver = class QuizResolver {
             return quiz;
         }
         else {
-            throw new Error('Quiz is already in progress or completed.');
+            throw new Error('Can\'t start quiz at this moment');
         }
     }
     async joinQuiz(input) {
         const { quizId, socketId, username } = input;
         const quiz = await this.quizService.findOne(quizId);
-        if (quiz.status === 'In Progress') {
+        if (quiz.status === 'Onboarding') {
             if (!quiz.participants.some((participant) => participant.socketId === socketId)) {
                 const newParticipant = new quiz_participant_entity_1.QuizParticipant();
                 newParticipant.socketId = socketId;
@@ -74,7 +86,7 @@ let QuizResolver = class QuizResolver {
                 await this.quizParticipantRepository.save(newParticipant);
                 quiz.participants.push(newParticipant);
                 await this.quizService.updateQuiz(quizId, quiz);
-                this.quizGateway.server.emit('userJoined', { quizId, socketId });
+                this.quizGateway.server.emit('userJoined', { quizId, socketId, username });
                 return quiz;
             }
             else {
@@ -135,6 +147,14 @@ __decorate([
     __metadata("design:paramtypes", [quiz_category_input_1.AssignQuizToCategoryInput]),
     __metadata("design:returntype", Promise)
 ], QuizResolver.prototype, "assignQuizToCategory", null);
+__decorate([
+    (0, common_1.UseGuards)(guards_1.JwtAuthGuard),
+    (0, graphql_1.Mutation)(() => quiz_input_1.CreateQuizInput),
+    __param(0, (0, graphql_1.Args)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], QuizResolver.prototype, "onboardPlayers", null);
 __decorate([
     (0, common_1.UseGuards)(guards_1.JwtAuthGuard),
     (0, graphql_1.Mutation)(() => quiz_input_1.CreateQuizInput),

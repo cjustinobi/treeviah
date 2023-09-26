@@ -15,7 +15,7 @@ export class Quiz {
   @Column({ nullable: true })
   code: string
 
-  @Column({ type: 'enum', enum: ['Not Started', 'In Progress', 'Completed'], default: 'Not Started' })
+  @Column({ type: 'enum', enum: ['Not Started', 'Onboarding', 'In Progress', 'Completed'], default: 'Not Started' })
   status: string
 
   @OneToMany(() => Question, (question) => question.quiz, { cascade: true })

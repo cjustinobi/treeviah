@@ -17,6 +17,7 @@ export declare class QuizResolver {
     create(input: CreateQuizInput): Promise<Quiz>;
     update(id: number, input: CreateQuizInput): Promise<Quiz>;
     assignQuizToCategory(input: AssignQuizToCategoryInput): Promise<Quiz>;
+    onboardPlayers(id: number): Promise<Quiz>;
     startQuiz(id: number): Promise<Quiz>;
     joinQuiz(input: JoinQuizInput): Promise<Quiz>;
 }

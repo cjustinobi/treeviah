@@ -78,13 +78,32 @@ export class QuizResolver {
   //   }
   // }
 
+  @UseGuards(JwtAuthGuard)
+@Mutation(() => CreateQuizInput)
+async onboardPlayers(@Args('id') id: number): Promise<Quiz> {
+
+  const quiz = await this.quizService.findOne(id);
+
+  if (quiz.status === 'Not Started') {
+    quiz.status = 'Onboarding'
+
+    await this.quizService.updateQuiz(id, quiz);
+
+    this.quizGateway.server.emit('Onboarding Started')
+    return quiz
+
+    } else {
+      throw new Error('Quiz is already in progress or completed.');
+    }
+  }
+
 @UseGuards(JwtAuthGuard)
 @Mutation(() => CreateQuizInput)
 async startQuiz(@Args('id') id: number): Promise<Quiz> {
 
   const quiz = await this.quizService.findOne(id);
 
-  if (quiz.status === 'Not Started') {
+  if (quiz.status === 'Onboarding') {
     quiz.status = 'In Progress';
     quiz.code = 'thecode'
 
@@ -94,7 +113,7 @@ async startQuiz(@Args('id') id: number): Promise<Quiz> {
     return quiz
 
     } else {
-      throw new Error('Quiz is already in progress or completed.');
+      throw new Error('Can\'t start quiz at this moment');
     }
   }
 
@@ -103,11 +122,11 @@ async startQuiz(@Args('id') id: number): Promise<Quiz> {
     @Args('input') input: JoinQuizInput
   ): Promise<Quiz> {
     const { quizId, socketId, username } = input
-    
+
     const quiz = await this.quizService.findOne(quizId)
 
     // Check if the quiz is in progress and not completed
-    if (quiz.status === 'In Progress') {
+    if (quiz.status === 'Onboarding') {
       // Check if the user's socketId is not already in the participants array
       if (!quiz.participants.some((participant) => participant.socketId === socketId)) {
         // Create a new QuizParticipant instance and populate it with data from QuizParticipantInput
@@ -122,7 +141,7 @@ async startQuiz(@Args('id') id: number): Promise<Quiz> {
         await this.quizService.updateQuiz(quizId, quiz);
 
         // Emit a 'userJoined' event to notify other participants
-        this.quizGateway.server.emit('userJoined', { quizId, socketId });
+        this.quizGateway.server.emit('userJoined', { quizId, socketId, username });
 
         return quiz;
       } else {

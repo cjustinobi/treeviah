@@ -7,12 +7,31 @@ import { UseGuards } from '@nestjs/common'
 import { JwtAuthGuard } from '../common/guards'
 import { ReqUser } from '../common/decorators'
 
-
+let currentQuestionIndex = 0;
 
 @Resolver(of => CreateQuestionInput)
 @UseGuards(JwtAuthGuard)
 export class QuestionResolver {
   constructor(private readonly questionService: QuestionService) {}
+
+  // Resolver to get the next question
+  @Query(returns => CreateQuestionInput, { name: 'getNextQuestion' })
+  async getNextQuestion(): Promise<Question> {
+    // Get the list of questions (assuming you have a method to fetch questions)
+    const questions = await this.questionService.findAll();
+
+    // Check if there are questions available
+    if (currentQuestionIndex < questions.length) {
+      // Get the current question
+      const nextQuestion = questions[currentQuestionIndex];
+
+      // Increment the current question index for the next request
+      currentQuestionIndex++;
+
+      // Return the next question to the client
+      return nextQuestion;
+    } 
+  }
 
   @Mutation(returns => CreateQuestionInput)
   async createQuestion(

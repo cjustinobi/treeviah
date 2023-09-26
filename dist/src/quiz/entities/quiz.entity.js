@@ -30,7 +30,7 @@ __decorate([
     __metadata("design:type", String)
 ], Quiz.prototype, "code", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'enum', enum: ['Not Started', 'In Progress', 'Completed'], default: 'Not Started' }),
+    (0, typeorm_1.Column)({ type: 'enum', enum: ['Not Started', 'Onboarding', 'In Progress', 'Completed'], default: 'Not Started' }),
     __metadata("design:type", String)
 ], Quiz.prototype, "status", void 0);
 __decorate([
