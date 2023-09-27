@@ -4,7 +4,7 @@ import { CreateQuestionInput } from './input/question.input';
 export declare class QuestionResolver {
     private readonly questionService;
     constructor(questionService: QuestionService);
-    getNextQuestion(): Promise<Question>;
+    getNextQuestion(): Promise<Question | null>;
     createQuestion(input: CreateQuestionInput, user: any): Promise<Question>;
     findOne(id: number): Promise<Question>;
     findAll(): Promise<Question[]>;

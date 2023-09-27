@@ -5,10 +5,8 @@ import { CreateQuizInput } from './input/quiz.input'
 import { AssignQuizToCategoryInput } from './quiz-category.input'
 import { UseGuards } from '@nestjs/common'
 import { JwtAuthGuard } from 'src/common/guards'
-// import { WebSocketGateway } from '@nestjs/websockets'
 import { QuizGateway } from './quiz.gateway'
 import { QuizParticipant } from './entities/quiz-participant.entity'
-import { QuizParticipantInput } from './input/quiz-participant.input'
 import { Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
 import { JoinQuizInput } from './input/join-quiz.input'
@@ -93,27 +91,27 @@ async onboardPlayers(@Args('id') id: number): Promise<Quiz> {
     return quiz
 
     } else {
-      throw new Error('Quiz is already in progress or completed.');
+      throw new Error('Quiz is already in progress or completed.')
     }
   }
 
 @UseGuards(JwtAuthGuard)
 @Mutation(() => CreateQuizInput)
-async startQuiz(@Args('id') id: number): Promise<Quiz> {
+async startQuiz(@Args('id') quizId: number): Promise<Quiz> {
 
-  const quiz = await this.quizService.findOne(id);
+  const quiz = await this.quizService.findOne(quizId);
 
   if (quiz.status === 'Onboarding') {
-    quiz.status = 'In Progress';
+    quiz.status = 'In Progress'
     quiz.code = 'thecode'
 
-    await this.quizService.updateQuiz(id, quiz);
+    await this.quizService.updateQuiz(quizId, quiz)
 
-    this.quizGateway.server.emit('quizStarted', {quiz})
+    await this.quizGateway.fetchNextQuestionAndEmit(quizId)
     return quiz
 
     } else {
-      throw new Error('Can\'t start quiz at this moment');
+      throw new Error('Can\'t start quiz at this moment')
     }
   }
 

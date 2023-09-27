@@ -31,6 +31,7 @@ let QuestionResolver = class QuestionResolver {
             currentQuestionIndex++;
             return nextQuestion;
         }
+        return null;
     }
     async createQuestion(input, user) {
         return this.questionService.createQuestion(input, user);
@@ -56,7 +57,7 @@ let QuestionResolver = class QuestionResolver {
 };
 exports.QuestionResolver = QuestionResolver;
 __decorate([
-    (0, graphql_1.Query)(returns => question_input_1.CreateQuestionInput, { name: 'getNextQuestion' }),
+    (0, graphql_1.Query)(returns => question_input_1.CreateQuestionInput),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)

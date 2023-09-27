@@ -18,6 +18,6 @@ export declare class QuizResolver {
     update(id: number, input: CreateQuizInput): Promise<Quiz>;
     assignQuizToCategory(input: AssignQuizToCategoryInput): Promise<Quiz>;
     onboardPlayers(id: number): Promise<Quiz>;
-    startQuiz(id: number): Promise<Quiz>;
+    startQuiz(quizId: number): Promise<Quiz>;
     joinQuiz(input: JoinQuizInput): Promise<Quiz>;
 }

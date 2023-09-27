@@ -62,13 +62,13 @@ let QuizResolver = class QuizResolver {
             throw new Error('Quiz is already in progress or completed.');
         }
     }
-    async startQuiz(id) {
-        const quiz = await this.quizService.findOne(id);
+    async startQuiz(quizId) {
+        const quiz = await this.quizService.findOne(quizId);
         if (quiz.status === 'Onboarding') {
             quiz.status = 'In Progress';
             quiz.code = 'thecode';
-            await this.quizService.updateQuiz(id, quiz);
-            this.quizGateway.server.emit('quizStarted', { quiz });
+            await this.quizService.updateQuiz(quizId, quiz);
+            await this.quizGateway.fetchNextQuestionAndEmit(quizId);
             return quiz;
         }
         else {
