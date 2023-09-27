@@ -10,5 +10,8 @@ export class JoinQuizInput {
   socketId: string
 
   @Field()
+  quizCode: string
+
+  @Field()
   username: string
 }

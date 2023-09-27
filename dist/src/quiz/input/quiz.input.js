@@ -15,6 +15,10 @@ let CreateQuizInput = class CreateQuizInput {
 };
 exports.CreateQuizInput = CreateQuizInput;
 __decorate([
+    (0, graphql_1.Field)({ nullable: true }),
+    __metadata("design:type", Number)
+], CreateQuizInput.prototype, "id", void 0);
+__decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], CreateQuizInput.prototype, "title", void 0);

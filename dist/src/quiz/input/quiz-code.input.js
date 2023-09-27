@@ -9,29 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JoinQuizInput = void 0;
+exports.QuizCodeInput = void 0;
 const graphql_1 = require("@nestjs/graphql");
-let JoinQuizInput = class JoinQuizInput {
+let QuizCodeInput = class QuizCodeInput {
 };
-exports.JoinQuizInput = JoinQuizInput;
-__decorate([
-    (0, graphql_1.Field)(),
-    __metadata("design:type", Number)
-], JoinQuizInput.prototype, "quizId", void 0);
+exports.QuizCodeInput = QuizCodeInput;
 __decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
-], JoinQuizInput.prototype, "socketId", void 0);
-__decorate([
-    (0, graphql_1.Field)(),
-    __metadata("design:type", String)
-], JoinQuizInput.prototype, "quizCode", void 0);
-__decorate([
-    (0, graphql_1.Field)(),
-    __metadata("design:type", String)
-], JoinQuizInput.prototype, "username", void 0);
-exports.JoinQuizInput = JoinQuizInput = __decorate([
+], QuizCodeInput.prototype, "code", void 0);
+exports.QuizCodeInput = QuizCodeInput = __decorate([
     (0, graphql_1.InputType)(),
-    (0, graphql_1.ObjectType)('JoinQuiz')
-], JoinQuizInput);
-//# sourceMappingURL=join-quiz.input.js.map
+    (0, graphql_1.ObjectType)('QuizCode')
+], QuizCodeInput);
+//# sourceMappingURL=quiz-code.input.js.map

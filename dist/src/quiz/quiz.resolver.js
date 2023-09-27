@@ -24,10 +24,13 @@ const quiz_participant_entity_1 = require("./entities/quiz-participant.entity");
 const typeorm_1 = require("typeorm");
 const typeorm_2 = require("@nestjs/typeorm");
 const join_quiz_input_1 = require("./input/join-quiz.input");
+const quiz_code_input_1 = require("./input/quiz-code.input");
+const helpers_1 = require("./helpers");
 let QuizResolver = class QuizResolver {
-    constructor(quizService, quizGateway, quizParticipantRepository) {
+    constructor(quizService, quizGateway, codeGenerator, quizParticipantRepository) {
         this.quizService = quizService;
         this.quizGateway = quizGateway;
+        this.codeGenerator = codeGenerator;
         this.quizParticipantRepository = quizParticipantRepository;
     }
     async findAll() {
@@ -54,6 +57,7 @@ let QuizResolver = class QuizResolver {
         const quiz = await this.quizService.findOne(id);
         if (quiz.status === 'Not Started') {
             quiz.status = 'Onboarding';
+            quiz.code = this.codeGenerator.generateCode(5);
             await this.quizService.updateQuiz(id, quiz);
             this.quizGateway.server.emit('Onboarding Started');
             return quiz;
@@ -66,7 +70,6 @@ let QuizResolver = class QuizResolver {
         const quiz = await this.quizService.findOne(quizId);
         if (quiz.status === 'Onboarding') {
             quiz.status = 'In Progress';
-            quiz.code = 'thecode';
             await this.quizService.updateQuiz(quizId, quiz);
             await this.quizGateway.fetchNextQuestionAndEmit(quizId);
             return quiz;
@@ -76,8 +79,10 @@ let QuizResolver = class QuizResolver {
         }
     }
     async joinQuiz(input) {
-        const { quizId, socketId, username } = input;
+        const { quizId, socketId, quizCode, username } = input;
         const quiz = await this.quizService.findOne(quizId);
+        if (quizCode !== quiz.code)
+            throw new Error('Quiz code does not match.');
         if (quiz.status === 'Onboarding') {
             if (!quiz.participants.some((participant) => participant.socketId === socketId)) {
                 const newParticipant = new quiz_participant_entity_1.QuizParticipant();
@@ -149,8 +154,8 @@ __decorate([
 ], QuizResolver.prototype, "assignQuizToCategory", null);
 __decorate([
     (0, common_1.UseGuards)(guards_1.JwtAuthGuard),
-    (0, graphql_1.Mutation)(() => quiz_input_1.CreateQuizInput),
-    __param(0, (0, graphql_1.Args)('id')),
+    (0, graphql_1.Mutation)(() => quiz_code_input_1.QuizCodeInput),
+    __param(0, (0, graphql_1.Args)('quizId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
@@ -158,7 +163,7 @@ __decorate([
 __decorate([
     (0, common_1.UseGuards)(guards_1.JwtAuthGuard),
     (0, graphql_1.Mutation)(() => quiz_input_1.CreateQuizInput),
-    __param(0, (0, graphql_1.Args)('id')),
+    __param(0, (0, graphql_1.Args)('quizId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
@@ -172,9 +177,10 @@ __decorate([
 ], QuizResolver.prototype, "joinQuiz", null);
 exports.QuizResolver = QuizResolver = __decorate([
     (0, graphql_1.Resolver)(of => quiz_input_1.CreateQuizInput),
-    __param(2, (0, typeorm_2.InjectRepository)(quiz_participant_entity_1.QuizParticipant)),
+    __param(3, (0, typeorm_2.InjectRepository)(quiz_participant_entity_1.QuizParticipant)),
     __metadata("design:paramtypes", [quiz_service_1.QuizService,
         quiz_gateway_1.QuizGateway,
+        helpers_1.CodeGenerator,
         typeorm_1.Repository])
 ], QuizResolver);
 //# sourceMappingURL=quiz.resolver.js.map

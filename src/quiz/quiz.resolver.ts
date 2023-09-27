@@ -10,6 +10,8 @@ import { QuizParticipant } from './entities/quiz-participant.entity'
 import { Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
 import { JoinQuizInput } from './input/join-quiz.input'
+import { QuizCodeInput } from './input/quiz-code.input'
+import { CodeGenerator } from './helpers'
 
 
 @Resolver(of => CreateQuizInput)
@@ -17,6 +19,7 @@ export class QuizResolver {
   constructor(
     private readonly quizService: QuizService,
     private readonly quizGateway: QuizGateway,
+    private readonly codeGenerator: CodeGenerator,
     @InjectRepository(QuizParticipant)
     private readonly quizParticipantRepository: Repository<QuizParticipant>
     ) {}
@@ -76,34 +79,33 @@ export class QuizResolver {
   //   }
   // }
 
-  @UseGuards(JwtAuthGuard)
-@Mutation(() => CreateQuizInput)
-async onboardPlayers(@Args('id') id: number): Promise<Quiz> {
+@UseGuards(JwtAuthGuard)
+@Mutation(() => QuizCodeInput)
+async onboardPlayers(@Args('quizId') id: number): Promise<Quiz> {
 
   const quiz = await this.quizService.findOne(id);
 
   if (quiz.status === 'Not Started') {
     quiz.status = 'Onboarding'
-
+    quiz.code = this.codeGenerator.generateCode(5)
     await this.quizService.updateQuiz(id, quiz);
 
     this.quizGateway.server.emit('Onboarding Started')
     return quiz
 
-    } else {
-      throw new Error('Quiz is already in progress or completed.')
-    }
+  } else {
+    throw new Error('Quiz is already in progress or completed.')
   }
+}
 
 @UseGuards(JwtAuthGuard)
 @Mutation(() => CreateQuizInput)
-async startQuiz(@Args('id') quizId: number): Promise<Quiz> {
+async startQuiz(@Args('quizId') quizId: number): Promise<Quiz> {
 
   const quiz = await this.quizService.findOne(quizId);
 
   if (quiz.status === 'Onboarding') {
     quiz.status = 'In Progress'
-    quiz.code = 'thecode'
 
     await this.quizService.updateQuiz(quizId, quiz)
 
@@ -119,9 +121,11 @@ async startQuiz(@Args('id') quizId: number): Promise<Quiz> {
   async joinQuiz(
     @Args('input') input: JoinQuizInput
   ): Promise<Quiz> {
-    const { quizId, socketId, username } = input
+    const { quizId, socketId, quizCode, username } = input
 
     const quiz = await this.quizService.findOne(quizId)
+
+    if (quizCode !== quiz.code) throw new Error('Quiz code does not match.')
 
     // Check if the quiz is in progress and not completed
     if (quiz.status === 'Onboarding') {
@@ -139,7 +143,7 @@ async startQuiz(@Args('id') quizId: number): Promise<Quiz> {
         await this.quizService.updateQuiz(quizId, quiz);
 
         // Emit a 'userJoined' event to notify other participants
-        this.quizGateway.server.emit('userJoined', { quizId, socketId, username });
+        this.quizGateway.server.emit('userJoined', { quizId, socketId, username })
 
         return quiz;
       } else {
