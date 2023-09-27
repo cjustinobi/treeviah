@@ -24,15 +24,6 @@ let QuestionResolver = class QuestionResolver {
     constructor(questionService) {
         this.questionService = questionService;
     }
-    async getNextQuestion() {
-        const questions = await this.questionService.findAll();
-        if (currentQuestionIndex < questions.length) {
-            const nextQuestion = questions[currentQuestionIndex];
-            currentQuestionIndex++;
-            return nextQuestion;
-        }
-        return null;
-    }
     async createQuestion(input, user) {
         return this.questionService.createQuestion(input, user);
     }
@@ -56,12 +47,6 @@ let QuestionResolver = class QuestionResolver {
     }
 };
 exports.QuestionResolver = QuestionResolver;
-__decorate([
-    (0, graphql_1.Query)(returns => question_input_1.CreateQuestionInput),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], QuestionResolver.prototype, "getNextQuestion", null);
 __decorate([
     (0, graphql_1.Mutation)(returns => question_input_1.CreateQuestionInput),
     __param(0, (0, graphql_1.Args)('input')),
