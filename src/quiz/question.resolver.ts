@@ -16,6 +16,24 @@ export class QuestionResolver {
     private readonly questionService: QuestionService
     ) {}
 
+  @Query(returns => CreateQuestionInput)
+  async getNextQuestion(): Promise<Question | null> {
+    // Get the list of questions (assuming you have a method to fetch questions)
+    const questions = await this.questionService.findAll()
+
+    // Check if there are questions available
+    if (currentQuestionIndex < questions.length) {
+      // Get the current question
+      const nextQuestion = questions[currentQuestionIndex]
+
+      // Increment the current question index for the next request
+      currentQuestionIndex++
+
+      // Return the next question to the client
+      return nextQuestion
+    } 
+    return null
+  }
 
   @Mutation(returns => CreateQuestionInput)
   async createQuestion(

@@ -59,7 +59,7 @@ let QuizResolver = class QuizResolver {
             quiz.status = 'Onboarding';
             quiz.code = this.codeGenerator.generateCode(5);
             await this.quizService.updateQuiz(id, quiz);
-            this.quizGateway.server.emit('Onboarding Started');
+            this.quizGateway.server.emit('Onboarding Started', { quizCode: quiz.code });
             return quiz;
         }
         else {
