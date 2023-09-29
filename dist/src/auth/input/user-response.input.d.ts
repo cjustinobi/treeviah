@@ -1,4 +1,4 @@
-export declare class UserResponseDto {
+export declare class UserResponseInput {
     id: number;
     fullname: string;
     username: string;

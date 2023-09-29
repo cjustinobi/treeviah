@@ -4,7 +4,7 @@ import { RegisterUserDto } from './dto/register-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { AuthHelper } from './auth.helper';
-import { UserResponseDto } from './dto/user-response.dto';
+import { UserResponseInput } from './input/user-response.input';
 export declare class AuthService {
     private readonly authRepository;
     private readonly authHelper;
@@ -13,7 +13,7 @@ export declare class AuthService {
     register(data: RegisterUserDto): Promise<User>;
     login(loginUserDto: LoginUserDto): Promise<{
         accessToken: string;
-        user: UserResponseDto;
+        user: UserResponseInput;
     }>;
     logout(accessToken: string): Promise<void>;
 }

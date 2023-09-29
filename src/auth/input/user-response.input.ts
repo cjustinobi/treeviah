@@ -3,7 +3,7 @@ import { Field, ObjectType } from '@nestjs/graphql'
 import { IsString, IsEmail, IsInt } from 'class-validator'
 
 @ObjectType()
-export class UserResponseDto {
+export class UserResponseInput {
 
   @Field()
   @IsInt()

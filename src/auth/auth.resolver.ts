@@ -1,8 +1,8 @@
 
 import { AuthService } from './auth.service'
 import { Resolver, Args, Mutation, Context } from '@nestjs/graphql'
-import { UserRegisterInput } from './user-register.input'
-import { UserLoginInput, AccessToken } from './user-login.input'
+import { UserRegisterInput } from './input/user-register.input'
+import { UserLoginInput, LoginResponse } from './input/user-login.input'
 import { UnauthorizedException } from '@nestjs/common'
 
 @Resolver(of => UserRegisterInput)
@@ -13,7 +13,7 @@ export class AuthResolver {
   ) {}
 
 
-@Mutation(() => AccessToken)
+@Mutation(() => LoginResponse)
 async login(@Args('loginInput') loginInput: UserLoginInput): Promise<{ accessToken: string, user: any }> {
   try {
     const { accessToken, user } = await this.authService.login(loginInput)

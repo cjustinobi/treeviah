@@ -7,7 +7,7 @@ import { LoginUserDto } from './dto/login-user.dto'
 import { JwtService } from '@nestjs/jwt'
 import { JwtPayload } from './jwt-payload.interface'
 import { AuthHelper } from './auth.helper'
-import { UserResponseDto } from './dto/user-response.dto'
+import { UserResponseInput } from './input/user-response.input'
 
 
 @Injectable()
@@ -23,7 +23,7 @@ export class AuthService {
     return this.authRepository.register(data)
   }
 
-   async login(loginUserDto: LoginUserDto): Promise<{ accessToken: string, user: UserResponseDto }> {
+   async login(loginUserDto: LoginUserDto): Promise<{ accessToken: string, user: UserResponseInput }> {
 
     const res = await this.authRepository.validateUserPassword(loginUserDto)
 
@@ -34,7 +34,7 @@ export class AuthService {
   
     const userObj = await this.authRepository.findByEmail(email)
    
-    let user: UserResponseDto = {
+    let user: UserResponseInput = {
       id: userObj.id,
       fullname: userObj.fullname,
       username: userObj.username,

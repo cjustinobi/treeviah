@@ -9,9 +9,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AccessToken = exports.UserLoginInput = void 0;
+exports.LoginResponse = exports.UserLoginInput = void 0;
 const graphql_1 = require("@nestjs/graphql");
-const user_response_dto_1 = require("./dto/user-response.dto");
+const user_response_input_1 = require("../input/user-response.input");
 let UserLoginInput = class UserLoginInput {
 };
 exports.UserLoginInput = UserLoginInput;
@@ -27,18 +27,18 @@ exports.UserLoginInput = UserLoginInput = __decorate([
     (0, graphql_1.InputType)(),
     (0, graphql_1.ObjectType)('Login')
 ], UserLoginInput);
-let AccessToken = class AccessToken {
+let LoginResponse = class LoginResponse {
 };
-exports.AccessToken = AccessToken;
+exports.LoginResponse = LoginResponse;
 __decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
-], AccessToken.prototype, "accessToken", void 0);
+], LoginResponse.prototype, "accessToken", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => user_response_dto_1.UserResponseDto, { nullable: true }),
-    __metadata("design:type", user_response_dto_1.UserResponseDto)
-], AccessToken.prototype, "user", void 0);
-exports.AccessToken = AccessToken = __decorate([
+    (0, graphql_1.Field)(() => user_response_input_1.UserResponseInput, { nullable: true }),
+    __metadata("design:type", user_response_input_1.UserResponseInput)
+], LoginResponse.prototype, "user", void 0);
+exports.LoginResponse = LoginResponse = __decorate([
     (0, graphql_1.ObjectType)()
-], AccessToken);
+], LoginResponse);
 //# sourceMappingURL=user-login.input.js.map

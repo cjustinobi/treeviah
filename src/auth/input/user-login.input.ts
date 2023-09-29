@@ -1,5 +1,5 @@
 import { ObjectType, Field, InputType, ID } from '@nestjs/graphql'
-import { UserResponseDto } from './dto/user-response.dto'
+import { UserResponseInput } from '../input/user-response.input'
 
 @InputType()
 @ObjectType('Login')
@@ -12,11 +12,11 @@ export class UserLoginInput {
 }
 
 @ObjectType()
-export class AccessToken {
+export class LoginResponse {
 
   @Field()
   accessToken: string 
 
- @Field(() => UserResponseDto, { nullable: true })
-  user?: UserResponseDto
+ @Field(() => UserResponseInput, { nullable: true })
+  user?: UserResponseInput
 }

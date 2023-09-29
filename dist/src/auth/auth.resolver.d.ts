@@ -1,6 +1,6 @@
 import { AuthService } from './auth.service';
-import { UserRegisterInput } from './user-register.input';
-import { UserLoginInput } from './user-login.input';
+import { UserRegisterInput } from './input/user-register.input';
+import { UserLoginInput } from './input/user-login.input';
 export declare class AuthResolver {
     private authService;
     constructor(authService: AuthService);
