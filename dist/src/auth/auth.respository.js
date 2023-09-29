@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CustomAuthRepository = void 0;
 const bcrypt = require("bcrypt");
+const common_1 = require("@nestjs/common");
 exports.CustomAuthRepository = {
     async register(registerUserDto) {
         const { password } = registerUserDto;
@@ -19,6 +20,13 @@ exports.CustomAuthRepository = {
         catch (error) {
             console.log(`User with email: ${email} not found`);
         }
+    },
+    async findByEmail(email) {
+        const user = await this.findOne({ where: { email } });
+        if (!user) {
+            throw new common_1.NotFoundException('User not found');
+        }
+        return user;
     }
 };
 const hashPassWord = (password, salt) => {

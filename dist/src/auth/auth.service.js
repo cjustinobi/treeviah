@@ -32,9 +32,16 @@ let AuthService = class AuthService {
         if (!res)
             throw new common_1.UnauthorizedException('Invalid credentials');
         const { email } = loginUserDto;
+        const userObj = await this.authRepository.findByEmail(email);
+        let user = {
+            id: userObj.id,
+            fullname: userObj.fullname,
+            username: userObj.username,
+            email: userObj.email
+        };
         const payload = { email };
         const accessToken = await this.jwtService.sign(payload);
-        return { accessToken };
+        return { accessToken, user };
     }
     async logout(accessToken) {
         this.authHelper.blackListToken(accessToken);

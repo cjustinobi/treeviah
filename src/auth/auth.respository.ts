@@ -11,6 +11,7 @@ export interface AuthRepository extends Repository<User> {
   register(data)
   validateUserPassword({email, password})
   userExists({email})
+  findByEmail(email)
 }
 
 export const CustomAuthRepository: Pick<AuthRepository, any> = {
@@ -37,10 +38,24 @@ export const CustomAuthRepository: Pick<AuthRepository, any> = {
       console.log(`User with email: ${email} not found`)
     }
 
+  },
+
+  async findByEmail(email: string): Promise<User | undefined> {
+  
+    const user = await this.findOne({ where: { email } });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return user;
   }
 
-} 
+}
 
+
+
+// TODO: Move to helper class
 
 const hashPassWord = (password: any, salt: any) => {
   return bcrypt.hash(password, salt)

@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccessToken = exports.UserLoginInput = void 0;
 const graphql_1 = require("@nestjs/graphql");
+const user_response_dto_1 = require("./dto/user-response.dto");
 let UserLoginInput = class UserLoginInput {
 };
 exports.UserLoginInput = UserLoginInput;
@@ -33,6 +34,10 @@ __decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], AccessToken.prototype, "accessToken", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => user_response_dto_1.UserResponseDto, { nullable: true }),
+    __metadata("design:type", user_response_dto_1.UserResponseDto)
+], AccessToken.prototype, "user", void 0);
 exports.AccessToken = AccessToken = __decorate([
     (0, graphql_1.ObjectType)()
 ], AccessToken);

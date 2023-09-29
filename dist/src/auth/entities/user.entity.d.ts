@@ -1,8 +1,7 @@
 import { Question } from '../../quiz/entities/question.entity';
 export declare class User {
     id: number;
-    first_name: string;
-    last_name: string;
+    fullname: string;
     username: string;
     email: string;
     salt: string;

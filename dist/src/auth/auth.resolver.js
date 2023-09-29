@@ -24,8 +24,8 @@ let AuthResolver = class AuthResolver {
     }
     async login(loginInput) {
         try {
-            const { accessToken } = await this.authService.login(loginInput);
-            return { accessToken };
+            const { accessToken, user } = await this.authService.login(loginInput);
+            return { accessToken, user };
         }
         catch (error) {
             throw new common_1.UnauthorizedException('Invalid credentials');

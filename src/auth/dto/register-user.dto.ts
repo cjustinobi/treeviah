@@ -1,16 +1,12 @@
 
-import { IsNotEmpty, IsString, IsEmail } from 'class-validator'
+import { IsNotEmpty, IsString, IsEmail, IsOptional } from 'class-validator'
 
 export class RegisterUserDto {
 
   // Validates for a non-empty string
   @IsString()
   @IsNotEmpty()
-  public first_name: string
-
-  @IsString()
-  @IsNotEmpty()
-  public last_name: string
+  public fullname: string
 
   @IsString()
   @IsNotEmpty()
@@ -22,7 +18,7 @@ export class RegisterUserDto {
   public email: string
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   public salt: string
 
   @IsString()

@@ -17,11 +17,7 @@ exports.UserRegisterInput = UserRegisterInput;
 __decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
-], UserRegisterInput.prototype, "first_name", void 0);
-__decorate([
-    (0, graphql_1.Field)(),
-    __metadata("design:type", String)
-], UserRegisterInput.prototype, "last_name", void 0);
+], UserRegisterInput.prototype, "fullname", void 0);
 __decorate([
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
@@ -31,7 +27,7 @@ __decorate([
     __metadata("design:type", String)
 ], UserRegisterInput.prototype, "username", void 0);
 __decorate([
-    (0, graphql_1.Field)(),
+    (0, graphql_1.Field)({ nullable: true }),
     __metadata("design:type", String)
 ], UserRegisterInput.prototype, "salt", void 0);
 __decorate([

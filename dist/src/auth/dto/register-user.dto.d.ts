@@ -1,6 +1,5 @@
 export declare class RegisterUserDto {
-    first_name: string;
-    last_name: string;
+    fullname: string;
     username: string;
     email: string;
     salt: string;

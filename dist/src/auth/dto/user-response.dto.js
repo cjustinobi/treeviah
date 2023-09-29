@@ -9,35 +9,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RegisterUserDto = void 0;
+exports.UserResponseDto = void 0;
+const graphql_1 = require("@nestjs/graphql");
 const class_validator_1 = require("class-validator");
-class RegisterUserDto {
-}
-exports.RegisterUserDto = RegisterUserDto;
+let UserResponseDto = class UserResponseDto {
+};
+exports.UserResponseDto = UserResponseDto;
 __decorate([
+    (0, graphql_1.Field)(),
+    (0, class_validator_1.IsInt)(),
+    __metadata("design:type", Number)
+], UserResponseDto.prototype, "id", void 0);
+__decorate([
+    (0, graphql_1.Field)(),
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], RegisterUserDto.prototype, "fullname", void 0);
+], UserResponseDto.prototype, "fullname", void 0);
 __decorate([
+    (0, graphql_1.Field)(),
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], RegisterUserDto.prototype, "username", void 0);
+], UserResponseDto.prototype, "username", void 0);
 __decorate([
+    (0, graphql_1.Field)(),
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsEmail)(),
     __metadata("design:type", String)
-], RegisterUserDto.prototype, "email", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", String)
-], RegisterUserDto.prototype, "salt", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], RegisterUserDto.prototype, "password", void 0);
-//# sourceMappingURL=register-user.dto.js.map
+], UserResponseDto.prototype, "email", void 0);
+exports.UserResponseDto = UserResponseDto = __decorate([
+    (0, graphql_1.ObjectType)()
+], UserResponseDto);
+//# sourceMappingURL=user-response.dto.js.map

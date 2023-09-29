@@ -10,5 +10,6 @@ export interface AuthRepository extends Repository<User> {
     userExists({ email }: {
         email: any;
     }): any;
+    findByEmail(email: any): any;
 }
 export declare const CustomAuthRepository: Pick<AuthRepository, any>;

@@ -5,10 +5,7 @@ import { ObjectType, Field, InputType } from '@nestjs/graphql'
 export class UserRegisterInput {
 
   @Field()
-  first_name: string
-
-  @Field()
-  last_name: string
+  fullname: string
 
   @Field()
   email: string
@@ -16,7 +13,7 @@ export class UserRegisterInput {
   @Field()
   username: string
 
-  @Field()
+  @Field({ nullable: true })
   salt: string
 
   @Field()

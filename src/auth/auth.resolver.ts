@@ -8,17 +8,17 @@ import { UnauthorizedException } from '@nestjs/common'
 @Resolver(of => UserRegisterInput)
 export class AuthResolver {
   constructor(
-    private authService: AuthService,
+    private authService: AuthService
 
   ) {}
 
 
 @Mutation(() => AccessToken)
-async login(@Args('loginInput') loginInput: UserLoginInput): Promise<{accessToken: string}> {
+async login(@Args('loginInput') loginInput: UserLoginInput): Promise<{ accessToken: string, user: any }> {
   try {
-    const { accessToken } = await this.authService.login(loginInput)
+    const { accessToken, user } = await this.authService.login(loginInput)
 
-    return {accessToken} // Return the response object
+    return { accessToken, user }
   } catch (error) {
     throw new UnauthorizedException('Invalid credentials')
   }
@@ -32,10 +32,10 @@ async registerUser(@Args('registerInput') userRegisterInput: UserRegisterInput) 
 
 
 
-  @Mutation(() => Boolean) // Return a boolean to indicate success
+  @Mutation(() => Boolean)
   async logout(@Context() context): Promise<boolean> {
-    const { authorization } = context.req.headers; // Get the authorization header from the context
-    const token = authorization.replace('Bearer ', ''); // Extract the token
+    const { authorization } = context.req.headers
+    const token = authorization.replace('Bearer ', '')
     
     try {
       this.authService.logout(token)

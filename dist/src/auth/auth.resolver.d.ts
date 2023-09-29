@@ -6,6 +6,7 @@ export declare class AuthResolver {
     constructor(authService: AuthService);
     login(loginInput: UserLoginInput): Promise<{
         accessToken: string;
+        user: any;
     }>;
     registerUser(userRegisterInput: UserRegisterInput): Promise<import("./entities/user.entity").User>;
     logout(context: any): Promise<boolean>;

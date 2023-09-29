@@ -7,6 +7,7 @@ import { LoginUserDto } from './dto/login-user.dto'
 import { JwtService } from '@nestjs/jwt'
 import { JwtPayload } from './jwt-payload.interface'
 import { AuthHelper } from './auth.helper'
+import { UserResponseDto } from './dto/user-response.dto'
 
 
 @Injectable()
@@ -22,7 +23,7 @@ export class AuthService {
     return this.authRepository.register(data)
   }
 
-   async login(loginUserDto: LoginUserDto): Promise<{ accessToken: string }> {
+   async login(loginUserDto: LoginUserDto): Promise<{ accessToken: string, user: UserResponseDto }> {
 
     const res = await this.authRepository.validateUserPassword(loginUserDto)
 
@@ -30,16 +31,26 @@ export class AuthService {
 
     const { email } = loginUserDto
 
+  
+    const userObj = await this.authRepository.findByEmail(email)
+   
+    let user: UserResponseDto = {
+      id: userObj.id,
+      fullname: userObj.fullname,
+      username: userObj.username,
+      email: userObj.email
+    }
+
     const payload: JwtPayload = { email }
 
     const accessToken = await this.jwtService.sign(payload)
 
-    return { accessToken }
+    return { accessToken, user }
 
   }
 
   async logout(accessToken: string): Promise<void> {
-    this.authHelper.blackListToken(accessToken);
+    this.authHelper.blackListToken(accessToken)
   }
 
 }

@@ -21,10 +21,7 @@ export class User {
   id: number
 
   @Column()
-  first_name: string
-
-  @Column()
-  last_name: string
+  fullname: string
 
   @Column()
   @Unique(['string'])
