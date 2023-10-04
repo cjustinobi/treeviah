@@ -9,19 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateQuizDto = void 0;
-const class_validator_1 = require("class-validator");
-class UpdateQuizDto {
-}
-exports.UpdateQuizDto = UpdateQuizDto;
+exports.UpdateQuizInput = void 0;
+const graphql_1 = require("@nestjs/graphql");
+let UpdateQuizInput = class UpdateQuizInput {
+};
+exports.UpdateQuizInput = UpdateQuizInput;
 __decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
+    (0, graphql_1.Field)({ nullable: true }),
     __metadata("design:type", String)
-], UpdateQuizDto.prototype, "title", void 0);
+], UpdateQuizInput.prototype, "title", void 0);
 __decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
+    (0, graphql_1.Field)({ nullable: true }),
     __metadata("design:type", String)
-], UpdateQuizDto.prototype, "status", void 0);
-//# sourceMappingURL=update-quiz.dto.js.map
+], UpdateQuizInput.prototype, "status", void 0);
+exports.UpdateQuizInput = UpdateQuizInput = __decorate([
+    (0, graphql_1.InputType)(),
+    (0, graphql_1.ObjectType)('UpdateQuiz')
+], UpdateQuizInput);
+//# sourceMappingURL=update-quiz.input.js.map

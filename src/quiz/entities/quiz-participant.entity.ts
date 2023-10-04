@@ -1,6 +1,7 @@
 
-import { Entity, PrimaryGeneratedColumn, ManyToOne, Column } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, ManyToOne, Column, OneToMany } from 'typeorm'
 import { Quiz } from './quiz.entity'
+import { Leaderboard } from './leaderboard.entity'
 
 @Entity()
 export class QuizParticipant {
@@ -18,5 +19,8 @@ export class QuizParticipant {
 
   @Column()
   socketId: string
+
+  @OneToMany(() => Leaderboard, (leaderboard) => leaderboard.participant)
+  leaderboard: Leaderboard[]
 
 }

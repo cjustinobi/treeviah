@@ -5,19 +5,22 @@ import {
     WebSocketServer,
   } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import { QuestionService } from './question.service';
+import { QuestionService } from './question.service'
+import { QuizParticipantService } from './quiz-participant.service'
 
 @WebSocketGateway()
 export class QuizGateway {
-  constructor(private readonly questionService: QuestionService) {} 
+  constructor(
+    private readonly questionService: QuestionService,
+    private readonly quizParticipantService: QuizParticipantService
+    ) {} 
   
     @WebSocketServer()
     server: Server
 
 
-  private currentQuestionIndex = 0; // Initialize the current question index
+  private currentQuestionIndex = 0
 
-  // Define a timer interval (in milliseconds)
   private timerInterval = 10000
 
   @SubscribeMessage('nQuestion')
@@ -26,12 +29,9 @@ export class QuizGateway {
 
     if (this.currentQuestionIndex < questions.length) {
       const nextQuestion = questions[this.currentQuestionIndex]
-      this.currentQuestionIndex++;
-
-      // Emit the next question to all participants in the quiz
-      
-      // this.server.emit('nextQuestion', { question: nextQuestion });
-      this.server.to(`quiz-${quizId}`).emit('nextQuestion', { question: nextQuestion });
+      this.currentQuestionIndex++
+      this.server.emit('nextQuestion', { question: nextQuestion });
+      // this.server.to(`quiz-${quizId}`).emit('nextQuestion', { question: nextQuestion });
 
       // Schedule the next fetch after the timer interval
       setTimeout(() => {
@@ -46,9 +46,33 @@ export class QuizGateway {
     this.server.emit('userJoined', { quizId, userId: client.id })
   }
 
-  // Handle user submitting answers
-  @SubscribeMessage('submitAnswers')
-  handleSubmitAnswers(client: Socket, data: any) {
+   @SubscribeMessage('submitAnswer')
+  async handleSubmitAnswer(client: Socket, questionId: number, answer: string ) {
+    
+    const user = await this.quizParticipantService.getQuizParticipantsBySocketId(client.id)
+console.log('ffhf')
+console.log(user)
+    const question = await this.questionService.findOne(questionId)
 
+    if (!question) {
+
+      return
+    }
+
+    // Check if the user's answer is correct.
+    const isCorrect = answer === question.correctAnswers[0]
+
+    // Calculate the time taken by the user to answer the question.
+    const answerTimestamp = new Date();
+    const timeTaken = answerTimestamp.getTime() - question.timestamp.getTime();
+
+    // await this.updateLeaderboard(user, isCorrect, timeTaken);
+
+    // Emit an event to notify other clients about the result.
+    this.server.to(`quiz-${question.quiz.id}`).emit('answerResult', {
+      username: user,
+      isCorrect,
+      timeTaken
+    })
   }
 }

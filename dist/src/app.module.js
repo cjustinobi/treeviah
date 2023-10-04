@@ -61,6 +61,7 @@ exports.AppModule = AppModule = __decorate([
                 subscriptions: {
                     'graphql-ws': true
                 },
+                context: ({ req }) => ({ req })
             }),
             quiz_module_1.QuizModule,
             category_module_1.CategoryModule

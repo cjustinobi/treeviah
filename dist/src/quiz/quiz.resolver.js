@@ -26,6 +26,7 @@ const typeorm_2 = require("@nestjs/typeorm");
 const join_quiz_input_1 = require("./input/join-quiz.input");
 const quiz_code_input_1 = require("./input/quiz-code.input");
 const helpers_1 = require("./helpers");
+const update_quiz_input_1 = require("./input/update-quiz.input");
 let QuizResolver = class QuizResolver {
     constructor(quizService, quizGateway, codeGenerator, quizParticipantRepository) {
         this.quizService = quizService;
@@ -141,7 +142,7 @@ __decorate([
     __param(0, (0, graphql_1.Args)('id')),
     __param(1, (0, graphql_1.Args)('input')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, quiz_input_1.CreateQuizInput]),
+    __metadata("design:paramtypes", [Number, update_quiz_input_1.UpdateQuizInput]),
     __metadata("design:returntype", Promise)
 ], QuizResolver.prototype, "update", null);
 __decorate([

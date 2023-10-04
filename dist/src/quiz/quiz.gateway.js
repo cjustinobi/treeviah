@@ -13,9 +13,11 @@ exports.QuizGateway = void 0;
 const websockets_1 = require("@nestjs/websockets");
 const socket_io_1 = require("socket.io");
 const question_service_1 = require("./question.service");
+const quiz_participant_service_1 = require("./quiz-participant.service");
 let QuizGateway = class QuizGateway {
-    constructor(questionService) {
+    constructor(questionService, quizParticipantService) {
         this.questionService = questionService;
+        this.quizParticipantService = quizParticipantService;
         this.currentQuestionIndex = 0;
         this.timerInterval = 10000;
     }
@@ -24,7 +26,7 @@ let QuizGateway = class QuizGateway {
         if (this.currentQuestionIndex < questions.length) {
             const nextQuestion = questions[this.currentQuestionIndex];
             this.currentQuestionIndex++;
-            this.server.to(`quiz-${quizId}`).emit('nextQuestion', { question: nextQuestion });
+            this.server.emit('nextQuestion', { question: nextQuestion });
             setTimeout(() => {
                 this.fetchNextQuestionAndEmit(quizId);
             }, this.timerInterval);
@@ -34,7 +36,22 @@ let QuizGateway = class QuizGateway {
         client.join(`quiz-${quizId}`);
         this.server.emit('userJoined', { quizId, userId: client.id });
     }
-    handleSubmitAnswers(client, data) {
+    async handleSubmitAnswer(client, questionId, answer) {
+        const user = await this.quizParticipantService.getQuizParticipantsBySocketId(client.id);
+        console.log('ffhf');
+        console.log(user);
+        const question = await this.questionService.findOne(questionId);
+        if (!question) {
+            return;
+        }
+        const isCorrect = answer === question.correctAnswers[0];
+        const answerTimestamp = new Date();
+        const timeTaken = answerTimestamp.getTime() - question.timestamp.getTime();
+        this.server.to(`quiz-${question.quiz.id}`).emit('answerResult', {
+            username: user,
+            isCorrect,
+            timeTaken
+        });
     }
 };
 exports.QuizGateway = QuizGateway;
@@ -55,13 +72,14 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], QuizGateway.prototype, "handleJoinQuiz", null);
 __decorate([
-    (0, websockets_1.SubscribeMessage)('submitAnswers'),
+    (0, websockets_1.SubscribeMessage)('submitAnswer'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [socket_io_1.Socket, Object]),
-    __metadata("design:returntype", void 0)
-], QuizGateway.prototype, "handleSubmitAnswers", null);
+    __metadata("design:paramtypes", [socket_io_1.Socket, Number, String]),
+    __metadata("design:returntype", Promise)
+], QuizGateway.prototype, "handleSubmitAnswer", null);
 exports.QuizGateway = QuizGateway = __decorate([
     (0, websockets_1.WebSocketGateway)(),
-    __metadata("design:paramtypes", [question_service_1.QuestionService])
+    __metadata("design:paramtypes", [question_service_1.QuestionService,
+        quiz_participant_service_1.QuizParticipantService])
 ], QuizGateway);
 //# sourceMappingURL=quiz.gateway.js.map

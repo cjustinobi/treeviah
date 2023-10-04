@@ -7,6 +7,7 @@ import { QuizParticipant } from './entities/quiz-participant.entity';
 import { Repository } from 'typeorm';
 import { JoinQuizInput } from './input/join-quiz.input';
 import { CodeGenerator } from './helpers';
+import { UpdateQuizInput } from './input/update-quiz.input';
 export declare class QuizResolver {
     private readonly quizService;
     private readonly quizGateway;
@@ -17,7 +18,7 @@ export declare class QuizResolver {
     findOne(id: number): Promise<Quiz>;
     getQuizzesByCategory(categoryId: number): Promise<Quiz[]>;
     create(input: CreateQuizInput): Promise<Quiz>;
-    update(id: number, input: CreateQuizInput): Promise<Quiz>;
+    update(id: number, input: UpdateQuizInput): Promise<Quiz>;
     assignQuizToCategory(input: AssignQuizToCategoryInput): Promise<Quiz>;
     onboardPlayers(id: number): Promise<Quiz>;
     startQuiz(quizId: number): Promise<Quiz>;

@@ -70,6 +70,10 @@ __decorate([
     (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.questions),
     __metadata("design:type", user_entity_1.User)
 ], Question.prototype, "user", void 0);
+__decorate([
+    (0, typeorm_1.CreateDateColumn)({ type: 'timestamp' }),
+    __metadata("design:type", Date)
+], Question.prototype, "timestamp", void 0);
 exports.Question = Question = __decorate([
     (0, typeorm_1.Entity)()
 ], Question);

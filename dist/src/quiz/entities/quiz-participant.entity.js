@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.QuizParticipant = void 0;
 const typeorm_1 = require("typeorm");
 const quiz_entity_1 = require("./quiz.entity");
+const leaderboard_entity_1 = require("./leaderboard.entity");
 let QuizParticipant = class QuizParticipant {
 };
 exports.QuizParticipant = QuizParticipant;
@@ -35,6 +36,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], QuizParticipant.prototype, "socketId", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => leaderboard_entity_1.Leaderboard, (leaderboard) => leaderboard.participant),
+    __metadata("design:type", Array)
+], QuizParticipant.prototype, "leaderboard", void 0);
 exports.QuizParticipant = QuizParticipant = __decorate([
     (0, typeorm_1.Entity)()
 ], QuizParticipant);

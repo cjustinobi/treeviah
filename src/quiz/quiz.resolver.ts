@@ -12,6 +12,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { JoinQuizInput } from './input/join-quiz.input'
 import { QuizCodeInput } from './input/quiz-code.input'
 import { CodeGenerator } from './helpers'
+import { UpdateQuizInput } from './input/update-quiz.input'
 
 
 @Resolver(of => CreateQuizInput)
@@ -25,13 +26,13 @@ export class QuizResolver {
     ) {}
 
   @UseGuards(JwtAuthGuard)
-  @Query(returns => [CreateQuizInput], {name: 'getQuizzes'})
+  @Query(returns => [CreateQuizInput], { name: 'getQuizzes' })
   async findAll(): Promise<CreateQuizInput[]> {
     return this.quizService.findAll()
   }
 
   @UseGuards(JwtAuthGuard)
-  @Query(returns => CreateQuizInput, {name: 'getQuiz'})
+  @Query(returns => CreateQuizInput, { name: 'getQuiz' })
   async findOne(@Args('id') id: number): Promise<Quiz> {
     return this.quizService.findOne(id) 
   }
@@ -45,17 +46,17 @@ export class QuizResolver {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Mutation(returns => CreateQuizInput, {name: 'createQuiz'})
+  @Mutation(returns => CreateQuizInput, { name: 'createQuiz' })
   async create(@Args('input') input: CreateQuizInput): Promise<Quiz> {
     const quiz = await this.quizService.createQuiz(input)
     return quiz
   }
 
   @UseGuards(JwtAuthGuard)
-  @Mutation(returns => CreateQuizInput, {name: 'updateQuiz'})
+  @Mutation(returns => CreateQuizInput, { name: 'updateQuiz' })
   async update(
     @Args('id') id: number,
-    @Args('input') input: CreateQuizInput
+    @Args('input') input: UpdateQuizInput
     ): Promise<Quiz> {
     return this.quizService.updateQuiz(id, input)
   }
@@ -143,7 +144,6 @@ async startQuiz(@Args('quizId') quizId: number): Promise<Quiz> {
         // Update the quiz with the modified participants array
         await this.quizService.updateQuiz(quizId, quiz);
 
-        // Emit a 'userJoined' event to notify other participants
         this.quizGateway.server.emit('userJoined', { quizId, socketId, username })
 
         return quiz;

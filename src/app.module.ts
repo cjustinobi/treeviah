@@ -9,7 +9,6 @@ import { AuthModule } from './auth/auth.module'
 import { QuizModule } from './quiz/quiz.module'
 import { CategoryModule } from './category/category.module'
 import { GraphQLModule } from '@nestjs/graphql'
-import { User } from './auth/entities/user.entity'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import configuration from '../config/configuration'
@@ -27,7 +26,6 @@ import { QuizParticipant } from './quiz/entities/quiz-participant.entity'
       load: [configuration]
     }),
     AuthModule,
-    // TypeOrmModule.forFeature([User]),
     TypeOrmModule.forFeature([QuizParticipant]),
     TypeOrmModule.forRootAsync({
       useFactory: dataSourceOptions,
@@ -42,6 +40,7 @@ import { QuizParticipant } from './quiz/entities/quiz-participant.entity'
       subscriptions: {
         'graphql-ws': true
       },
+      context: ({ req }) => ({ req })
     }),
     QuizModule,
     CategoryModule

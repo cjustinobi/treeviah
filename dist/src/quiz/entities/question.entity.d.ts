@@ -12,4 +12,5 @@ export declare class Question {
     point: string;
     quiz: Quiz;
     user: User;
+    timestamp: Date;
 }
