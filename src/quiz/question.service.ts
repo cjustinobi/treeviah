@@ -62,10 +62,10 @@ export class QuestionService {
     const question = await this.questionRepository.findOneBy({id})
 
     if (!question) {
-      throw new NotFoundException('Question not found');
+      throw new NotFoundException('Question not found')
     }
 
     question.timestamp = new Date()
-    return this.questionRepository.save(question);
+    return this.questionRepository.save(question)
   }
 }
