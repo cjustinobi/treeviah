@@ -26,7 +26,11 @@ let QuestionService = class QuestionService {
         return this.questionRepository.save({ ...question, user });
     }
     async findOne(id) {
-        return this.questionRepository.findOneBy({ id });
+        return await this.questionRepository
+            .createQueryBuilder('question')
+            .where('question.id = :id', { id })
+            .leftJoinAndSelect('question.quiz', 'quiz')
+            .getOne();
     }
     async findAll() {
         return this.questionRepository.find();

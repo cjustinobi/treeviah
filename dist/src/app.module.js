@@ -30,6 +30,7 @@ const quiz_resolver_1 = require("./quiz/quiz.resolver");
 const category_resolver_1 = require("./category/category.resolver");
 const quiz_gateway_1 = require("./quiz/quiz.gateway");
 const quiz_participant_entity_1 = require("./quiz/entities/quiz-participant.entity");
+const leaderboard_module_1 = require("./leaderboard/leaderboard.module");
 let AppModule = class AppModule {
     constructor(dataSource) {
         this.dataSource = dataSource;
@@ -64,7 +65,8 @@ exports.AppModule = AppModule = __decorate([
                 context: ({ req }) => ({ req })
             }),
             quiz_module_1.QuizModule,
-            category_module_1.CategoryModule
+            category_module_1.CategoryModule,
+            leaderboard_module_1.LeaderboardModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [

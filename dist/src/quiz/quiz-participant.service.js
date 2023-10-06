@@ -22,8 +22,13 @@ let QuizParticipantService = class QuizParticipantService {
         this.quizParticipantRepository = quizParticipantRepository;
     }
     async getQuizParticipantsBySocketId(socketId) {
-        return this.quizParticipantRepository.find({
+        return this.quizParticipantRepository.findOne({
             where: { socketId }
+        });
+    }
+    async getQuizParticipantsByUsername(username) {
+        return this.quizParticipantRepository.findOne({
+            where: { username }
         });
     }
 };

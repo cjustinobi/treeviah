@@ -15,4 +15,5 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./code-generator"), exports);
+__exportStar(require("./point-calculator"), exports);
 //# sourceMappingURL=index.js.map

@@ -22,9 +22,28 @@ let QuizModule = class QuizModule {
 exports.QuizModule = QuizModule;
 exports.QuizModule = QuizModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([quiz_entity_1.Quiz, question_entity_1.Question, category_entity_1.Category, quiz_participant_entity_1.QuizParticipant])],
-        providers: [quiz_service_1.QuizService, question_service_1.QuestionService, helpers_1.CodeGenerator, quiz_participant_service_1.QuizParticipantService],
-        exports: [quiz_service_1.QuizService, question_service_1.QuestionService, helpers_1.CodeGenerator, quiz_participant_service_1.QuizParticipantService]
+        imports: [
+            typeorm_1.TypeOrmModule.forFeature([
+                quiz_entity_1.Quiz,
+                question_entity_1.Question,
+                category_entity_1.Category,
+                quiz_participant_entity_1.QuizParticipant
+            ])
+        ],
+        providers: [
+            quiz_service_1.QuizService,
+            question_service_1.QuestionService,
+            helpers_1.CodeGenerator,
+            helpers_1.PointCalculator,
+            quiz_participant_service_1.QuizParticipantService
+        ],
+        exports: [
+            quiz_service_1.QuizService,
+            question_service_1.QuestionService,
+            helpers_1.CodeGenerator,
+            helpers_1.PointCalculator,
+            quiz_participant_service_1.QuizParticipantService
+        ]
     })
 ], QuizModule);
 //# sourceMappingURL=quiz.module.js.map

@@ -14,10 +14,14 @@ const websockets_1 = require("@nestjs/websockets");
 const socket_io_1 = require("socket.io");
 const question_service_1 = require("./question.service");
 const quiz_participant_service_1 = require("./quiz-participant.service");
+const leaderboard_service_1 = require("../leaderboard/leaderboard.service");
+const point_calculator_1 = require("./helpers/point-calculator");
 let QuizGateway = class QuizGateway {
-    constructor(questionService, quizParticipantService) {
+    constructor(questionService, quizParticipantService, leaderboardService, pointCalculator) {
         this.questionService = questionService;
         this.quizParticipantService = quizParticipantService;
+        this.leaderboardService = leaderboardService;
+        this.pointCalculator = pointCalculator;
         this.currentQuestionIndex = 0;
         this.timerInterval = 10000;
     }
@@ -36,18 +40,19 @@ let QuizGateway = class QuizGateway {
         client.join(`quiz-${quizId}`);
         this.server.emit('userJoined', { quizId, userId: client.id });
     }
-    async handleSubmitAnswer(client, questionId, answer) {
-        const user = await this.quizParticipantService.getQuizParticipantsBySocketId(client.id);
-        console.log('ffhf');
-        console.log(user);
-        const question = await this.questionService.findOne(questionId);
-        if (!question) {
+    async handleSubmitAnswer(client, data) {
+        const user = await this.quizParticipantService.getQuizParticipantsByUsername('menhyui');
+        if (!user)
             return;
-        }
-        const isCorrect = answer === question.correctAnswers[0];
+        const question = await this.questionService.findOne(data.questionId);
+        if (!question)
+            return;
+        const isCorrect = data.answer === question.correctAnswers[0];
         const answerTimestamp = new Date();
         const timeTaken = answerTimestamp.getTime() - question.timestamp.getTime();
-        this.server.to(`quiz-${question.quiz.id}`).emit('answerResult', {
+        const points = this.pointCalculator.calculatePoints(timeTaken, question.timer);
+        await this.leaderboardService.updateLeaderboard(user, points);
+        this.server.emit('answerResult', {
             username: user,
             isCorrect,
             timeTaken
@@ -74,12 +79,14 @@ __decorate([
 __decorate([
     (0, websockets_1.SubscribeMessage)('submitAnswer'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [socket_io_1.Socket, Number, String]),
+    __metadata("design:paramtypes", [socket_io_1.Socket, Object]),
     __metadata("design:returntype", Promise)
 ], QuizGateway.prototype, "handleSubmitAnswer", null);
 exports.QuizGateway = QuizGateway = __decorate([
     (0, websockets_1.WebSocketGateway)(),
     __metadata("design:paramtypes", [question_service_1.QuestionService,
-        quiz_participant_service_1.QuizParticipantService])
+        quiz_participant_service_1.QuizParticipantService,
+        leaderboard_service_1.LeaderboardService,
+        point_calculator_1.PointCalculator])
 ], QuizGateway);
 //# sourceMappingURL=quiz.gateway.js.map

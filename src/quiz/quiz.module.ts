@@ -5,13 +5,32 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { Quiz } from './entities/quiz.entity'
 import { Question } from './entities/question.entity'
 import { Category } from '../category/entities/category.entity'
-import { CodeGenerator } from './helpers'
+import { CodeGenerator, PointCalculator } from './helpers'
 import { QuizParticipantService } from './quiz-participant.service'
 import { QuizParticipant } from './entities/quiz-participant.entity'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Quiz, Question, Category, QuizParticipant])],
-  providers: [QuizService, QuestionService, CodeGenerator, QuizParticipantService],
-  exports: [QuizService, QuestionService, CodeGenerator, QuizParticipantService]
+  imports: [
+    TypeOrmModule.forFeature([
+      Quiz, 
+      Question, 
+      Category, 
+      QuizParticipant
+    ])
+  ],
+  providers: [
+    QuizService, 
+    QuestionService, 
+    CodeGenerator, 
+    PointCalculator,
+    QuizParticipantService
+  ],
+  exports: [
+    QuizService,
+    QuestionService, 
+    CodeGenerator, 
+    PointCalculator,
+    QuizParticipantService
+  ]
 })
 export class QuizModule {}

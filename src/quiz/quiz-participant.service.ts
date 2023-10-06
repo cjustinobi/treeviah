@@ -10,9 +10,15 @@ export class QuizParticipantService {
     private readonly quizParticipantRepository: Repository<QuizParticipant>,
   ) {}
 
-  async getQuizParticipantsBySocketId(socketId: string): Promise<QuizParticipant[]> {
-    return this.quizParticipantRepository.find({
+  async getQuizParticipantsBySocketId(socketId: string): Promise<QuizParticipant> {
+    return this.quizParticipantRepository.findOne({
       where: { socketId }
+    });
+  }
+
+  async getQuizParticipantsByUsername(username: string): Promise<QuizParticipant> {
+    return this.quizParticipantRepository.findOne({
+      where: { username }
     });
   }
 }

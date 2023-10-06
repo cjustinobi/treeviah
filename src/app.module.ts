@@ -18,6 +18,7 @@ import { QuizResolver } from './quiz/quiz.resolver'
 import { CategoryResolver } from './category/category.resolver'
 import { QuizGateway } from './quiz/quiz.gateway'
 import { QuizParticipant } from './quiz/entities/quiz-participant.entity'
+import { LeaderboardModule } from './leaderboard/leaderboard.module'
 
 @Module({
   imports: [
@@ -43,7 +44,8 @@ import { QuizParticipant } from './quiz/entities/quiz-participant.entity'
       context: ({ req }) => ({ req })
     }),
     QuizModule,
-    CategoryModule
+    CategoryModule,
+    LeaderboardModule
   ],
   controllers: [AppController],
   providers: [

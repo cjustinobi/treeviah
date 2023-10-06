@@ -21,7 +21,13 @@ export class QuestionService {
   }
 
    async findOne(id: number): Promise<Question | undefined> {
-    return this.questionRepository.findOneBy({id})
+    return await this.questionRepository
+  .createQueryBuilder('question')
+  .where('question.id = :id', { id })
+  .leftJoinAndSelect('question.quiz', 'quiz')
+  .getOne()
+
+    // return this.questionRepository.findOneBy({id})
   }
 
   async findAll(): Promise<Question[]> {
