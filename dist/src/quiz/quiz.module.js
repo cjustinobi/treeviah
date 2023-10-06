@@ -17,6 +17,7 @@ const category_entity_1 = require("../category/entities/category.entity");
 const helpers_1 = require("./helpers");
 const quiz_participant_service_1 = require("./quiz-participant.service");
 const quiz_participant_entity_1 = require("./entities/quiz-participant.entity");
+const leaderboard_entity_1 = require("./entities/leaderboard.entity");
 let QuizModule = class QuizModule {
 };
 exports.QuizModule = QuizModule;
@@ -27,7 +28,8 @@ exports.QuizModule = QuizModule = __decorate([
                 quiz_entity_1.Quiz,
                 question_entity_1.Question,
                 category_entity_1.Category,
-                quiz_participant_entity_1.QuizParticipant
+                quiz_participant_entity_1.QuizParticipant,
+                leaderboard_entity_1.Leaderboard
             ])
         ],
         providers: [

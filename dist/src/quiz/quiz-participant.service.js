@@ -17,9 +17,11 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const quiz_participant_entity_1 = require("./entities/quiz-participant.entity");
+const leaderboard_entity_1 = require("./entities/leaderboard.entity");
 let QuizParticipantService = class QuizParticipantService {
-    constructor(quizParticipantRepository) {
+    constructor(quizParticipantRepository, leaderboardRepository) {
         this.quizParticipantRepository = quizParticipantRepository;
+        this.leaderboardRepository = leaderboardRepository;
     }
     async getQuizParticipantsBySocketId(socketId) {
         return this.quizParticipantRepository.findOne({
@@ -31,11 +33,28 @@ let QuizParticipantService = class QuizParticipantService {
             where: { username }
         });
     }
+    async getTopThreeParticipants(quizId) {
+        const leaderboardEntries = await this.leaderboardRepository.find({
+            where: {
+                participant: {
+                    quiz: { id: quizId },
+                },
+            },
+            order: {
+                totalPoints: 'DESC',
+            },
+            take: 3,
+            relations: ['participant', 'participant.quiz'],
+        });
+        return leaderboardEntries;
+    }
 };
 exports.QuizParticipantService = QuizParticipantService;
 exports.QuizParticipantService = QuizParticipantService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(quiz_participant_entity_1.QuizParticipant)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __param(1, (0, typeorm_1.InjectRepository)(leaderboard_entity_1.Leaderboard)),
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository])
 ], QuizParticipantService);
 //# sourceMappingURL=quiz-participant.service.js.map

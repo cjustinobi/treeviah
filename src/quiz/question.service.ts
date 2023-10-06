@@ -57,4 +57,15 @@ export class QuestionService {
 
     await this.questionRepository.remove(question)
   }
+
+  async updateQuestionTimestamp(id: number): Promise<Question> {
+    const question = await this.questionRepository.findOneBy({id})
+
+    if (!question) {
+      throw new NotFoundException('Question not found');
+    }
+
+    question.timestamp = new Date()
+    return this.questionRepository.save(question);
+  }
 }

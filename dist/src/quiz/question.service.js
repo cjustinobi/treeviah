@@ -50,6 +50,14 @@ let QuestionService = class QuestionService {
         }
         await this.questionRepository.remove(question);
     }
+    async updateQuestionTimestamp(id) {
+        const question = await this.questionRepository.findOneBy({ id });
+        if (!question) {
+            throw new common_1.NotFoundException('Question not found');
+        }
+        question.timestamp = new Date();
+        return this.questionRepository.save(question);
+    }
 };
 exports.QuestionService = QuestionService;
 exports.QuestionService = QuestionService = __decorate([

@@ -13,7 +13,6 @@ export declare class QuizGateway {
     private currentQuestionIndex;
     private timerInterval;
     fetchNextQuestionAndEmit(quizId: number): Promise<void>;
-    handleJoinQuiz(client: Socket, quizId: number): void;
     handleSubmitAnswer(client: Socket, data: {
         questionId: number;
         answer: string;

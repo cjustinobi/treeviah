@@ -27,18 +27,20 @@ let QuizGateway = class QuizGateway {
     }
     async fetchNextQuestionAndEmit(quizId) {
         const questions = await this.questionService.findAll();
-        if (this.currentQuestionIndex < questions.length) {
+        const questionLength = questions.length;
+        if (this.currentQuestionIndex < questionLength) {
             const nextQuestion = questions[this.currentQuestionIndex];
             this.currentQuestionIndex++;
-            this.server.emit('nextQuestion', { question: nextQuestion });
+            this.server.emit('nextQuestionStarted', { question: nextQuestion, questionLength });
+            await this.questionService.updateQuestionTimestamp(nextQuestion.id);
             setTimeout(() => {
                 this.fetchNextQuestionAndEmit(quizId);
             }, this.timerInterval);
         }
-    }
-    handleJoinQuiz(client, quizId) {
-        client.join(`quiz-${quizId}`);
-        this.server.emit('userJoined', { quizId, userId: client.id });
+        else {
+            const result = await this.quizParticipantService.getTopThreeParticipants(quizId);
+            this.server.emit('quizResult', { result });
+        }
     }
     async handleSubmitAnswer(client, data) {
         const user = await this.quizParticipantService.getQuizParticipantsByUsername('menhyui');
@@ -65,17 +67,11 @@ __decorate([
     __metadata("design:type", socket_io_1.Server)
 ], QuizGateway.prototype, "server", void 0);
 __decorate([
-    (0, websockets_1.SubscribeMessage)('nQuestion'),
+    (0, websockets_1.SubscribeMessage)('nextQuestion'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], QuizGateway.prototype, "fetchNextQuestionAndEmit", null);
-__decorate([
-    (0, websockets_1.SubscribeMessage)('joinQuiz'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [socket_io_1.Socket, Number]),
-    __metadata("design:returntype", void 0)
-], QuizGateway.prototype, "handleJoinQuiz", null);
 __decorate([
     (0, websockets_1.SubscribeMessage)('submitAnswer'),
     __metadata("design:type", Function),

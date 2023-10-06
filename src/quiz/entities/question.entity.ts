@@ -48,6 +48,6 @@ export class Question {
   @ManyToOne(() => User, (user) => user.questions)
   user: User
 
-  @CreateDateColumn({ type: 'timestamp' })
+  @CreateDateColumn({ type: 'timestamp', nullable: true })
   timestamp: Date
 }

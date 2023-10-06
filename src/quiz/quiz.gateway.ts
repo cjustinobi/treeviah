@@ -26,31 +26,31 @@ export class QuizGateway {
 
   private timerInterval = 10000
 
-  @SubscribeMessage('nQuestion')
+  @SubscribeMessage('nextQuestion')
   async fetchNextQuestionAndEmit(quizId: number): Promise<void> {
     const questions = await this.questionService.findAll()
+    const questionLength = questions.length
 
-    if (this.currentQuestionIndex < questions.length) {
+    if (this.currentQuestionIndex < questionLength) {
       const nextQuestion = questions[this.currentQuestionIndex]
       this.currentQuestionIndex++
-      this.server.emit('nextQuestion', { question: nextQuestion })
+      this.server.emit('nextQuestionStarted', { question: nextQuestion, questionLength })
+
+      await this.questionService.updateQuestionTimestamp(nextQuestion.id)
       // this.server.to(`quiz-${quizId}`).emit('nextQuestion', { question: nextQuestion })
 
       // Schedule the next fetch after the timer interval
       setTimeout(() => {
         this.fetchNextQuestionAndEmit(quizId)
       }, this.timerInterval)
+    } else {
+      const result = await this.quizParticipantService.getTopThreeParticipants(quizId)
+      this.server.emit('quizResult', { result })
     }
   }
 
-  @SubscribeMessage('joinQuiz')
-  handleJoinQuiz(client: Socket, quizId: number) {
-    client.join(`quiz-${quizId}`)
-    this.server.emit('userJoined', { quizId, userId: client.id })
-  }
-
    @SubscribeMessage('submitAnswer')
-  async handleSubmitAnswer(client: Socket, data: {questionId: number, answer: string}) {
+  async handleSubmitAnswer(client: Socket, data: { questionId: number, answer: string }) {
     
     const user = await this.quizParticipantService.getQuizParticipantsByUsername('menhyui')
     if (!user) return

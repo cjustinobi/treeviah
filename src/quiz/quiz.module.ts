@@ -8,6 +8,7 @@ import { Category } from '../category/entities/category.entity'
 import { CodeGenerator, PointCalculator } from './helpers'
 import { QuizParticipantService } from './quiz-participant.service'
 import { QuizParticipant } from './entities/quiz-participant.entity'
+import { Leaderboard } from './entities/leaderboard.entity'
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { QuizParticipant } from './entities/quiz-participant.entity'
       Quiz, 
       Question, 
       Category, 
-      QuizParticipant
+      QuizParticipant,
+      Leaderboard
     ])
   ],
   providers: [

@@ -11,4 +11,5 @@ export declare class QuestionService {
     findAll(): Promise<Question[]>;
     update(id: number, updateQuestionDto: UpdateQuestionDto, user: User): Promise<Question>;
     delete(id: number): Promise<void>;
+    updateQuestionTimestamp(id: number): Promise<Question>;
 }

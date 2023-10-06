@@ -92,7 +92,7 @@ async onboardPlayers(@Args('quizId') id: number): Promise<Quiz> {
     quiz.code = this.codeGenerator.generateCode(5)
     await this.quizService.updateQuiz(id, quiz);
 
-    this.quizGateway.server.emit('Onboarding Started', { quizCode: quiz.code })
+    this.quizGateway.server.emit('onboardingStarted', { quizCode: quiz.code })
     return quiz
 
   } else {
