@@ -8,7 +8,7 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
+    "start": "node dist/src/main",
     "start:dev": "NODE_ENV=development nest start --watch",
     "start:staging": "NODE_ENV=staging nest start --watch",
     "start:debug": "nest start --debug --watch",
@@ -22,7 +22,8 @@
     "typeorm": "npm run build && npx typeorm -d dist/data-source.js",
     "migration:generate": "npm run typeorm -- migration:generate dist/pp",
     "migration:run": "npm run typeorm -- migration:run",
-    "migration:revert": "npm run typeorm -- migration:revert"
+    "migration:revert": "npm run typeorm -- migration:revert",
+    "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "dependencies": {
     "@apollo/server": "^4.9.1",
