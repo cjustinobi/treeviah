@@ -28,4 +28,4 @@ jobs:
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
-        ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY treeabwd@66.29.141.34 "cd /publich_html/treeviah && git pull && npm install && pm2 restart treeviah"
+        ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY treeabwd@66.29.141.34 "cd /public_html/treeviah && git pull && npm install && pm2 restart treeviah"
