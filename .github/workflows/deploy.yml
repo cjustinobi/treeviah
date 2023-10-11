@@ -21,7 +21,7 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Build NestJS app
+    - name: Build NestJS App
       run: npm run build
 
     - name: Deploy to Namecheap
