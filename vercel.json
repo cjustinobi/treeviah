@@ -19,7 +19,7 @@
     "DB_USERNAME": "treeviah",
     "DB_PASSWORD": "treeviah",
     "DB_DATABASE": "treeviah",
-    "DB_SYNCHRONIZE": true,
+    "DB_SYNCHRONIZE": "true",
     "JWT_EXPIRES_IN": "2y",
     "JWT_SECRET": "afric",
     "CONNECTION_NAME": "mysql://treeviah:treeviah@db4free.net:3306/treeviah"
