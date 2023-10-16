@@ -15,4 +15,4 @@ export const dataSourceOptions = async (configService: ConfigService): Promise<T
   extra: {
     socketPath: configService.get<string>('NODE_ENV') === 'staging' ? configService.get<string>('CONNECTION_NAME') : ''
   }
-})
+});
