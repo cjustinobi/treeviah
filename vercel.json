@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "dist/src/main.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "dist/src/main.js"
+    }
+  ],
+  "env": {
+    "SERVER_PORT=3000": "",
+    "DB_HOST=mysql-db": "",
+    "DB_PORT=3306": "",
+    "DB_USERNAME": "treeviah",
+    "DB_PASSWORD": "treeviah",
+    "DB_DATABASE": "treeviah",
+    "DB_SYNCHRONIZE": true,
+    "JWT_EXPIRES_IN": "2y",
+    "JWT_SECRET": "afric",
+    "CONNECTION_NAME": "mysql://treeviah:treeviah@db4free.net:3306/treeviah"
+  }
+}
