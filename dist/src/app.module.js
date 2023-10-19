@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
-const cors = require("cors");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const app_controller_1 = require("./app.controller");
@@ -34,9 +33,6 @@ const leaderboard_module_1 = require("./leaderboard/leaderboard.module");
 let AppModule = class AppModule {
     constructor(dataSource) {
         this.dataSource = dataSource;
-    }
-    configure(consumer) {
-        consumer.apply(cors()).forRoutes('*');
     }
 };
 exports.AppModule = AppModule;

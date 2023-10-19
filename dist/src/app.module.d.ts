@@ -1,7 +1,5 @@
-import { MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-export declare class AppModule implements NestModule {
+export declare class AppModule {
     private dataSource;
     constructor(dataSource: DataSource);
-    configure(consumer: MiddlewareConsumer): void;
 }

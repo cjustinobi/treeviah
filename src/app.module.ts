@@ -57,9 +57,12 @@ import { LeaderboardModule } from './leaderboard/leaderboard.module'
     QuizGateway
   ],
 })
-export class AppModule implements NestModule {
+export class AppModule {
   constructor(private dataSource: DataSource) {}
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(cors()).forRoutes('*')
-  }
 }
+// export class AppModule implements NestModule {
+//   constructor(private dataSource: DataSource) {}
+//   // configure(consumer: MiddlewareConsumer) {
+//   //   consumer.apply(cors()).forRoutes('*')
+//   // }
+// }
