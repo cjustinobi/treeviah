@@ -23,3 +23,5 @@ gcloud run deploy poll \
   # --allow-unauthenticated \
   # --add-cloudsql-instances treeviah:us-central1:myinstance \
   # --project treeviah
+
+  gcloud builds submit --tag gcr.io/treeviah-404022/poll --project treeviah-404022
