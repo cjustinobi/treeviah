@@ -5,5 +5,4 @@ import { InputType, Field, ObjectType } from '@nestjs/graphql'
 export class QuizCodeInput {
   @Field()
   code: string
-
 }

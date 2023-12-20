@@ -4,8 +4,8 @@ import { InputType, Field, Int, ObjectType } from '@nestjs/graphql'
 @ObjectType('QuizToCategory')
 export class AssignQuizToCategoryInput {
   @Field(() => Int)
-  quizId: number;
+  quizId: number
 
   @Field(() => Int)
-  categoryId: number;
+  categoryId: number
 }

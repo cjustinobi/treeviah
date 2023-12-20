@@ -1,8 +1,6 @@
-
 import { IsNotEmpty, IsString, IsEmail, IsOptional } from 'class-validator'
 
 export class RegisterUserDto {
-
   // Validates for a non-empty string
   @IsString()
   @IsNotEmpty()

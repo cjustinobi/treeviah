@@ -12,4 +12,4 @@
 - Poll
 - Word Cloud
 - Open ended
-Players type up to 250 characters and submit their answers. Their answers are visualized as text cards.
+  Players type up to 250 characters and submit their answers. Their answers are visualized as text cards.

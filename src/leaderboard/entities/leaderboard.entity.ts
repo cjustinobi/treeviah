@@ -1,5 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne, Column, CreateDateColumn } from 'typeorm';
-import { QuizParticipant } from '../../quiz/entities/quiz-participant.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  Column,
+  CreateDateColumn,
+} from 'typeorm'
+import { QuizParticipant } from '../../quiz/entities/quiz-participant.entity'
 
 @Entity()
 export class Leaderboard {

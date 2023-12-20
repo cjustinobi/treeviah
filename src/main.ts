@@ -6,9 +6,9 @@ import { ConfigService } from '@nestjs/config'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
-  const configService = app.get(ConfigService); // Get the ConfigService
-  
-  const port = configService.get<number>('port');
+  const configService = app.get(ConfigService) // Get the ConfigService
+
+  const port = configService.get<number>('port')
 
   // app.setGlobalPrefix('api');
   // app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }))

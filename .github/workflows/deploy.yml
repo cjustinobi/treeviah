@@ -10,22 +10,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Install Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: 14
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Build NestJS App
-      run: npm run build
+      - name: Build NestJS App
+        run: npm run build
 
-    - name: Deploy to Namecheap
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      run: |
-        ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY treeabwd@66.29.141.34 "cd /home/treeabwd/staging && git pull && npm install && pm2 restart treeviah"
+      - name: Deploy to Namecheap
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY treeabwd@66.29.141.34 "cd /home/treeabwd/staging && git pull && npm install && pm2 restart treeviah"

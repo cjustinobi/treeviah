@@ -1,8 +1,8 @@
 import {
-    SubscribeMessage,
-    WebSocketGateway,
-    WebSocketServer,
-  } from '@nestjs/websockets'
+  SubscribeMessage,
+  WebSocketGateway,
+  WebSocketServer,
+} from '@nestjs/websockets'
 import { Server, Socket } from 'socket.io'
 import { QuestionService } from './question.service'
 import { QuizParticipantService } from './quiz-participant.service'
@@ -16,11 +16,10 @@ export class QuizGateway {
     private readonly quizParticipantService: QuizParticipantService,
     private readonly leaderboardService: LeaderboardService,
     private readonly pointCalculator: PointCalculator
-    ) {} 
-  
-    @WebSocketServer()
-    server: Server
+  ) {}
 
+  @WebSocketServer()
+  server: Server
 
   private currentQuestionIndex = 0
 
@@ -34,7 +33,10 @@ export class QuizGateway {
     if (this.currentQuestionIndex < questionLength) {
       const nextQuestion = questions[this.currentQuestionIndex]
       this.currentQuestionIndex++
-      this.server.emit('nextQuestionStarted', { question: nextQuestion, questionLength })
+      this.server.emit('nextQuestionStarted', {
+        question: nextQuestion,
+        questionLength,
+      })
 
       await this.questionService.updateQuestionTimestamp(nextQuestion.id)
       // this.server.to(`quiz-${quizId}`).emit('nextQuestion', { question: nextQuestion })
@@ -44,15 +46,20 @@ export class QuizGateway {
         this.fetchNextQuestionAndEmit(quizId)
       }, this.timerInterval)
     } else {
-      const result = await this.quizParticipantService.getTopThreeParticipants(quizId)
+      const result = await this.quizParticipantService.getTopThreeParticipants(
+        quizId
+      )
       this.server.emit('quizResult', { result })
     }
   }
 
-   @SubscribeMessage('submitAnswer')
-  async handleSubmitAnswer(client: Socket, data: { questionId: number, answer: string }) {
-    
-    const user = await this.quizParticipantService.getQuizParticipantsByUsername('menhyui')
+  @SubscribeMessage('submitAnswer')
+  async handleSubmitAnswer(
+    client: Socket,
+    data: { questionId: number; answer: string }
+  ) {
+    const user =
+      await this.quizParticipantService.getQuizParticipantsByUsername('menhyui')
     if (!user) return
 
     const question = await this.questionService.findOne(data.questionId)
@@ -64,15 +71,18 @@ export class QuizGateway {
     const answerTimestamp = new Date()
     const timeTaken = answerTimestamp.getTime() - question.timestamp.getTime()
 
-    const points = this.pointCalculator.calculatePoints(timeTaken, question.timer)
- 
+    const points = this.pointCalculator.calculatePoints(
+      timeTaken,
+      question.timer
+    )
+
     await this.leaderboardService.updateLeaderboard(user, points)
 
     this.server.emit('answerResult', {
-    // this.server.to(`quiz-${question.quiz.id}`).emit('answerResult', {
+      // this.server.to(`quiz-${question.quiz.id}`).emit('answerResult', {
       username: user,
       isCorrect,
-      timeTaken
+      timeTaken,
     })
   }
 }

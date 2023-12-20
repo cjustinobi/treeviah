@@ -1,18 +1,17 @@
-
 import { QuizParticipant } from 'src/quiz/entities/quiz-participant.entity'
 import { Question } from '../../quiz/entities/question.entity'
 import { Quiz } from '../../quiz/entities/quiz.entity'
-import { 
-  Entity, 
-  Column, 
-  PrimaryGeneratedColumn, 
-  Unique, 
-  CreateDateColumn, 
-  DeleteDateColumn, 
-  UpdateDateColumn, 
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  Unique,
+  CreateDateColumn,
+  DeleteDateColumn,
+  UpdateDateColumn,
   OneToMany,
   ManyToMany,
-  JoinTable
+  JoinTable,
 } from 'typeorm'
 
 @Entity()
@@ -45,9 +44,9 @@ export class User {
   @DeleteDateColumn()
   public deleted_at: Date | null
 
-
   @OneToMany(() => Question, (question) => question.user)
   questions: Question[]
 }
 
-{}
+{
+}

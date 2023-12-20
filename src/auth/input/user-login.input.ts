@@ -13,10 +13,9 @@ export class UserLoginInput {
 
 @ObjectType()
 export class LoginResponse {
-
   @Field()
-  accessToken: string 
+  accessToken: string
 
- @Field(() => UserResponseInput, { nullable: true })
+  @Field(() => UserResponseInput, { nullable: true })
   user?: UserResponseInput
 }

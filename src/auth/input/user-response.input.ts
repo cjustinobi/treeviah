@@ -1,10 +1,8 @@
-
 import { Field, ObjectType } from '@nestjs/graphql'
 import { IsString, IsEmail, IsInt } from 'class-validator'
 
 @ObjectType()
 export class UserResponseInput {
-
   @Field()
   @IsInt()
   public id: number
@@ -21,5 +19,4 @@ export class UserResponseInput {
   @IsString()
   @IsEmail()
   public email: string
-
 }

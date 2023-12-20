@@ -1,5 +1,3 @@
-
-
 import { IsString, IsOptional, IsArray, IsInt } from 'class-validator'
 
 export class UpdateQuestionDto {

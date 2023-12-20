@@ -1,5 +1,10 @@
-
-import { Entity, PrimaryGeneratedColumn, ManyToOne, Column, OneToMany } from 'typeorm'
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  Column,
+  OneToMany,
+} from 'typeorm'
 import { Quiz } from './quiz.entity'
 import { Leaderboard } from './leaderboard.entity'
 
@@ -14,7 +19,7 @@ export class QuizParticipant {
   @ManyToOne(() => Quiz, (quiz) => quiz.participants)
   quiz: Quiz
 
-  @Column({ nullable: true})
+  @Column({ nullable: true })
   score: number
 
   @Column()
@@ -22,5 +27,4 @@ export class QuizParticipant {
 
   @OneToMany(() => Leaderboard, (leaderboard) => leaderboard.participant)
   leaderboard: Leaderboard[]
-
 }

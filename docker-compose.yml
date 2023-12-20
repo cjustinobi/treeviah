@@ -1,14 +1,15 @@
-version: "3"
+version: '3'
 services:
   nest-app:
     container_name: nest-app
     build:
       context: .
-      target: "dev"
+      target: 'dev'
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"  # Map the container port to the host port
-    command: ["./wait-for-it.sh", "mysql-db:3306", "--", "npm", "run", "start:dev"]
+      - '3000:3000' # Map the container port to the host port
+    command:
+      ['./wait-for-it.sh', 'mysql-db:3306', '--', 'npm', 'run', 'start:dev']
     networks:
       - app-network
     volumes:
@@ -28,7 +29,7 @@ services:
     networks:
       - app-network
     ports:
-      - "3306:3306"  # Map the container port to the host port
+      - '3306:3306' # Map the container port to the host port
     volumes:
       - mysql_data:/var/lib/mysql
 networks:

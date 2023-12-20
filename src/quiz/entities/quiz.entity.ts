@@ -1,5 +1,10 @@
-
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from 'typeorm'
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToOne,
+} from 'typeorm'
 import { Question } from './question.entity'
 import { Category } from '../../category/entities/category.entity'
 import { QuizParticipant } from './quiz-participant.entity'
@@ -15,7 +20,11 @@ export class Quiz {
   @Column({ nullable: true })
   code: string
 
-  @Column({ type: 'enum', enum: ['Not Started', 'Onboarding', 'In Progress', 'Completed'], default: 'Not Started' })
+  @Column({
+    type: 'enum',
+    enum: ['Not Started', 'Onboarding', 'In Progress', 'Completed'],
+    default: 'Not Started',
+  })
   status: string
 
   @OneToMany(() => Question, (question) => question.quiz, { cascade: true })
@@ -23,7 +32,7 @@ export class Quiz {
 
   @ManyToOne(() => Category, (category) => category.quizzes, {
     onDelete: 'CASCADE',
-    nullable: true
+    nullable: true,
   })
   category: Category
 

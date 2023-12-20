@@ -24,7 +24,7 @@ import { LeaderboardModule } from './leaderboard/leaderboard.module'
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [configuration]
+      load: [configuration],
     }),
     AuthModule,
     TypeOrmModule.forFeature([QuizParticipant]),
@@ -36,16 +36,16 @@ import { LeaderboardModule } from './leaderboard/leaderboard.module'
       driver: ApolloDriver,
       autoSchemaFile: true,
       buildSchemaOptions: {
-        numberScalarMode: 'integer'
+        numberScalarMode: 'integer',
       },
       subscriptions: {
-        'graphql-ws': true
+        'graphql-ws': true,
       },
-      context: ({ req }) => ({ req })
+      context: ({ req }) => ({ req }),
     }),
     QuizModule,
     CategoryModule,
-    LeaderboardModule
+    LeaderboardModule,
   ],
   controllers: [AppController],
   providers: [
@@ -54,7 +54,7 @@ import { LeaderboardModule } from './leaderboard/leaderboard.module'
     QuizResolver,
     QuestionResolver,
     CategoryResolver,
-    QuizGateway
+    QuizGateway,
   ],
 })
 export class AppModule {

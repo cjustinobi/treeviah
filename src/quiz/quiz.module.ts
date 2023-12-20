@@ -13,26 +13,26 @@ import { Leaderboard } from './entities/leaderboard.entity'
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      Quiz, 
-      Question, 
-      Category, 
+      Quiz,
+      Question,
+      Category,
       QuizParticipant,
-      Leaderboard
-    ])
+      Leaderboard,
+    ]),
   ],
   providers: [
-    QuizService, 
-    QuestionService, 
-    CodeGenerator, 
+    QuizService,
+    QuestionService,
+    CodeGenerator,
     PointCalculator,
-    QuizParticipantService
+    QuizParticipantService,
   ],
   exports: [
     QuizService,
-    QuestionService, 
-    CodeGenerator, 
+    QuestionService,
+    CodeGenerator,
     PointCalculator,
-    QuizParticipantService
-  ]
+    QuizParticipantService,
+  ],
 })
 export class QuizModule {}

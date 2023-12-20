@@ -1,4 +1,3 @@
-
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
@@ -11,21 +10,23 @@ import { User } from 'src/auth/entities/user.entity'
 export class QuestionService {
   constructor(
     @InjectRepository(Question)
-    private readonly questionRepository: Repository<Question>,
+    private readonly questionRepository: Repository<Question>
   ) {}
 
-  async createQuestion(createQuestionDto: CreateQuestionDto, user: User): Promise<Question> {
- 
+  async createQuestion(
+    createQuestionDto: CreateQuestionDto,
+    user: User
+  ): Promise<Question> {
     const question = this.questionRepository.create(createQuestionDto)
-    return this.questionRepository.save({...question, user})
+    return this.questionRepository.save({ ...question, user })
   }
 
-   async findOne(id: number): Promise<Question | undefined> {
+  async findOne(id: number): Promise<Question | undefined> {
     return await this.questionRepository
-  .createQueryBuilder('question')
-  .where('question.id = :id', { id })
-  .leftJoinAndSelect('question.quiz', 'quiz')
-  .getOne()
+      .createQueryBuilder('question')
+      .where('question.id = :id', { id })
+      .leftJoinAndSelect('question.quiz', 'quiz')
+      .getOne()
 
     // return this.questionRepository.findOneBy({id})
   }
@@ -39,18 +40,18 @@ export class QuestionService {
     updateQuestionDto: UpdateQuestionDto,
     user: User
   ): Promise<Question> {
-    const question = await this.questionRepository.findOneBy({id})
+    const question = await this.questionRepository.findOneBy({ id })
     if (!question) {
       throw new NotFoundException('Question not found')
     }
 
-    Object.assign(question, {...updateQuestionDto, user})
+    Object.assign(question, { ...updateQuestionDto, user })
 
     return this.questionRepository.save(question)
   }
 
   async delete(id: number): Promise<void> {
-    const question = await this.questionRepository.findOneBy({id})
+    const question = await this.questionRepository.findOneBy({ id })
     if (!question) {
       throw new NotFoundException('Question not found')
     }
@@ -59,7 +60,7 @@ export class QuestionService {
   }
 
   async updateQuestionTimestamp(id: number): Promise<Question> {
-    const question = await this.questionRepository.findOneBy({id})
+    const question = await this.questionRepository.findOneBy({ id })
 
     if (!question) {
       throw new NotFoundException('Question not found')

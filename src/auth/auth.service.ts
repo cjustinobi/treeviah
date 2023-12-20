@@ -9,11 +9,10 @@ import { JwtPayload } from './jwt-payload.interface'
 import { AuthHelper } from './auth.helper'
 import { UserResponseInput } from './input/user-response.input'
 
-
 @Injectable()
 export class AuthService {
-
-  constructor(@InjectRepository(User) 
+  constructor(
+    @InjectRepository(User)
     private readonly authRepository: AuthRepository,
     private readonly authHelper: AuthHelper,
     private jwtService: JwtService
@@ -23,22 +22,22 @@ export class AuthService {
     return this.authRepository.register(data)
   }
 
-   async login(loginUserDto: LoginUserDto): Promise<{ accessToken: string, user: UserResponseInput }> {
-
+  async login(
+    loginUserDto: LoginUserDto
+  ): Promise<{ accessToken: string; user: UserResponseInput }> {
     const res = await this.authRepository.validateUserPassword(loginUserDto)
 
     if (!res) throw new UnauthorizedException('Invalid credentials')
 
     const { email } = loginUserDto
 
-  
     const userObj = await this.authRepository.findByEmail(email)
-   
+
     let user: UserResponseInput = {
       id: userObj.id,
       fullname: userObj.fullname,
       username: userObj.username,
-      email: userObj.email
+      email: userObj.email,
     }
 
     const payload: JwtPayload = { email }
@@ -46,11 +45,9 @@ export class AuthService {
     const accessToken = await this.jwtService.sign(payload)
 
     return { accessToken, user }
-
   }
 
   async logout(accessToken: string): Promise<void> {
     this.authHelper.blackListToken(accessToken)
   }
-
 }

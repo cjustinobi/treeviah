@@ -1,4 +1,3 @@
-
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
 import { QuestionService } from './question.service'
 import { Question } from './entities/question.entity'
@@ -7,16 +6,14 @@ import { UseGuards } from '@nestjs/common'
 import { JwtAuthGuard } from '../common/guards'
 import { ReqUser } from '../common/decorators'
 
-let currentQuestionIndex = 0;
+let currentQuestionIndex = 0
 
-@Resolver(of => CreateQuestionInput)
+@Resolver((of) => CreateQuestionInput)
 @UseGuards(JwtAuthGuard)
 export class QuestionResolver {
-  constructor(
-    private readonly questionService: QuestionService
-    ) {}
+  constructor(private readonly questionService: QuestionService) {}
 
-  @Query(returns => CreateQuestionInput)
+  @Query((returns) => CreateQuestionInput)
   async getNextQuestion(): Promise<Question | null> {
     // Get the list of questions (assuming you have a method to fetch questions)
     const questions = await this.questionService.findAll()
@@ -31,25 +28,24 @@ export class QuestionResolver {
 
       // Return the next question to the client
       return nextQuestion
-    } 
+    }
     return null
   }
 
-  @Mutation(returns => CreateQuestionInput)
+  @Mutation((returns) => CreateQuestionInput)
   async createQuestion(
     @Args('input') input: CreateQuestionInput,
     @ReqUser() user: any
-    ): Promise<Question> {
-
+  ): Promise<Question> {
     return this.questionService.createQuestion(input, user)
   }
 
-  @Query(returns => CreateQuestionInput, { name: 'getQuestion' })
+  @Query((returns) => CreateQuestionInput, { name: 'getQuestion' })
   async findOne(@Args('id') id: number): Promise<Question> {
     return this.questionService.findOne(id)
   }
 
-  @Query(returns => [CreateQuestionInput], { name: 'getQuestions' })
+  @Query((returns) => [CreateQuestionInput], { name: 'getQuestions' })
   async findAll() {
     return this.questionService.findAll()
   }
@@ -63,7 +59,7 @@ export class QuestionResolver {
     return this.questionService.update(id, input, user)
   }
 
-  @Mutation(() => Boolean, {name: 'deleteQuestion'})
+  @Mutation(() => Boolean, { name: 'deleteQuestion' })
   async delete(@Args('id') id: number): Promise<boolean> {
     try {
       await this.questionService.delete(id)

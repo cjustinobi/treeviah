@@ -1,5 +1,9 @@
 import { Module } from '@nestjs/common'
-import { TypeOrmModule, getRepositoryToken, getDataSourceToken } from '@nestjs/typeorm'
+import {
+  TypeOrmModule,
+  getRepositoryToken,
+  getDataSourceToken,
+} from '@nestjs/typeorm'
 import { AuthService } from './auth.service'
 import { AuthController } from './auth.controller'
 import { User } from './entities/user.entity'
@@ -14,13 +18,13 @@ import { AuthHelper } from './auth.helper'
   imports: [
     // ConfigModule,
     TypeOrmModule.forFeature([User]),
-    PassportModule.register({ defaultStrategy: 'jwt'} ),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: 'afric',
       signOptions: {
-        expiresIn: '2y'
-      }
-    })
+        expiresIn: '2y',
+      },
+    }),
   ],
   controllers: [AuthController],
   providers: [
@@ -28,18 +32,13 @@ import { AuthHelper } from './auth.helper'
       provide: getRepositoryToken(User),
       inject: [getDataSourceToken()],
       useFactory(datasource: DataSource) {
-        return datasource.getRepository(User).extend(CustomAuthRepository);
+        return datasource.getRepository(User).extend(CustomAuthRepository)
       },
     },
     AuthService,
     JwtStrategy,
-    AuthHelper
+    AuthHelper,
   ],
-  exports: [
-    JwtStrategy,
-    PassportModule,
-    AuthService,
-    AuthHelper
-  ]
+  exports: [JwtStrategy, PassportModule, AuthService, AuthHelper],
 })
 export class AuthModule {}

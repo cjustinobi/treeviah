@@ -1,4 +1,9 @@
-import { Injectable, HttpException, HttpStatus, UnauthorizedException } from '@nestjs/common'
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+  UnauthorizedException,
+} from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
@@ -7,9 +12,9 @@ import * as bcrypt from 'bcrypt'
 import { JwtPayload } from './jwt-payload.interface'
 
 interface DecodedToken {
-  email: string;
-  iat: number;
-  exp: number;
+  email: string
+  iat: number
+  exp: number
 }
 
 @Injectable()
@@ -30,7 +35,7 @@ export class AuthHelper {
   }
 
   public async validateUser(email) {
-    return await this.repository.findOneBy({email})
+    return await this.repository.findOneBy({ email })
   }
 
   public async generateToken(email): Promise<string> {
@@ -50,7 +55,6 @@ export class AuthHelper {
   }
 
   async validate(token: string) {
-
     if (this.tokenBlacklist.has(token)) return false
 
     const decoded: DecodedToken = this.jwt.verify(token)

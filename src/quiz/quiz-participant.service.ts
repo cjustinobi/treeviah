@@ -13,15 +13,19 @@ export class QuizParticipantService {
     private readonly leaderboardRepository: Repository<Leaderboard>
   ) {}
 
-  async getQuizParticipantsBySocketId(socketId: string): Promise<QuizParticipant> {
+  async getQuizParticipantsBySocketId(
+    socketId: string
+  ): Promise<QuizParticipant> {
     return this.quizParticipantRepository.findOne({
-      where: { socketId }
+      where: { socketId },
     })
   }
 
-  async getQuizParticipantsByUsername(username: string): Promise<QuizParticipant> {
+  async getQuizParticipantsByUsername(
+    username: string
+  ): Promise<QuizParticipant> {
     return this.quizParticipantRepository.findOne({
-      where: { username }
+      where: { username },
     })
   }
 

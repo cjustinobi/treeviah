@@ -7,5 +7,5 @@ export class QuizParticipantInput {
   socketId: string
 
   @Field()
-  score: number;
+  score: number
 }
