@@ -73,11 +73,11 @@ socket.on('nextQuestion', (data) => {
 
 ### `quizResult`
 
-**Description** For displaying next question.
+**Description** For displaying Quiz result.
 
 **Payload:**
 
-- `question` (array): This contains the first-three users that won the quiz.
+- `result` (array): This contains the first-three users that won the quiz.
 
 **Example**
 

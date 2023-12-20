@@ -8,10 +8,12 @@ import { QuestionService } from './question.service'
 import { QuizParticipantService } from './quiz-participant.service'
 import { LeaderboardService } from '../leaderboard/leaderboard.service'
 import { PointCalculator } from './helpers/point-calculator'
+import { QuizService } from './quiz.service'
 
 @WebSocketGateway()
 export class QuizGateway {
   constructor(
+    private readonly quizService: QuizService,
     private readonly questionService: QuestionService,
     private readonly quizParticipantService: QuizParticipantService,
     private readonly leaderboardService: LeaderboardService,
@@ -50,6 +52,9 @@ export class QuizGateway {
         quizId
       )
       this.server.emit('quizResult', { result })
+      const quiz = await this.quizService.findOne(quizId)
+      quiz.status = 'Completed'
+      this.quizService.updateQuiz(quizId, quiz)
     }
   }
 
@@ -59,7 +64,7 @@ export class QuizGateway {
     data: { questionId: number; answer: string }
   ) {
     const user =
-      await this.quizParticipantService.getQuizParticipantsByUsername('menhyui')
+      await this.quizParticipantService.getQuizParticipantsByUsername('menhyui') // TODO: or use getQuizParticipantsBySocketId
     if (!user) return
 
     const question = await this.questionService.findOne(data.questionId)
