@@ -6,6 +6,6 @@ export class UpdateQuizInput {
   @Field({ nullable: true })
   title?: string
 
-  @Field({ nullable: true })
-  status?: string
+  // @Field({ nullable: true })
+  // status?: string
 }
